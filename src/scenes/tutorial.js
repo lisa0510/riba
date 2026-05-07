@@ -56,6 +56,7 @@ export default class Tutorial extends Phaser.Scene {
       "",
       {
         fontSize: "25px",
+        fontFamily: "Roboto",
         color: "#ffffff",
         backgroundColor: "#000000cd",
         padding: { x: 40, y: 25 },
@@ -117,7 +118,8 @@ export default class Tutorial extends Phaser.Scene {
         color: "#ffffff",
         backgroundColor: "#000000aa",
         padding: { x: 20, y: 10 },
-        align: "center"
+        align: "center",
+        fontFamily: "Roboto"
       }
     )
       .setOrigin(0.5)
@@ -249,6 +251,7 @@ export default class Tutorial extends Phaser.Scene {
       `${percent}%`,
       {
         fontSize: "50px",
+        fontFamily: "Roboto",
         color: feedbackColor,
         fontStyle: "bold",
         stroke: "#000000",
@@ -317,6 +320,7 @@ export default class Tutorial extends Phaser.Scene {
       finalMessage,
       {
         fontSize: "25px",
+        fontFamily: "Roboto",
         color: "#ffffff",
         backgroundColor: "#000000",
         padding: { x: 40, y: 25 },

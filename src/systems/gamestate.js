@@ -99,11 +99,8 @@ class GameState {
     if (!allChoices.length) return 0;
 
     const negativeChoices = [
-      "remember_her",
-      "she_exists",
-      "dontcare",
-      "wiedergutmachen",
-      "pressure"
+      "negative1",
+      "negative2",
     ];
 
     const negativeCount = allChoices.filter((choiceId) =>
@@ -128,10 +125,6 @@ class GameState {
 
     if (rightPercent > 51 && negativePercent > 31) {
       return "ending3";
-    }
-
-    if (rightPercent > 51 && negativePercent <= 31) {
-      return "ending4";
     }
 
     return "endingNeutral";

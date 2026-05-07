@@ -52,11 +52,6 @@ preEndingDialogue: {
     { text: "Das war alles für heute." },
     { text: "3." }
   ],
-
-  ending4: [
-    { text: "Das war alles für heute." },
-    { text: "4" }
-  ]
 },
 
 finalDialogues: {
@@ -72,11 +67,6 @@ finalDialogues: {
 
   ending3: [
     { text: "Von all den Menschen die es geschafft haben sich unter Wasser zu retten, musste ich mit der unnützen Person in ein Team gesteckt werden." }
-  ],
-
-  ending4: [
-    { text: "Die Leistung dieses Mal war in Ordnung, besser sogar als letztes Mal. Denk jedoch nicht, dass dies heisst dass du dich nicht noch weiter anstrengen musst." },
-    { text: "Ich erwarte, dass du eines Tages Perfektion erreicht verstanden?" }
   ],
 
   endingNeutral: [

@@ -38,7 +38,7 @@ export default class DialogueManager {
       .setDepth(501);
 
     this.continueBtn = this.scene.add.text(
-      width / 1.3,
+      width / 1.5,
       height / 1.3,
       "...",
       {

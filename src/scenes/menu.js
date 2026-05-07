@@ -9,20 +9,25 @@ export default class Menu extends Phaser.Scene {
     this.load.image("background", "assets/Fish02/UI/Fisch_Menü_UI.png");
     this.load.image("eye", "assets/Fish02/UI/FischAuge_Menü_UI.png");
     this.load.image("headphones", "assets/Fish02/UI/Kopfhörer_Symbol_UI.png");
+
+    this.load.audio("menu_button", "assets/audio/menubutton.mp3");
   }
 
   create() {
     const { width, height } = this.scale;
 
+    // Hintergrund
     const bg = this.add.image(width / 2, height / 2, "background");
     bg.setDisplaySize(width, height);
 
+    // Auge-Logik
     this.eyeCenterX = width / 2;
     this.eyeCenterY = height * 0.35;
     this.eye = this.add.image(this.eyeCenterX, this.eyeCenterY, "eye");
     this.eye.setScale(width < 1200 ? 0.28 : 0.4);
     this.maxEyeDistance = width < 1200 ? 28 : 40;
 
+    // Layout Variablen
     const menuX = width < 1200 ? width * 0.16 : width * 0.12;
     const titleY = height < 750 ? height * 0.14 : height * 0.1;
     const startY = height * 0.5;
@@ -33,56 +38,48 @@ export default class Menu extends Phaser.Scene {
     const buttonPaddingX = Math.max(12, width * 0.012);
     const buttonPaddingY = Math.max(8, height * 0.01);
 
+    // Titel
     this.add.text(menuX, titleY, "RIBA", {
       fontSize: `${titleFontSize}px`,
       fill: "#fff",
-      fontFamily: "Helvetica"
+      fontFamily: '"Roboto"', // Google Font
+      fontWeight: "900"
     }).setOrigin(0.5);
 
+    // Start Button
     const startButton = this.add.text(menuX, startY, "START", {
       fontSize: `${buttonFontSize}px`,
       fill: "#ffffff",
-      fontFamily: "Helvetica",
+      fontFamily: '"Roboto"',
       backgroundColor: "#000000aa",
-      padding: {
-        x: buttonPaddingX,
-        y: buttonPaddingY
-      }
+      padding: { x: buttonPaddingX, y: buttonPaddingY }
     })
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 
-    startButton.on("pointerover", () => {
-      startButton.setStyle({ fill: "rgb(0, 4, 255)" });
-    });
-
-    startButton.on("pointerout", () => {
-      startButton.setStyle({ fill: "#fff" });
-    });
-
+    startButton.on("pointerover", () => startButton.setStyle({ fill: "rgb(0, 4, 255)" }));
+    startButton.on("pointerout", () => startButton.setStyle({ fill: "#fff" }));
     startButton.on("pointerdown", () => {
-      this.scene.start("Intro");
+      this.sound.play("menu_button");
+      this.time.delayedCall(150, () => this.scene.start("Intro"));
     });
 
+    // Credits Button
     const creditsButton = this.add.text(menuX, creditsY, "Credits", {
       fontSize: `${buttonFontSize}px`,
       fill: "#ffffff",
-      fontFamily: "Helvetica",
+      fontFamily: '"Roboto Condensed"',
       backgroundColor: "#000000aa",
-      padding: {
-        x: buttonPaddingX,
-        y: buttonPaddingY
-      }
+      padding: { x: buttonPaddingX, y: buttonPaddingY }
     })
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 
-    creditsButton.on("pointerover", () => {
-      creditsButton.setStyle({ fill: "rgb(0, 4, 255)" });
-    });
-
-    creditsButton.on("pointerout", () => {
-      creditsButton.setStyle({ fill: "#fff" });
+    creditsButton.on("pointerover", () => creditsButton.setStyle({ fill: "rgb(0, 4, 255)" }));
+    creditsButton.on("pointerout", () => creditsButton.setStyle({ fill: "#fff" }));
+    creditsButton.on("pointerdown", () => {
+      this.sound.play("menu_button");
+      this.createCreditsPopup();
     });
 
     this.createPopup();
@@ -91,84 +88,140 @@ export default class Menu extends Phaser.Scene {
   createPopup() {
     const { width, height } = this.scale;
 
-    this.popupOverlay = this.add.rectangle(
-      0,
-      0,
-      width,
-      height,
-      0x000000,
-      1
-    )
-      .setOrigin(0)
-      .setInteractive()
-      .setDepth(100);
+    this.popupOverlay = this.add.rectangle(0, 0, width, height, 0x000000, 1)
+      .setOrigin(0).setInteractive().setDepth(100);
 
     this.popupContainer = this.add.container(width / 2, 0).setDepth(101);
 
-    const topPadding = height * 0.2;
-    const spacing = height * 0.2;
-
-    const headerText = this.add.text(
-      0,
-      topPadding,
-      ' "Wenn das Wasser steigt, muss man versuchen darin zu überleben." ',
-      {
+    const headerText = this.add.text(0, height * 0.2, 
+      ' "Wenn das Wasser steigt, muss man versuchen darin zu überleben." ', {
         fontSize: `${Math.max(20, height * 0.04)}px`,
         fill: "#ffffff",
-        fontFamily: "Helvetica",
-        fontStyle: "italic",
+        fontFamily: '"Roboto"',
         align: "center",
         wordWrap: { width: width * 0.8 }
-      }
-    ).setOrigin(0.5);
+      }).setOrigin(0.5);
 
     const popupImg = this.add.image(0, height / 2, "headphones")
       .setScale(width < 1200 ? 0.14 : 0.2);
 
-    const infoText = this.add.text(
-      0,
-      popupImg.y + spacing,
-      "Trage Kopfhörer für eine bessere Erfahrung.",
-      {
+    const infoText = this.add.text(0, popupImg.y + height * 0.2, 
+      "Trage Kopfhörer für eine bessere Erfahrung.", {
         fontSize: `${Math.max(18, height * 0.03)}px`,
         fill: "#bbbbbb",
         align: "center",
-        fontFamily: "Helvetica"
-      }
-    ).setOrigin(0.5);
+        fontFamily: '"Roboto"'
+      }).setOrigin(0.5);
 
-    const hintText = this.add.text(
-      0,
-      height * 0.9,
-      "[ Press any key or click to start ]",
-      {
+    const hintText = this.add.text(0, height * 0.9, "[ Press any key or click to start ]", {
         fontSize: `${Math.max(16, height * 0.025)}px`,
         fill: "#666666",
-        fontFamily: "Helvetica"
-      }
-    )
-      .setOrigin(0.5)
-      .setName("waveText");
+        fontFamily: '"Roboto"'
+      }).setOrigin(0.5).setName("waveText");
 
-    this.popupContainer.add([
-      headerText,
-      popupImg,
-      infoText,
-      hintText
-    ]);
+    this.popupContainer.add([headerText, popupImg, infoText, hintText]);
 
     const closePopup = () => {
       if (this.popupContainer) this.popupContainer.destroy();
       if (this.popupOverlay) this.popupOverlay.destroy();
-
-      this.input.keyboard.off("keydown");
-      this.input.off("pointerdown");
+      this.input.keyboard.off("keydown", closePopup);
+      this.input.off("pointerdown", closePopup);
     };
 
     this.time.delayedCall(200, () => {
       this.input.keyboard.on("keydown", closePopup);
       this.input.on("pointerdown", closePopup);
     });
+  }
+
+  createCreditsPopup() {
+    const { width, height } = this.scale;
+    if (this.creditsOverlay) return;
+
+    this.creditsOverlay = this.add.rectangle(0, 0, width, height, 0x000000, 0.84)
+      .setOrigin(0).setDepth(200);
+
+    this.creditsContainer = this.add.container(width / 2, height / 2).setDepth(201);
+
+    const title = this.add.text(0, -height * 0.4, "CREDITS", {
+        fontSize: `${Math.max(42, height * 0.065)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Roboto"',
+        fontWeight: "900"
+      }).setOrigin(0.5);
+
+    const subtitle = this.add.text(0, -height * 0.3, "Bachelorarbeit 2026, Digital Ideation", {
+        fontSize: `${Math.max(22, height * 0.02)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Roboto"',
+      }).setOrigin(0.5);
+
+    // --- NEBENEINANDER: GAME DEV & GAME DESIGNER ---
+    const leftColumn = this.add.text(-width * 0.15, -height * 0.13, 
+      "Game Developer\nLüsa", {
+        fontSize: `${Math.max(20, height * 0.025)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Roboto"',
+        align: "center",
+        lineSpacing: 8
+      }).setOrigin(0.5);
+
+    const rightColumn = this.add.text(width * 0.15, -height * 0.13, 
+      "Game Art Designer\nJenny", {
+        fontSize: `${Math.max(20, height * 0.025)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Roboto"',
+        align: "center",
+        lineSpacing: 8
+      }).setOrigin(0.5);
+
+    // --- DARUNTER: RESTLICHE CREDITS ---
+    const bottomCredits = this.add.text(0, height * 0.22, 
+      `Synchronsprecherinnen
+Sara als Mona Schwarz
+Saskia als Klara
+
+Game Soundtrack
+Jenny Kolleg?
+
+Mentoren
+Benji O. Technische Betreuung
+Ruth B.  Game Art Betreuung
+Lea C.   Game Design Betreuung
+`, {
+        fontSize: `${Math.max(22, height * 0.02)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Roboto"',
+        align: "center",
+        lineSpacing: 12
+      }).setOrigin(0.5);
+
+    const closeButton = this.add.text(width * 0.43, -height * 0.4, "✕", {
+        fontSize: `${Math.max(34, height * 0.055)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Roboto"'
+      }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+
+    closeButton.on("pointerover", () => closeButton.setStyle({ fill: "rgb(0, 4, 255)" }));
+    closeButton.on("pointerout", () => closeButton.setStyle({ fill: "#ffffff" }));
+    closeButton.on("pointerdown", () => {
+      this.sound.play("menu_button");
+      this.tweens.add({
+        targets: this.creditsContainer,
+        alpha: 0,
+        duration: 180,
+        onComplete: () => {
+          this.creditsContainer.destroy();
+          this.creditsOverlay.destroy();
+          this.creditsContainer = null;
+          this.creditsOverlay = null;
+        }
+      });
+    });
+
+    this.creditsContainer.add([title, subtitle, leftColumn, rightColumn, bottomCredits, closeButton]);
+    this.creditsContainer.setAlpha(0);
+    this.tweens.add({ targets: this.creditsContainer, alpha: 1, duration: 250, ease: "Power2" });
   }
 
   update(time) {
@@ -181,34 +234,14 @@ export default class Menu extends Phaser.Scene {
       });
     }
 
-    if (this.popupOverlay && this.popupOverlay.active) return;
+    if ((this.popupOverlay && this.popupOverlay.active) || (this.creditsOverlay && this.creditsOverlay.active)) return;
 
     const pointer = this.input.activePointer;
+    const angle = Phaser.Math.Angle.Between(this.eyeCenterX, this.eyeCenterY, pointer.x, pointer.y);
+    const dist = Phaser.Math.Distance.Between(this.eyeCenterX, this.eyeCenterY, pointer.x, pointer.y);
+    const constrainedDist = Math.min(dist * 2, this.maxEyeDistance);
 
-    const angle = Phaser.Math.Angle.Between(
-      this.eyeCenterX,
-      this.eyeCenterY,
-      pointer.x,
-      pointer.y
-    );
-
-    const dist = Phaser.Math.Distance.Between(
-      this.eyeCenterX,
-      this.eyeCenterY,
-      pointer.x,
-      pointer.y
-    );
-
-    const sensitivity = 2;
-    const constrainedDist = Math.min(
-      dist * sensitivity,
-      this.maxEyeDistance
-    );
-
-    this.eye.x =
-      this.eyeCenterX + Math.cos(angle) * constrainedDist;
-
-    this.eye.y =
-      this.eyeCenterY + Math.sin(angle) * constrainedDist;
+    this.eye.x = this.eyeCenterX + Math.cos(angle) * constrainedDist;
+    this.eye.y = this.eyeCenterY + Math.sin(angle) * constrainedDist;
   }
 }
