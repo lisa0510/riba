@@ -12,30 +12,36 @@ export default class Shop extends Phaser.Scene {
     super("Shop");
   }
 
-  preload() {
-    this.load.image("parasite", "assets/Fish02/parasite.png");
-    this.load.image("miniwal", "assets/Fish02/MiniWal.png");
-  }
+ preload() {
+  this.load.image("fish", "assets/Fish04/First_Fisch.png");
+  this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
+  this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
+  this.load.image("button", "assets/Fish04/Red_Button.png");
+
+  this.load.image("parasite", "assets/Fish02/parasite.png");
+  this.load.image("miniwal", "assets/Fish02/MiniWal.png");
+
+  this.load.audio("laser", "assets/audio/laser1.mp3");
+}
 
   create() {
-  const { width, height } = this.scale;
+    const { width, height } = this.scale;
 
-  this.add.image(width / 2, height / 2, "shop_bg")
-    .setDisplaySize(width, height)
-    .setDepth(-12);
+    this.add.image(width / 2, height / 2, "shop_bg")
+      .setDisplaySize(width, height)
+      .setDepth(-12);
 
-  this.add.image(width / 2, height / 2, "shop_laser")
-    .setDisplaySize(width, height)
-    .setDepth(-10);
+    this.add.image(width / 2, height / 2, "shop_laser")
+      .setDisplaySize(width, height)
+      .setDepth(-10);
 
-  this.coworker = this.add.image(
-    width / 2,
-    height / 1.8,
-    "customer"
-  )
-    .setScale(0.5)
-    .setDepth(-11);
-
+    this.coworker = this.add.image(
+      width / 2,
+      height / 1.8,
+      "customer"
+    )
+      .setScale(0.5)
+      .setDepth(-11);
 
     this.dialogueManager = new DialogueManager(this);
     this.boxManager = new BoxManager(this);
@@ -44,19 +50,13 @@ export default class Shop extends Phaser.Scene {
     this.currentFish = 0;
     this.cutResults = [];
     this.choiceButtons = [];
+    this.targetPercent = 30;
 
     this.cutLine = null;
     this.cutLineDirection = 1;
-    this.cutLineSpeed = 12;
+    this.cutLineSpeed = 6;
     this.canStopLine = false;
     this.cutInputReady = false;
-
-    this.input.on("pointerdown", () => {
-      if (!this.canStopLine) return;
-      if (!this.cutInputReady) return;
-
-      this.stopLineAndCut();
-    });
 
     gameState.reset();
     this.currentBoxId = "box1";
@@ -82,36 +82,81 @@ export default class Shop extends Phaser.Scene {
     }
   }
 
-  enableCoworkerInteraction() {
-    if (!this.coworker) return;
-
-    this.coworker.setInteractive({ useHandCursor: true });
-
-    this.coworker.once("pointerdown", () => {
-      this.coworker.disableInteractive();
-      this.startCuttingPhase();
-    });
-  }
-
   startCuttingPhase() {
     const { width, height } = this.scale;
 
-    this.overlay = this.add.rectangle(
+    this.blackBg = this.add.rectangle(
       width / 2,
       height / 2,
       width,
       height,
       0x000000,
-      0.7
-    ).setDepth(100);
+      1
+    ).setDepth(99);
 
-    this.boardImg = this.add.image(
+    this.cuttingView = this.add.image(
       width / 2,
       height / 2,
-      "board"
+      "cuttingview"
+    )
+      .setDisplaySize(width, height)
+      .setDepth(100);
+
+    this.note1 = this.add.image(
+      width / 5,
+      height / 3,
+      "note1"
     )
       .setDepth(101)
-      .setScale(0.7);
+      .setScale(0.4);
+
+      this.cutButton = this.add.image(
+    width * 0.88,
+    height * 0.85,
+    "button"
+  )
+    .setDepth(160)
+    .setScale(0.3)
+    .setAlpha(1)
+    .setInteractive({ useHandCursor: true });
+
+  this.cutButton.on("pointerover", () => {
+    this.tweens.add({
+      targets: this.cutButton,
+      scale: 0.32,
+      alpha: 1,
+      duration: 100,
+      ease: "Power2"
+    });
+  });
+
+  this.cutButton.on("pointerout", () => {
+    this.tweens.add({
+      targets: this.cutButton,
+      scale: 0.3,
+      alpha: 1,
+      duration: 100,
+      ease: "Power2"
+    });
+  });
+
+  this.cutButton.on("pointerdown", () => {
+    if (!this.canStopLine) return;
+    if (!this.cutInputReady) return;
+
+    this.sound.play("laser");
+
+    this.tweens.add({
+      targets: this.cutButton,
+      scale: 0.3,
+      alpha: 1,
+      duration: 70,
+      yoyo: true,
+      ease: "Power2"
+    });
+
+    this.stopLineAndCut();
+  });
 
     this.spawnFish(true);
     this.enableLineClick();
@@ -127,8 +172,8 @@ export default class Shop extends Phaser.Scene {
     this.cutInputReady = false;
 
     this.fish = this.add.image(
-      width / 2,
-      height / 2,
+      width / 1.5,
+      height / 3,
       "fish"
     ).setDepth(102);
 
@@ -136,7 +181,6 @@ export default class Shop extends Phaser.Scene {
       this.createMovingCutLine();
     }
   }
-
 
   createMovingCutLine() {
     if (!this.fish) return;
@@ -153,7 +197,7 @@ export default class Shop extends Phaser.Scene {
     ).setDepth(130);
 
     this.cutLineDirection = 1;
-    this.cutLineSpeed = 12;
+    this.cutLineSpeed = 6;
   }
 
  enableLineClick() {
@@ -162,6 +206,11 @@ export default class Shop extends Phaser.Scene {
 
   this.time.delayedCall(150, () => {
     this.cutInputReady = true;
+
+    if (this.cutButton) {
+      this.cutButton.setInteractive({ useHandCursor: true });
+      this.cutButton.setAlpha(1);
+    }
   });
 }
 
@@ -172,6 +221,10 @@ export default class Shop extends Phaser.Scene {
 
     this.canStopLine = false;
     this.cutInputReady = false;
+    if (this.cutButton) {
+    this.cutButton.disableInteractive();
+    this.cutButton.setAlpha(1);
+  }
 
     const bounds = this.fish.getBounds();
 
@@ -209,39 +262,40 @@ export default class Shop extends Phaser.Scene {
 
     this.fish.destroy();
 
-    const diff = Math.abs(percent - 50);
+    const diff = Math.abs(percent - this.targetPercent);
     const feedbackColor = diff <= 2 ? "#2ecc71" : "#ff4444";
 
     const percentText = this.add.text(
-      x,
-      y - 150,
+      this.scale.width * 0.15,
+      this.scale.height * 0.85,
       `${percent}%`,
       {
-        fontSize: "60px",
+        fontSize: `${Math.max(32, this.scale.width * 0.03)}px`,
+        fontFamily: "Roboto",
         color: feedbackColor,
         fontStyle: "bold",
         stroke: "#000000",
-        strokeThickness: 6
+        strokeThickness: 5
       }
     )
-      .setOrigin(0.5)
+      .setOrigin(0, 1)
       .setDepth(300);
 
     this.tweens.add({
       targets: leftHalf,
       x: x - 250,
       alpha: 0,
-      duration: 400
+      duration: 350
     });
 
     this.tweens.add({
       targets: rightHalf,
       x: x + 250,
       alpha: 0,
-      duration: 400
+      duration: 350
     });
 
-    this.time.delayedCall(600, () => {
+    this.time.delayedCall(800, () => {
       leftHalf.destroy();
       rightHalf.destroy();
       percentText.destroy();
@@ -258,6 +312,30 @@ export default class Shop extends Phaser.Scene {
       this.enableLineClick();
     } else {
       this.finishBox();
+    }
+  }
+
+  finishBox() {
+    if (this.blackBg) this.blackBg.destroy();
+    if (this.cuttingView) this.cuttingView.destroy();
+    if (this.note1) this.note1.destroy();
+    if (this.cutLine) this.cutLine.destroy();
+    if (this.cutButton) this.cutButton.destroy();
+
+    this.canStopLine = false;
+    this.cutInputReady = false;
+
+    const perfect = gameState.isPerfectBox(this.currentBoxId);
+
+    if (perfect) {
+      this.dialogueManager.startDialogue(
+        this.currentBox.successDialogue,
+        () => {
+          this.startNextStep();
+        }
+      );
+    } else {
+      this.startParasiteEncounter();
     }
   }
 
@@ -326,28 +404,6 @@ export default class Shop extends Phaser.Scene {
         ease: "Power2"
       });
     });
-  }
-
-  finishBox() {
-    if (this.overlay) this.overlay.destroy();
-    if (this.boardImg) this.boardImg.destroy();
-    if (this.cutLine) this.cutLine.destroy();
-
-    this.canStopLine = false;
-    this.cutInputReady = false;
-
-    const perfect = gameState.isPerfectBox(this.currentBoxId);
-
-    if (perfect) {
-      this.dialogueManager.startDialogue(
-        this.currentBox.successDialogue,
-        () => {
-          this.startNextStep();
-        }
-      );
-    } else {
-      this.startParasiteEncounter();
-    }
   }
 
   startParasiteEncounter() {
@@ -460,25 +516,31 @@ export default class Shop extends Phaser.Scene {
       .setDepth(50);
 
     if (this.currentBoxId === "box1") {
-      this.boxManager.startBox("box2", box2Data);
+      this.currentBoxId = "box2";
+      this.currentBox = box2Data;
+
+      this.currentFish = 0;
+      this.cutResults = [];
+
+      this.startCuttingPhase();
     } else if (this.currentBoxId === "box2") {
       this.startFinalPath();
     }
   }
 
   startFinalPath() {
-  const ending = gameState.getEnding();
+    const ending = gameState.getEnding();
 
-  const preEndingDialogue =
-    box2Data.preEndingDialogue[ending];
+    const preEndingDialogue =
+      box2Data.preEndingDialogue[ending];
 
-  this.dialogueManager.startDialogue(
-    preEndingDialogue,
-    () => {
-      this.scene.start("Ending", {
-        ending: ending
-      });
-    }
-  );
-}
+    this.dialogueManager.startDialogue(
+      preEndingDialogue,
+      () => {
+        this.scene.start("Ending", {
+          ending: ending
+        });
+      }
+    );
+  }
 }

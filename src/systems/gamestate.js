@@ -4,6 +4,8 @@ class GameState {
   }
 
   reset() {
+    this.targetCut = 30;
+
     this.boxResults = {
       box1: [],
       box2: []
@@ -42,7 +44,7 @@ class GameState {
   }
 
   isPerfectCut(cut) {
-    return cut >= 45 && cut <= 55;
+    return cut >= this.targetCut - 5 && cut <= this.targetCut + 5;
   }
 
   isPerfectBox(box) {

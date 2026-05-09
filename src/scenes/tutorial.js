@@ -10,41 +10,69 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
     this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
     this.load.image("customer", "assets/Fish04/Normal_Klara.png");
-    this.load.image("fish", "assets/Fish03/Fisch03.png");
-    this.load.image("board", "assets/Fish02/Schnittbrett.png");
+    this.load.image("fish", "assets/Fish04/First_Fisch.png");
+    this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
+    this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
+    this.load.image("button", "assets/Fish04/Red_Button.png");
+
+    this.load.audio("laser", "assets/audio/laser1.mp3");
   }
 
   create() {
   const { width, height } = this.scale;
 
-  this.add.image(width / 2, height / 2, "shop_bg")
-    .setDisplaySize(width, height)
+  this.shopBg = this.add.image(
+    width / 2,
+    height / 2,
+    "shop_bg"
+  )
     .setDepth(-12);
 
-  this.add.image(width / 2, height / 2, "shop_laser")
-    .setDisplaySize(width, height)
+  const bgScale = Math.min(
+    width / this.shopBg.width,
+    height / this.shopBg.height
+  );
+
+  this.shopBg.setScale(bgScale);
+  this.shopLaser = this.add.image(
+    width / 2,
+    height / 1.5,
+    "shop_laser"
+  )
     .setDepth(-10);
+
+  const laserScale = Math.min(
+    width / this.shopLaser.width,
+    height / this.shopLaser.height
+  );
+  this.shopLaser.setScale(laserScale * 0.8);
+
+    const coworkerScale = Phaser.Math.Clamp(
+    height * 0.0011,
+    0.6,
+    0.7
+  );
 
   this.coworker = this.add.image(
     width / 2,
-    height / 1.8,
+    height / 2,
     "customer"
   )
-    .setScale(0.5)
+    .setScale(coworkerScale)
     .setDepth(-11);
 
-  this.dialogueIndex = 0;
-  this.cuts = [];
-  this.targetCM = 30;
-  this.totalFish = 1;
-  this.currentFish = 0;
+    this.dialogueIndex = 0;
+    this.cuts = [];
+    this.targetCM = 30;
+    this.totalFish = 1;
+    this.currentFish = 0;
 
-  this.cutLine = null;
-  this.cutLineDirection = 1;
-  this.cutLineSpeed = 2;
+    this.cutLine = null;
+    this.cutLineDirection = 1;
+    this.cutLineSpeed = 2;
 
-  this.setupMainDialogue();
-}
+    this.setupMainDialogue();
+  }
 
   setupMainDialogue() {
     const { width, height } = this.scale;
@@ -52,20 +80,20 @@ export default class Tutorial extends Phaser.Scene {
     this.currentDialogues = dialogues.tutorial.intro;
 
     this.dialogueText = this.add.text(
-      width / 2,
-      height / 1.2,
+      width * 0.08,
+      height * 0.42,
       "",
       {
         fontSize: "25px",
         fontFamily: "Roboto",
         color: "#ffffff",
-        backgroundColor: "#000000cd",
+        backgroundColor: "#000000e1",
         padding: { x: 40, y: 25 },
-        align: "center",
-        wordWrap: { width: width * 0.6 }
+        align: "left",
+        wordWrap: { width: width * 0.2 }
       }
     )
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setDepth(200);
 
     this.input.on("pointerdown", this.handleProgressDialogue, this);
@@ -89,56 +117,129 @@ export default class Tutorial extends Phaser.Scene {
     }
   }
 
-  startTutorialCutting() {
-    const { width, height } = this.scale;
+startTutorialCutting() {
+  const { width, height } = this.scale;
 
-    this.overlay = this.add.rectangle(
-      width / 2,
-      height / 2,
-      width,
-      height,
-      0x000000,
-      0.8
-    ).setDepth(100);
+  this.blackBg = this.add.rectangle(
+    width / 2,
+    height / 2,
+    width,
+    height,
+    0x000000,
+    1
+  ).setDepth(99);
 
-    this.boardImg = this.add.image(
-      width / 2,
-      height / 2,
-      "board"
-    )
-      .setDepth(101)
-      .setScale(0.7);
+  this.cuttingView = this.add.image(
+    width / 2,
+    height / 2,
+    "cuttingview"
+  )
+    .setDepth(100);
 
-    // 🔥 INFO TEXT
-    this.infoText = this.add.text(
-      width / 2,
-      height * 0.2,
-      "Ziel: Schneide bei 30%",
-      {
-        fontSize: "24px",
-        color: "#ffffff",
-        backgroundColor: "#000000aa",
-        padding: { x: 20, y: 10 },
-        align: "center",
-        fontFamily: "Roboto"
-      }
-    )
-      .setOrigin(0.5)
-      .setDepth(150);
+  const cuttingScale = Math.min(
+    width / this.cuttingView.width,
+    height / this.cuttingView.height
+  );
 
-    this.infoText.setAlpha(0);
+  this.cuttingView.setScale(cuttingScale);
+
+  this.note1 = this.add.image(
+    width / 5,
+    height / 3,
+    "note1"
+  )
+    .setDepth(101)
+    .setScale(0.4);
+
+
+  // RED BUTTON
+  this.cutButton = this.add.image(
+    width * 0.79,
+    height * 0.88,
+    "button"
+  )
+    .setDepth(160)
+    .setScale(0.22)
+    .setAlpha(1)
+    .setInteractive({ useHandCursor: true });
+
+
+  // HOVER EFFECT
+  this.cutButton.on("pointerover", () => {
+    this.tweens.add({
+      targets: this.cutButton,
+      scale: 0.25,
+      alpha: 1,
+      duration: 100,
+      ease: "Power2"
+    });
+  });
+
+  this.cutButton.on("pointerout", () => {
+    this.tweens.add({
+      targets: this.cutButton,
+      scale: 0.22,
+      alpha: 1,
+      duration: 100,
+      ease: "Power2"
+    });
+  });
+
+
+  // CLICK
+  this.cutButton.on("pointerdown", () => {
+    if (!this.canStopLine) return;
+    this.sound.play("laser");
+    this.tweens.add({
+      targets: this.cutButton,
+      scale: 0.22,
+      alpha: 1,
+      duration: 70,
+      yoyo: true,
+      ease: "Power2"
+    });
+
+    this.stopLineAndCut();
+  });
+
+
+  // INFO TEXT
+  this.infoText = this.add.text(
+    width / 2,
+    height * 0.15,
+    "Die Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den roten Knopf drücken, wenn die Linie dort ist.",
+    {
+      fontSize: "28px",
+      fontFamily: "Roboto",
+      color: "#ffffff",
+      backgroundColor: "#000000dc",
+      padding: { x: 40, y: 25 },
+      align: "center",
+      wordWrap: { width: width * 0.6 }
+    }
+  )
+    .setOrigin(0.5)
+    .setDepth(150)
+    .setAlpha(1);
+
+
+  // INFO TEXT FADE OUT
+  this.time.delayedCall(5000, () => {
+    if (!this.infoText) return;
+
     this.tweens.add({
       targets: this.infoText,
-      alpha: 1,
-      duration: 400
+      alpha: 0,
+      duration: 500
     });
+  });
 
-    this.spawnFish();
+  this.spawnFish();
 
-    this.time.delayedCall(150, () => {
-      this.enableLineClick();
-    });
-  }
+  this.time.delayedCall(150, () => {
+    this.enableLineClick();
+  });
+}
 
   spawnFish() {
     const { width, height } = this.scale;
@@ -147,8 +248,8 @@ export default class Tutorial extends Phaser.Scene {
     if (this.cutLine) this.cutLine.destroy();
 
     this.fish = this.add.image(
-      width / 2,
-      height / 2,
+      width / 1.5,
+      height / 3,
       "fish"
     ).setDepth(102);
 
@@ -172,13 +273,14 @@ export default class Tutorial extends Phaser.Scene {
     this.canStopLine = false;
   }
 
-  enableLineClick() {
-    this.canStopLine = true;
+ enableLineClick() {
+  this.canStopLine = true;
 
-    this.input.once("pointerdown", () => {
-      this.stopLineAndCut();
-    });
+  if (this.cutButton) {
+    this.cutButton.setInteractive({ useHandCursor: true });
+    this.cutButton.setAlpha(1);
   }
+}
 
   update() {
     if (!this.cutLine || !this.fish) return;
@@ -203,6 +305,9 @@ export default class Tutorial extends Phaser.Scene {
     if (!this.cutLine || !this.fish) return;
 
     this.canStopLine = false;
+    if (this.cutButton) {
+  this.cutButton.disableInteractive();
+}
 
     const bounds = this.fish.getBounds();
 
@@ -239,7 +344,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.fish.destroy();
 
-    const diff = Math.abs(percent - 30); // 🔥 TARGET 30
+    const diff = Math.abs(percent - 30); 
 
     let feedbackColor = "#ff4444";
     if (diff <= 2) {
@@ -247,11 +352,11 @@ export default class Tutorial extends Phaser.Scene {
     }
 
     const percentText = this.add.text(
-      x,
-      y - 250,
+      this.scale.width * 0.23,
+      this.scale.height * 0.85,
       `${percent}%`,
       {
-        fontSize: "50px",
+        fontSize: `${Math.max(32, this.scale.width * 0.03)}px`,
         fontFamily: "Roboto",
         color: feedbackColor,
         fontStyle: "bold",
@@ -259,7 +364,7 @@ export default class Tutorial extends Phaser.Scene {
         strokeThickness: 5
       }
     )
-      .setOrigin(0.5)
+      .setOrigin(0, 1)
       .setDepth(300);
 
     this.tweens.add({
@@ -276,7 +381,7 @@ export default class Tutorial extends Phaser.Scene {
       duration: 350
     });
 
-    this.time.delayedCall(700, () => {
+    this.time.delayedCall(2000, () => {
       leftHalf.destroy();
       rightHalf.destroy();
       percentText.destroy();
@@ -300,33 +405,47 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   finishTutorial() {
-  if (this.overlay) this.overlay.destroy();
-  if (this.boardImg) this.boardImg.destroy();
-  if (this.cutLine) this.cutLine.destroy();
-  if (this.infoText) this.infoText.destroy();
-
   this.canStopLine = false;
 
   const { width, height } = this.scale;
 
-  const fade = this.add.rectangle(
+  const endHintText = this.add.text(
     width / 2,
-    height / 2,
-    width,
-    height,
-    0x000000,
-    0
+    height * 0.15,
+    "Klara: Ich sehe du hast es geschafft den Laser zu bedienen. Schneide nun die anderen Fische von der ersten Box auch noch.",
+    {
+      fontSize: "28px",
+      fontFamily: "Roboto",
+      color: "#ffffff",
+      backgroundColor: "#000000dc",
+      padding: { x: 40, y: 25 },
+      align: "center",
+      wordWrap: { width: width * 0.6 }
+    }
   )
-    .setDepth(1000);
+    .setOrigin(0.5)
+    .setDepth(1000)
+    .setAlpha(0);
 
   this.tweens.add({
-    targets: fade,
+    targets: endHintText,
     alpha: 1,
-    duration: 800,
+    duration: 3000,
     ease: "Power2",
     onComplete: () => {
-      this.scene.start("Shop");
+
+      this.time.delayedCall(1500, () => {
+
+        this.cameras.main.fade(500, 0, 0, 0);
+
+        this.time.delayedCall(500, () => {
+          this.scene.start("Shop");
+        });
+
+      });
+
     }
   });
+
 }
 }

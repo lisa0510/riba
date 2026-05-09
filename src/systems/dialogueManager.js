@@ -17,15 +17,15 @@ export default class DialogueManager {
 
     this.dialogueBox = this.scene.add.rectangle(
       width / 2,
-      height / 1.3,
+    height * 0.15,
       width * 0.8,
       160,
       0x000000,
     ).setDepth(500);
 
     this.dialogueText = this.scene.add.text(
-      width / 2,
-      height / 1.3,
+        width / 2,
+        height * 0.15,
       "",
       {
         fontSize: "22px",
@@ -39,7 +39,7 @@ export default class DialogueManager {
 
     this.continueBtn = this.scene.add.text(
       width / 1.5,
-      height / 1.3,
+      height * 0.15,
       "...",
       {
         fontSize: "20px",

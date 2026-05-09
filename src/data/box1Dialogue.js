@@ -2,7 +2,6 @@ export const box1Data = {
 
   successDialogue: [
     { text: "Klara: Ey, die sehen super aus! Lukas wird sich freuen, er mag es ja nicht, wenn die Rationen zu klein ausfallen. Auch wenn es ihm eigentlich gut tuen würde ein paar Kilos ab zu nehmen, hehehe." },
-    { text: "Klara: Bin wieder da! Lukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können." }
   ],
 
   parasiteDialogue: [

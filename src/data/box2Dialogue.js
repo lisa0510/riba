@@ -1,37 +1,37 @@
 export const box2Data = {
   introDialogue: [
     {
-      text: "Assistent: Hier ist deine zweite Box!"
+      text: "Klara: Bin wieder da! Lukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können."
     }
   ],
 
   successDialogue: [
     {
-      text: "Assistent: Ich sehe es schon heute gibt es ein Festmahl für uns alle! Die von der Küche werden eine Menge zu tun haben."
+      text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freuhe einen Tag lang nicht in die Säure gehen zu müssen."
     },
   ],
 
   parasiteDialogue: [
     {
-      text: "Ich kann es nicht glauben wie viele Fehler du dir getraust zu machen, wärend die anderen darauf warten, dass wir gute Arbeit leisten."
+      text: "Klara: Vielen Dank, dass ist doch wieder eine gute Menge. Wenn uns bald auch die letzten Dosen aus gehen und wir uns komplett von Fisch ernähren. Sind wir alle noch froher um deine tägliche Leistung."
     },
     {
-      text: "Assistent: Mich kann es nicht glauben wie viele Fehler du dir getraust zu machen, wärend die anderen darauf warten, dass wir gute Arbeit leisten.",
+      text: "Mona: Nur so wenige sind essbar? Bald gehen uns die letzten Dosen aus und dann müssen wir uns komplett von saurem Fisch ernähren. Was machen wir dann wenn du genauso wenig leistest?",
       choices: [
         {
-          id: "pressure",
-          text: "Ich gebe mein bestes",
-          nextText: "Dein Bestes ist nicht gut genug. Menschen verhungern, du fauler Sack, gibt dir Mühe!"
+          id: "disagree2",
+          text: "Klara redet so nicht",
+          nextText: "Mona: Du schreist ja auch nicht jeden Gedanken den du hast in die Welt hinaus. Vertrau mir, dieser Gedanke ist noch der mildeste den ich über dich äussern kann."
         },
         {
-          id: "wiedergutmachen",
+          id: "agree2",
           text: "Was soll ich denn machen?",
-          nextText: "Einen verdammten Knopf drücken, ist das so schwer? Du musst ja sonst nichts machen."
+          nextText: "Mona: Mühe! Meinst du ich bin froh täglich in der Säure schwimmen zu müssen? Trotz allem gebe ich mein bestes, aber das ist dir wohl ein Fremdwort."
         }
       ],
       ignoreDialogue: [
         {
-          text: "Assistent: Mich zu ignorieren löst nicht deine Probleme."
+          text: "Mona: Mich zu ignorieren löst nicht deine Probleme!"
         }
       ]
     }
@@ -39,17 +39,17 @@ export const box2Data = {
 
 preEndingDialogue: {
   ending1: [
-    { text: "Das war alles für heute." },
+    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig bock auf unsere Kaffee Pause." },
     { text: "Endign 1 text hier..." }
   ],
 
   ending2: [
-    { text: "Das war alles für heute." },
+    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig bock auf unsere Kaffee Pause." },
     { text: "2" }
   ],
 
   ending3: [
-    { text: "Das war alles für heute." },
+    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig bock auf unsere Kaffee Pause." },
     { text: "3." }
   ],
 },

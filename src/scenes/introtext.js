@@ -58,7 +58,7 @@ export default class Intro extends Phaser.Scene {
     this.add.text(
       width * 0.78,
       height * 0.08,
-      "CREW ID: M.SCHWARZ\nSTATION: ADRIA-03\nDATE: 30.12.2126",
+      "CREW NAME: MONA\nSTATION: ADRIA-03\nDATE: 30.12.2126",
       {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
@@ -77,8 +77,8 @@ Die Versäuerung der Ozeane war ein Nebeneffekt, der unser Überleben erschwerte
 
 Wir mussten lernen, das Fischfleisch von den Kiemen und jenen Stellen zu trennen, die sich für Menschen als giftig erwiesen hatten.
 
-Dein Name ist Mona Schwarz. Ich bin eines der Crew-Mitglieder dieser Station und habe mich dazu entschlossen, die Zubereitung der Proben zu übernehmen.
-Jedoch weiss ich nicht wie lange meine Psyche diese Lebenssituation noch aushalten wird.`;
+Dein Name ist Mona, eine der Crew-Mitglieder und du hast dich dazu entschlossen die Aufgabe dieser Zubereitung der Fische zu übernehmen.
+Jedoch weisst du nicht wie lange deine Psyche diese Lebenssituation noch aushalten kann.`;
 
     const mainText = this.add.text(
       panelX,
