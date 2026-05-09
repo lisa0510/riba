@@ -58,7 +58,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutLine = null;
     this.cutLineDirection = 1;
-    this.cutLineSpeed = 6;
+    this.cutLineSpeed = 5;
     this.canStopLine = false;
     this.cutInputReady = false;
 
@@ -205,7 +205,7 @@ export default class Shop extends Phaser.Scene {
     ).setDepth(130);
 
     this.cutLineDirection = 1;
-    this.cutLineSpeed = 6;
+    this.cutLineSpeed = 5;
   }
 
   enableLineClick() {
@@ -566,7 +566,7 @@ export default class Shop extends Phaser.Scene {
     );
   }
 
-  startNextStep() {
+   startNextStep() {
     const { width, height } = this.scale;
 
     if (this.parasite) {
@@ -579,11 +579,7 @@ export default class Shop extends Phaser.Scene {
       this.coworker = null;
     }
 
-    this.coworker = this.add.image(
-      width / 2,
-      height / 1.8,
-      "customer"
-    )
+    this.coworker = this.add.image(width / 2, height / 1.8, "customer")
       .setScale(0.5)
       .setDepth(50);
 
@@ -594,12 +590,21 @@ export default class Shop extends Phaser.Scene {
       this.currentFish = 0;
       this.cutResults = [];
 
-      this.startCuttingPhase();
-    } else if (this.currentBoxId === "box2") {
+      this.dialogueManager.startDialogue(
+        this.currentBox.introDialogue,
+        () => {
+          this.startCuttingPhase();
+        }
+      );
+
+      return;
+    }
+
+    if (this.currentBoxId === "box2") {
       this.startFinalPath();
     }
   }
-
+  
   startFinalPath() {
     const ending = gameState.getEnding();
 
