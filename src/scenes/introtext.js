@@ -77,7 +77,7 @@ Die Versäuerung der Ozeane war ein Nebeneffekt, der unser Überleben erschwerte
 
 Wir mussten lernen, das Fischfleisch von den Kiemen und jenen Stellen zu trennen, die sich für Menschen als giftig erwiesen hatten.
 
-Mein Name ist Mona Schwarz. Ich bin eines der Crew-Mitglieder dieser Station und habe mich dazu entschlossen, die Zubereitung der Proben zu übernehmen.
+Dein Name ist Mona Schwarz. Ich bin eines der Crew-Mitglieder dieser Station und habe mich dazu entschlossen, die Zubereitung der Proben zu übernehmen.
 Jedoch weiss ich nicht wie lange meine Psyche diese Lebenssituation noch aushalten wird.`;
 
     const mainText = this.add.text(
