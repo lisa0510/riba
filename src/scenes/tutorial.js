@@ -224,7 +224,7 @@ startTutorialCutting() {
 
 
   // INFO TEXT FADE OUT
-  this.time.delayedCall(5000, () => {
+  this.time.delayedCall(500, () => {
     if (!this.infoText) return;
 
     this.tweens.add({
@@ -248,7 +248,7 @@ startTutorialCutting() {
     if (this.cutLine) this.cutLine.destroy();
 
     this.fish = this.add.image(
-      width / 1.5,
+      width / 1.6,
       height / 3,
       "fish"
     ).setDepth(102);
@@ -381,7 +381,7 @@ startTutorialCutting() {
       duration: 350
     });
 
-    this.time.delayedCall(2000, () => {
+    this.time.delayedCall(500, () => {
       leftHalf.destroy();
       rightHalf.destroy();
       percentText.destroy();
@@ -434,7 +434,7 @@ startTutorialCutting() {
     ease: "Power2",
     onComplete: () => {
 
-      this.time.delayedCall(1500, () => {
+      this.time.delayedCall(500, () => {
 
         this.cameras.main.fade(500, 0, 0, 0);
 

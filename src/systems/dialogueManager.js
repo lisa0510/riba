@@ -1,87 +1,97 @@
 export default class DialogueManager {
   constructor(scene) {
     this.scene = scene;
-    this.dialogueBox = null;
     this.dialogueText = null;
-    this.continueBtn = null;
+    this.dialogues = [];
+    this.currentIndex = 0;
+    this.onComplete = null;
+    this.keepOpen = false;
+    this.canClickNext = false;
   }
 
-  startDialogue(dialogues, onComplete = null) {
+  startDialogue(dialogues, onComplete = null, keepOpen = false) {
     this.clearDialogue();
 
     this.dialogues = dialogues;
     this.currentIndex = 0;
     this.onComplete = onComplete;
+    this.keepOpen = keepOpen;
+    this.canClickNext = false;
 
     const { width, height } = this.scene.scale;
 
-    this.dialogueBox = this.scene.add.rectangle(
-      width / 2,
-    height * 0.15,
-      width * 0.8,
-      160,
-      0x000000,
-    ).setDepth(500);
-
     this.dialogueText = this.scene.add.text(
-        width / 2,
-        height * 0.15,
+      width * 0.08,
+      height * 0.42,
       "",
       {
-        fontSize: "22px",
+        fontSize: "25px",
+        fontFamily: "Roboto",
         color: "#ffffff",
-        align: "center",
-        wordWrap: { width: width * 0.6 }
+        backgroundColor: "#000000e1",
+        padding: { x: 40, y: 25 },
+        align: "left",
+        wordWrap: { width: width * 0.2 }
       }
     )
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setDepth(501);
 
-    this.continueBtn = this.scene.add.text(
-      width / 1.5,
-      height * 0.15,
-      "...",
-      {
-        fontSize: "20px",
-        backgroundColor: "#202020",
-        color: "#fff",
-        padding: { x: 20, y: 10 }
-      }
-    )
-      .setOrigin(0.5)
-      .setInteractive({ useHandCursor: true })
-      .setDepth(502);
-
-    this.continueBtn.on("pointerdown", () => {
-      this.nextDialogue();
-    });
-
     this.nextDialogue();
+
+    this.scene.time.delayedCall(150, () => {
+      this.canClickNext = true;
+
+      this.scene.input.on(
+        "pointerdown",
+        this.nextDialogue,
+        this
+      );
+    });
   }
 
   nextDialogue() {
+    if (!this.dialogueText) return;
+
     if (this.currentIndex < this.dialogues.length) {
       this.dialogueText.setText(
         this.dialogues[this.currentIndex].text
       );
 
       this.currentIndex++;
-    } else {
-      this.clearDialogue();
+      return;
+    }
 
-      if (this.onComplete) {
-        this.onComplete();
-      }
+    if (!this.canClickNext) return;
+
+    this.scene.input.off(
+      "pointerdown",
+      this.nextDialogue,
+      this
+    );
+
+    if (!this.keepOpen) {
+      this.clearDialogue();
+    }
+
+    if (this.onComplete) {
+      this.onComplete();
     }
   }
 
   clearDialogue() {
-    if (this.dialogueBox) this.dialogueBox.destroy();
-    if (this.dialogueText) this.dialogueText.destroy();
-    if (this.continueBtn) this.continueBtn.destroy();
+    if (this.dialogueText) {
+      this.dialogueText.destroy();
+    }
 
-    this.dialogueBox = null;
+    this.scene.input.off(
+      "pointerdown",
+      this.nextDialogue,
+      this
+    );
+
     this.dialogueText = null;
-    this.continueBtn = null;
+    this.keepOpen = false;
+    this.canClickNext = false;
   }
 }
