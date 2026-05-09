@@ -7,43 +7,44 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish03/TalkingScreenBack.png");
-    this.load.image("shop_laser", "assets/Fish03/TalkingScreenFront1.png");
-    this.load.image("customer", "assets/Fish02/TaucherBoxOffen.png");
+    this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
+    this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
+    this.load.image("customer", "assets/Fish04/Normal_Klara.png");
     this.load.image("fish", "assets/Fish03/Fisch03.png");
     this.load.image("board", "assets/Fish02/Schnittbrett.png");
   }
 
   create() {
-    const { width, height } = this.scale;
-    const bg = this.add.image(width / 2, height / 2, "shop_bg").setDepth(-12);
-    const scaleX = width / bg.width;
-    const scaleY = height / bg.height;
-    const scale = Math.max(scaleX, scaleY); 
-    bg.setScale(scale);
+  const { width, height } = this.scale;
 
-    const bglaser = this.add.image(width / 2, height / 1.5, "shop_laser").setDepth(-10);
-    bglaser.setScale(1.2);
-   
+  this.add.image(width / 2, height / 2, "shop_bg")
+    .setDisplaySize(width, height)
+    .setDepth(-12);
 
-    this.coworker = this.add.image(
-      width / 2,
-      height / 1.8,
-      "customer"
-    ).setScale(0.8).setDepth(-11);
+  this.add.image(width / 2, height / 2, "shop_laser")
+    .setDisplaySize(width, height)
+    .setDepth(-10);
 
-    this.dialogueIndex = 0;
-    this.cuts = [];
-    this.targetCM = 30;
-    this.totalFish = 4;
-    this.currentFish = 0;
+  this.coworker = this.add.image(
+    width / 2,
+    height / 1.8,
+    "customer"
+  )
+    .setScale(0.5)
+    .setDepth(-11);
 
-    this.cutLine = null;
-    this.cutLineDirection = 1;
-    this.cutLineSpeed = 4;
+  this.dialogueIndex = 0;
+  this.cuts = [];
+  this.targetCM = 30;
+  this.totalFish = 1;
+  this.currentFish = 0;
 
-    this.setupMainDialogue();
-  }
+  this.cutLine = null;
+  this.cutLineDirection = 1;
+  this.cutLineSpeed = 2;
+
+  this.setupMainDialogue();
+}
 
   setupMainDialogue() {
     const { width, height } = this.scale;
@@ -167,7 +168,7 @@ export default class Tutorial extends Phaser.Scene {
     ).setDepth(130);
 
     this.cutLineDirection = 1;
-    this.cutLineSpeed = 10;
+    this.cutLineSpeed = 4;
     this.canStopLine = false;
   }
 
@@ -299,40 +300,33 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   finishTutorial() {
-    if (this.overlay) this.overlay.destroy();
-    if (this.boardImg) this.boardImg.destroy();
-    if (this.cutLine) this.cutLine.destroy();
-    if (this.infoText) this.infoText.destroy(); // cleanup
+  if (this.overlay) this.overlay.destroy();
+  if (this.boardImg) this.boardImg.destroy();
+  if (this.cutLine) this.cutLine.destroy();
+  if (this.infoText) this.infoText.destroy();
 
-    const averagePercent =
-      this.cuts.reduce((a, b) => a + b, 0) / this.cuts.length;
+  this.canStopLine = false;
 
-    const diff = Math.abs(averagePercent - this.targetCM);
+  const { width, height } = this.scale;
 
-    const finalMessage =
-      dialogues.tutorial.feedback[
-        diff <= 2 ? "perfect" : diff <= 15 ? "okay" : "bad"
-      ];
+  const fade = this.add.rectangle(
+    width / 2,
+    height / 2,
+    width,
+    height,
+    0x000000,
+    0
+  )
+    .setDepth(1000);
 
-    this.add.text(
-      this.scale.width / 2,
-      this.scale.height / 1.3,
-      finalMessage,
-      {
-        fontSize: "25px",
-        fontFamily: "Roboto",
-        color: "#ffffff",
-        backgroundColor: "#000000",
-        padding: { x: 40, y: 25 },
-        align: "center",
-        wordWrap: { width: this.scale.width * 0.6 }
-      }
-    )
-      .setOrigin(0.5)
-      .setDepth(200);
-
-    this.input.once("pointerdown", () => {
+  this.tweens.add({
+    targets: fade,
+    alpha: 1,
+    duration: 800,
+    ease: "Power2",
+    onComplete: () => {
       this.scene.start("Shop");
-    });
-  }
+    }
+  });
+}
 }

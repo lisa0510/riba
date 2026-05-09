@@ -158,7 +158,7 @@ export default class Menu extends Phaser.Scene {
 
     // --- NEBENEINANDER: GAME DEV & GAME DESIGNER ---
     const leftColumn = this.add.text(-width * 0.15, -height * 0.13, 
-      "Game Developer\nLüsa", {
+      "Game Developer\nLisa Landolt", {
         fontSize: `${Math.max(20, height * 0.025)}px`,
         fill: "#ffffff",
         fontFamily: '"Roboto"',
@@ -167,7 +167,7 @@ export default class Menu extends Phaser.Scene {
       }).setOrigin(0.5);
 
     const rightColumn = this.add.text(width * 0.15, -height * 0.13, 
-      "Game Art Designer\nJenny", {
+      "Game Art Designer\nJennifer Beeler", {
         fontSize: `${Math.max(20, height * 0.025)}px`,
         fill: "#ffffff",
         fontFamily: '"Roboto"',
@@ -178,16 +178,17 @@ export default class Menu extends Phaser.Scene {
     // --- DARUNTER: RESTLICHE CREDITS ---
     const bottomCredits = this.add.text(0, height * 0.22, 
       `Synchronsprecherinnen
-Sara als Mona Schwarz
-Saskia als Klara
+Sara Noaman als Narratorin
+? als Klara 
+Saskia Helg als Mona und Fisch
 
 Game Soundtrack
-Jenny Kolleg?
+Till Bierich
 
 Mentoren
-Benji O. Technische Betreuung
-Ruth B.  Game Art Betreuung
-Lea C.   Game Design Betreuung
+Benji Osner Technische Betreuung
+Ruth Bosch  Art, Story und Game Design
+Léa Coquoz  Art, Story und Game Design
 `, {
         fontSize: `${Math.max(22, height * 0.02)}px`,
         fill: "#ffffff",

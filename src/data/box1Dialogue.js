@@ -1,31 +1,26 @@
 export const box1Data = {
-  introDialogue: [
-      {text: "Assistent: Da bin ich wieder. Heute Morgen konnten wir genug Fisch fangen, um zwei Boxen zu füllen. Hier ist die erste Box.",},
-      { text:"Assistent: Hoffen wir, dass unsere Arbeit genauso gut wird, wie gestern. Sonst muss ich früher, als mir geheuer ist wieder in der Säure schwimmen gehen."}
-    
-  ],
 
   successDialogue: [
-    { text: "Klara: Ey, die Fische sehen super aus! Wenn das so weiter geht, haben wir genug Rationen für drei Tage." },
-    { text: "Klara: Hier für dich, die zweite Box!" }
+    { text: "Klara: Ey, die sehen super aus! Lukas wird sich freuen, er mag es ja nicht, wenn die Rationen zu klein ausfallen. Auch wenn es ihm eigentlich gut tuen würde ein paar Kilos ab zu nehmen, hehehe." },
+    { text: "Klara: Bin wieder da! Lukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können." }
   ],
 
   parasiteDialogue: [
     {
-      text: "Wow, ich bin ganz ehrlich, wenn ich dir so zu sehe bin ich immer wieder aufs neue überrascht wie gut die die Fische nur mit einem Knopfdruck schneidest."
+      text: "Klara: Danke, lass mich die in unser Lager bringen. Hoffen wir bei der nächsten Box können wir mehr behalten. Wenn die Rationen zu klein ausfallen, wird Laura ja immer so gestresst..."
     },
     {
-      text: "Klara: Wenn ich dir so zu sehe bin ich immer wieder aufs neue überrascht wie schlecht du die Fische nur mit einem Knopfdruck schneidest.",
+      text: "Klara: Du weisst genau wie grosse Angst Laura davor hat hier zu verhungern! Sie macht nichts anderes als sich in ihre Arbeit zu vertiefen und zu schlafen, um nicht an ihren Tot zu denken. Wieso schaffst du es nicht gross genuge Stücke zu schneiden, damit es ihr wenigstesn beim Essen gut geht?",
       choices: [
         {
-          id: "negative1",
-          text: "Klara: Einen verdammten Knopf drücken, ist das so schwer? Du musst ja sonst nichts machen.",
-          nextText: "Assistent: Wie dumm kannst du sein? Es sind jetzt schon 7 Monate her, seit wir hier angekommen sind und du hast immer noch nicht gelernt, deinen Job richtig zu machen."
+          id: "disagree1",
+          text: "Das Bedienfeld geht halt nicht.",
+          nextText: "Klara: Oh jetzt gibt du ihr noch die Schuld dafür? Sie macht hier alles, Kochen, Putzen, Reparieren und du kannst nicht mal einen dummen Knopf bedienen."
         },
         {
-          id: "disagree1",
-          text: "Klara würde nie so etwas sagen",
-          nextText: "Klara: Du schreist ja auch nicht jeden Gedanken den du hast in die Welt hinaus. Vertrau mir, dieser Gedanke ist noch der mildeste den ich über dich äussern kann."
+          id: "agree1",
+          text: "Ich kann es halt nicht besser..",
+          nextText: "Klara: Faule Ausrede, dann werde besser! Immerhin hast du dich für diese Aufgabe gemeldet. Ich wünschte ich müsste nur einen Knopf bedienen! Du weisst wie sehr es mich grausst in der Säure schwimmen zu gehen.."
         }
       ],
 

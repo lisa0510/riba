@@ -13,19 +13,29 @@ export default class Shop extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish03/TalkingScreenBack.png");
-    this.load.image("customer", "assets/Fish02/TaucherBoxOffen.png");
-    this.load.image("fish", "assets/Fish03/Fisch03.png");
-    this.load.image("board", "assets/Fish02/Schnittbrett.png");
     this.load.image("parasite", "assets/Fish02/parasite.png");
     this.load.image("miniwal", "assets/Fish02/MiniWal.png");
   }
 
   create() {
-    const { width, height } = this.scale;
+  const { width, height } = this.scale;
 
-    this.add.image(width / 2, height / 2, "shop_bg").setDisplaySize(width, height);
-    this.coworker = this.add.image(width / 2, height / 1.8, "customer").setScale(0.5);
+  this.add.image(width / 2, height / 2, "shop_bg")
+    .setDisplaySize(width, height)
+    .setDepth(-12);
+
+  this.add.image(width / 2, height / 2, "shop_laser")
+    .setDisplaySize(width, height)
+    .setDepth(-10);
+
+  this.coworker = this.add.image(
+    width / 2,
+    height / 1.8,
+    "customer"
+  )
+    .setScale(0.5)
+    .setDepth(-11);
+
 
     this.dialogueManager = new DialogueManager(this);
     this.boxManager = new BoxManager(this);
@@ -49,7 +59,9 @@ export default class Shop extends Phaser.Scene {
     });
 
     gameState.reset();
-    this.boxManager.startBox("box1", box1Data);
+    this.currentBoxId = "box1";
+    this.currentBox = box1Data;
+    this.startCuttingPhase();
   }
 
   update() {
