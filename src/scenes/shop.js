@@ -15,14 +15,14 @@ export default class Shop extends Phaser.Scene {
   preload() {
     this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
     this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
-    this.load.image("customer", "assets/Fish04/Normal_Klara.png");
+    this.load.image("customer", "assets/Fish04/damagedNormal_Klara.png");
 
     this.load.image("fish", "assets/Fish04/First_Fisch.png");
     this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish04/Red_Button.png");
 
-    this.load.image("parasite", "assets/Fish02/parasite.png");
+    this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klara.png");
     this.load.image("miniwal", "assets/Fish02/MiniWal.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
@@ -57,12 +57,18 @@ export default class Shop extends Phaser.Scene {
 
     this.shopLaser.setScale(laserScale * 0.8);
 
+    this.coworkerScale = Phaser.Math.Clamp(
+    height * 0.0011,
+    0.6,
+    0.7
+    );
+
     this.coworker = this.add.image(
       width / 2,
       height / 1.8,
       "customer"
     )
-      .setScale(0.5)
+      .setScale(this.coworkerScale)
       .setDepth(-11);
 
     this.dialogueManager = new DialogueManager(this);
@@ -463,7 +469,7 @@ showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
     const btn = this.add.text(xPos, yPos, choice.text, {
       fontSize: choiceFontSize,
       fontFamily: "Roboto",
-      backgroundColor: "#1a1a1a",
+      backgroundColor: "#000000cc",
       color: "#ffffff",
       padding: {
         x: isSmall ? 14 : 18,
@@ -475,14 +481,6 @@ showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
       .setOrigin(0, 0.5)
       .setInteractive({ useHandCursor: true })
       .setDepth(600);
-
-    btn.on("pointerover", () => {
-      btn.setStyle({ backgroundColor: "#2a2a2a" });
-    });
-
-    btn.on("pointerout", () => {
-      btn.setStyle({ backgroundColor: "#1a1a1a" });
-    });
 
     btn.on("pointerdown", () => {
       if (choiceMade) return;
@@ -525,8 +523,8 @@ showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
         height / 2,
         "parasite"
       )
-        .setDepth(400)
-        .setScale(1.5);
+        .setDepth(-11)
+        .setScale(this.coworkerScale);
     const parasiteIntro = this.currentBox.parasiteDialogue[0];
     const parasiteNode = this.currentBox.parasiteDialogue[1];
 
@@ -588,7 +586,7 @@ showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
                   0,
                   "miniwal"
                 )
-                  .setScale(0.4)
+                  .setScale(this.coworkerScale)
                   .setDepth(-11)
                   .setOrigin(1, 0);
 
@@ -623,7 +621,7 @@ showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
     }
 
     this.coworker = this.add.image(width / 2, height / 1.8, "customer")
-      .setScale(0.5)
+      .setScale(this.coworkerScale)
       .setDepth(-11);
 
     if (this.currentBoxId === "box1") {

@@ -4,6 +4,9 @@ export default class Intro extends Phaser.Scene {
   constructor() {
     super("Intro");
   }
+  preload() {
+  this.load.audio("sara", "assets/audio/narration/sara.mp3");
+  }
 
   create() {
     const { width, height } = this.scale;
@@ -20,6 +23,11 @@ export default class Intro extends Phaser.Scene {
     const panelY = height * 0.5;
 
     this.add.rectangle(width / 2, height / 2, width, height, 0x111816);
+    this.introVoice = this.sound.add("sara", {
+        volume: 1
+      });
+
+      this.introVoice.play();
 
 
     // inner monitor
@@ -71,14 +79,13 @@ export default class Intro extends Phaser.Scene {
       this.add.rectangle(width / 2, y, width, 1, 0x3cff9b, 0.035);
     }
 
-    const introText = `Als die Sonne anfing, die Erdoberfläche zu verbrennen, befanden wir uns auf unserer Arbeitsstation in der Adria.
+    const introText = `Als die Sonne begann, die Erdoberfläche zu verbrennen, befanden wir uns auf unserer Arbeitsstation in der Adria.
 
-Die Versäuerung der Ozeane war ein Nebeneffekt, der unser Überleben erschwerte. Die Organismen passten sich an ihr neues Umfeld an – doch für uns wurde Nahrung knapp.
+Die Versäuerung der Ozeane war ein Nebeneffekt, der unser Überleben stark erschwerte, da sich die essbaren Lebewesen auf unbekannte Weise veränderten. 
+So wurde die Nahrung knapp und wir mussten lernen, das Fischfleisch von den Kiemen und jenen Stellen zu befreien, die sich für Menschen als giftig erwiesen hatten.
 
-Wir mussten lernen, das Fischfleisch von den Kiemen und jenen Stellen zu trennen, die sich für Menschen als giftig erwiesen hatten.
-
-Dein Name ist Mona, eine der Crew-Mitglieder und du hast dich dazu entschlossen die Aufgabe dieser Zubereitung der Fische zu übernehmen.
-Jedoch weisst du nicht wie lange deine Psyche diese Lebenssituation noch aushalten kann.`;
+Dein Name ist Mona. Du bist eins der Crew-Mitglieder und hast dich dazu entschlossen die Aufgabe dieser Zubereitung der Fische zu übernehmen.
+Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushalten kann.`;
 
     const mainText = this.add.text(
       panelX,
@@ -98,7 +105,7 @@ Jedoch weisst du nicht wie lange deine Psyche diese Lebenssituation noch aushalt
     let isFinished = false;
 
     const typeEvent = this.time.addEvent({
-      delay: isSmallScreen ? 8 : 18,
+      delay: isSmallScreen ? 25 : 40,
       loop: true,
       callback: () => {
         mainText.setText(introText.slice(0, index));
@@ -134,6 +141,10 @@ Jedoch weisst du nicht wie lange deine Psyche diese Lebenssituation noch aushalt
     });
 
     const goNext = () => {
+      if (this.introVoice && this.introVoice.isPlaying) {
+        this.introVoice.stop();
+      }
+
       if (!isFinished) {
         typeEvent.remove(false);
         mainText.setText(introText);
