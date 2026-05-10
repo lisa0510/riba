@@ -135,46 +135,43 @@ class GameState {
     (cut) => !this.isPerfectCut(cut)
   ).length;
 
-  const negativePercent =
-    this.getNegativeSelfTalkPercentage();
+  const box1WrongCuts = this.boxResults.box1.filter(
+    (cut) => !this.isPerfectCut(cut)
+  ).length;
 
-  const agreedWithBadThoughts =
-    negativePercent >= 50;
+  const box2WrongCuts = this.boxResults.box2.filter(
+    (cut) => !this.isPerfectCut(cut)
+  ).length;
 
-  // SECRET PERFECT ENDING
+  const negativePercent = this.getNegativeSelfTalkPercentage();
+  const agreedWithBadThoughts = negativePercent >= 50;
+
+  const box1Bad = box1WrongCuts >= 2;
+  const box2Bad = box2WrongCuts >= 2;
+
+  // Ending 5: every fish perfectly cut
   if (wrongCuts === 0) {
     return "endingPerfect";
   }
 
-  // FIRST BOX PERFORMANCE
-  const box1WrongCuts =
-    this.boxResults.box1.filter(
-      (cut) => !this.isPerfectCut(cut)
-    ).length;
-
-  const firstBoxGood =
-    box1WrongCuts <= 1;
-
-  // MANY mistakes + AGREED
+  // Ending 4: agreed with bad thoughts
   if (agreedWithBadThoughts) {
     return "ending4";
   }
 
-  // MANY mistakes + DISAGREED
-  if (wrongCuts >= 4) {
+  // Ending 1: both boxes bad + disagreed
+  if (box1Bad && box2Bad && !agreedWithBadThoughts) {
     return "ending1";
   }
 
-  // GOOD first box + DISAGREED
-  if (firstBoxGood) {
+  // Ending 2: Box 1 good + disagreed
+  if (!box1Bad && !agreedWithBadThoughts) {
     return "ending2";
   }
 
-  // BAD first box + DISAGREED
+  // Ending 3: Box 1 bad, but not both boxes bad + disagreed
   return "ending3";
 }
-
-
   getEndingStats() {
     return {
       rightPercent: this.getRightCutPercentage(),

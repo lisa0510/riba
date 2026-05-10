@@ -9,7 +9,7 @@ export default class Tutorial extends Phaser.Scene {
   preload() {
     this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
     this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
-    this.load.image("customer", "assets/Fish04/Normal_Klara.png");
+    this.load.image("customer", "assets/Fish04/damagedNormal_Klara.png");
     this.load.image("fish", "assets/Fish04/First_Fisch.png");
     this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
