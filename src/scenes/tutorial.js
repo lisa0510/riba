@@ -224,13 +224,13 @@ startTutorialCutting() {
 
 
   // INFO TEXT FADE OUT
-  this.time.delayedCall(500, () => {
+  this.time.delayedCall(200, () => {
     if (!this.infoText) return;
 
     this.tweens.add({
       targets: this.infoText,
       alpha: 0,
-      duration: 500
+      duration: 200
     });
   });
 

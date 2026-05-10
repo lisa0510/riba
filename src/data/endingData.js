@@ -12,5 +12,9 @@ export const endingData = {
   ending3: {
     image: "ending3",
     text: "Ending 3 Text hier..."
+  },
+  ending4: {
+    image: "ending4",
+    text: "4"
   }
 };

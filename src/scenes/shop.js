@@ -31,13 +31,31 @@ export default class Shop extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
 
-    this.add.image(width / 2, height / 2, "shop_bg")
-      .setDisplaySize(width, height)
-      .setDepth(-12);
+        this.shopBg = this.add.image(
+      width / 2,
+      height / 2,
+      "shop_bg"
+    ).setDepth(-12);
 
-    this.add.image(width / 2, height / 2, "shop_laser")
-      .setDisplaySize(width, height)
-      .setDepth(-10);
+    const bgScale = Math.min(
+      width / this.shopBg.width,
+      height / this.shopBg.height
+    );
+
+    this.shopBg.setScale(bgScale);
+
+    this.shopLaser = this.add.image(
+      width / 2,
+      height / 1.5,
+      "shop_laser"
+    ).setDepth(-10);
+
+    const laserScale = Math.min(
+      width / this.shopLaser.width,
+      height / this.shopLaser.height
+    );
+
+    this.shopLaser.setScale(laserScale * 0.8);
 
     this.coworker = this.add.image(
       width / 2,
@@ -348,73 +366,83 @@ export default class Shop extends Phaser.Scene {
     }
   }
 
-  showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
-    const { width, height } = this.scale;
+showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
+  const { width, height } = this.scale;
 
-    const baseX = width * 0.08;
-    const baseY = height * 0.68;
-    const spacingY = 75;
+  const isSmall = width < 1200 || height < 750;
 
-    let choiceMade = false;
-    let timeoutEvent = null;
-    let timerEvent = null;
-    let timerText = null;
-    let remainingSeconds = timeoutMs ? Math.ceil(timeoutMs / 1000) : 0;
+  const baseX = width * 0.08;
+  const dialogueY = height * 0.42;
 
-    const clearChoices = () => {
-      this.choiceButtons.forEach((button) => button.destroy());
-      this.choiceButtons = [];
+  const choiceWidth = Phaser.Math.Clamp(width * 0.25, 220, 420);
+  const choiceFontSize = isSmall ? "17px" : "20px";
+  const timerFontSize = isSmall ? "22px" : "28px";
 
-      if (timeoutEvent) {
-        timeoutEvent.remove(false);
-        timeoutEvent = null;
+  const baseY = dialogueY + Phaser.Math.Clamp(height * 0.24, 150, 250);
+  const spacingY = Phaser.Math.Clamp(height * 0.085, 54, 75);
+
+  const timerX = baseX + choiceWidth - Phaser.Math.Clamp(width * 0.03, 20, 20);
+  const timerY = baseY;
+
+  let choiceMade = false;
+  let timeoutEvent = null;
+  let timerEvent = null;
+  let timerText = null;
+  let remainingSeconds = timeoutMs ? Math.ceil(timeoutMs / 1000) : 0;
+
+  const clearChoices = () => {
+    this.choiceButtons.forEach((button) => button.destroy());
+    this.choiceButtons = [];
+
+    if (timeoutEvent) {
+      timeoutEvent.remove(false);
+      timeoutEvent = null;
+    }
+
+    if (timerEvent) {
+      timerEvent.remove(false);
+      timerEvent = null;
+    }
+
+    if (timerText) {
+      timerText.destroy();
+      timerText = null;
+    }
+  };
+
+  if (timeoutCallback && timeoutMs) {
+    timerText = this.add.text(
+      timerX,
+      timerY,
+      `${remainingSeconds}`,
+      {
+        fontSize: timerFontSize,
+        fontFamily: "Roboto",
+        color: "#ffffff",
+        backgroundColor: "#000000cc",
+        padding: { x: 18, y: 10 }
       }
+    )
+      .setOrigin(0, 0.5)
+      .setDepth(650);
 
-      if (timerEvent) {
-        timerEvent.remove(false);
-        timerEvent = null;
-      }
+    timerEvent = this.time.addEvent({
+      delay: 1000,
+      loop: true,
+      callback: () => {
+        remainingSeconds--;
 
-      if (timerText) {
-        timerText.destroy();
-        timerText = null;
-      }
-
-    };
-
-    if (timeoutCallback && timeoutMs) {
-      timerText = this.add.text(
-        baseX,
-        height * 0.72,
-        `${remainingSeconds}`,
-        {
-          fontSize: "28px",
-          fontFamily: "Roboto",
-          color: "#ffffff",
-          backgroundColor: "#000000cc",
-          padding: { x: 18, y: 10 }
+        if (timerText) {
+          timerText.setText(`${remainingSeconds}`);
         }
-      )
-        .setOrigin(0, 0.5)
-        .setDepth(650);
 
-      timerEvent = this.time.addEvent({
-        delay: 1000,
-        loop: true,
-        callback: () => {
-          remainingSeconds--;
-
-          if (timerText) {
-            timerText.setText(`${remainingSeconds}`);
-          }
-
-          if (remainingSeconds <= 0 && timerEvent) {
-            timerEvent.remove(false);
-          }
+        if (remainingSeconds <= 0 && timerEvent) {
+          timerEvent.remove(false);
         }
-      });
+      }
+    });
 
-      timeoutEvent = this.time.delayedCall(timeoutMs, () => {
+    timeoutEvent = this.time.delayedCall(timeoutMs, () => {
       if (choiceMade) return;
 
       choiceMade = true;
@@ -426,64 +454,79 @@ export default class Shop extends Phaser.Scene {
 
       timeoutCallback();
     });
-    }
-
-    choices.forEach((choice, index) => {
-      const xPos = baseX;
-      const yPos = baseY + index * spacingY;
-
-      const btn = this.add.text(xPos, yPos, choice.text, {
-        fontSize: "20px",
-        fontFamily: "Roboto",
-        backgroundColor: "#1a1a1a",
-        color: "#ffffff",
-        padding: { x: 18, y: 12 },
-        align: "left",
-        wordWrap: { width: width * 0.25 }
-      })
-        .setOrigin(0, 0.5)
-        .setInteractive({ useHandCursor: true })
-        .setDepth(600);
-
-      btn.on("pointerdown", () => {
-        if (choiceMade) return;
-
-        choiceMade = true;
-        clearChoices();
-
-        if (this.dialogueManager) {
-          this.dialogueManager.clearDialogue();
-        }
-
-        callback(choice);
-      });
-
-      this.choiceButtons.push(btn);
-
-      btn.setAlpha(0);
-
-      this.tweens.add({
-        targets: btn,
-        alpha: 1,
-        duration: 500,
-        ease: "Power2"
-      });
-    });
   }
 
+  choices.forEach((choice, index) => {
+    const xPos = baseX;
+    const yPos = baseY + index * spacingY;
+
+    const btn = this.add.text(xPos, yPos, choice.text, {
+      fontSize: choiceFontSize,
+      fontFamily: "Roboto",
+      backgroundColor: "#1a1a1a",
+      color: "#ffffff",
+      padding: {
+        x: isSmall ? 14 : 18,
+        y: isSmall ? 9 : 12
+      },
+      align: "left",
+      wordWrap: { width: choiceWidth }
+    })
+      .setOrigin(0, 0.5)
+      .setInteractive({ useHandCursor: true })
+      .setDepth(600);
+
+    btn.on("pointerover", () => {
+      btn.setStyle({ backgroundColor: "#2a2a2a" });
+    });
+
+    btn.on("pointerout", () => {
+      btn.setStyle({ backgroundColor: "#1a1a1a" });
+    });
+
+    btn.on("pointerdown", () => {
+      if (choiceMade) return;
+
+      choiceMade = true;
+      clearChoices();
+
+      if (this.dialogueManager) {
+        this.dialogueManager.clearDialogue();
+      }
+
+      callback(choice);
+    });
+
+    this.choiceButtons.push(btn);
+
+    btn.setAlpha(0);
+
+    this.tweens.add({
+      targets: btn,
+      alpha: 1,
+      duration: 500,
+      ease: "Power2"
+    });
+  });
+}
+
   startParasiteEncounter() {
+  
     const { width, height } = this.scale;
 
-    gameState.setParasiteInteraction(this.currentBoxId, true);
+      if (this.coworker) {
+        this.coworker.setVisible(false);
+      }
 
-    this.parasite = this.add.image(
-      width / 2,
-      height / 2,
-      "parasite"
-    )
-      .setDepth(400)
-      .setScale(1.5);
+      gameState.setParasiteInteraction(this.currentBoxId, true);
 
+      this.parasite = this.add.image(
+        width / 2,
+        height / 2,
+        "parasite"
+      )
+        .setDepth(400)
+        .setScale(1.5);
     const parasiteIntro = this.currentBox.parasiteDialogue[0];
     const parasiteNode = this.currentBox.parasiteDialogue[1];
 
@@ -546,7 +589,7 @@ export default class Shop extends Phaser.Scene {
                   "miniwal"
                 )
                   .setScale(0.4)
-                  .setDepth(50)
+                  .setDepth(-11)
                   .setOrigin(1, 0);
 
                 this.dialogueManager.startDialogue(
@@ -581,7 +624,7 @@ export default class Shop extends Phaser.Scene {
 
     this.coworker = this.add.image(width / 2, height / 1.8, "customer")
       .setScale(0.5)
-      .setDepth(50);
+      .setDepth(-11);
 
     if (this.currentBoxId === "box1") {
       this.currentBoxId = "box2";
@@ -604,7 +647,7 @@ export default class Shop extends Phaser.Scene {
       this.startFinalPath();
     }
   }
-  
+
   startFinalPath() {
     const ending = gameState.getEnding();
 
