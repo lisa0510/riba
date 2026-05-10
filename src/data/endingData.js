@@ -1,20 +1,26 @@
 export const endingData = {
   ending1: {
     image: "ending1",
-    text: "Ending 1 Text hier..."
+    text: "Du hast dich gegen deine bösen Stimmen gewehrt"
   },
 
   ending2: {
     image: "ending2",
-    text: "Ending 2 Text hier..."
+    text: "ending 2 text hier..."
   },
 
   ending3: {
     image: "ending3",
-    text: "Ending 3 Text hier..."
+    text: "3"
   },
+
   ending4: {
     image: "ending4",
-    text: "4"
+    text: "Du lernst langsam, dass es besser ist seine bösen Gedanken aus seinem Leben zu schneiden."
+  },
+
+  endingPerfect: {
+    image: "endingPerfect",
+    text: "SECRET ENDING"
   }
 };

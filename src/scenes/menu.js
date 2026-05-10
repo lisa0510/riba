@@ -138,7 +138,7 @@ export default class Menu extends Phaser.Scene {
     const { width, height } = this.scale;
     if (this.creditsOverlay) return;
 
-    this.creditsOverlay = this.add.rectangle(0, 0, width, height, 0x000000, 0.84)
+    this.creditsOverlay = this.add.rectangle(0, 0, width, height, 0x000000, 0.94)
       .setOrigin(0).setDepth(200);
 
     this.creditsContainer = this.add.container(width / 2, height / 2).setDepth(201);

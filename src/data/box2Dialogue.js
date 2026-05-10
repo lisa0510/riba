@@ -7,7 +7,7 @@ export const box2Data = {
 
   successDialogue: [
     {
-      text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freuhe einen Tag lang nicht in die Säure gehen zu müssen."
+      text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freue einen Tag lang nicht in der Säure schwimmen zu müssen."
     },
   ],
 
@@ -24,7 +24,7 @@ export const box2Data = {
           nextText: "Mona: Du schreist ja auch nicht jeden Gedanken den du hast in die Welt hinaus. Vertrau mir, dieser Gedanke ist noch der mildeste den ich über dich äussern kann."
         },
         {
-          id: "agree2",
+          id: "negative2",
           text: "Was soll ich denn machen?",
           nextText: "Mona: Mühe! Meinst du ich bin froh täglich in der Säure schwimmen zu müssen? Trotz allem gebe ich mein bestes, aber das ist dir wohl ein Fremdwort."
         }
@@ -52,28 +52,40 @@ preEndingDialogue: {
     { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig bock auf unsere Kaffee Pause." },
     { text: "3." }
   ],
+
+  ending4: [
+    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig bock auf unsere Kaffee Pause." },
+    { text: "4." }
+  ],
+
+  endingPerfect: [
+    { text: "SECRET ENDING" }
+  ]
 },
 
 finalDialogues: {
   ending1: [
     { text: "Hey ist alles okay? Du siehst so bleich aus, du solltest dich für heute ausruhen." },
-    { text: "Ich weiss, nicht viele deiner Fische konnten wir für den Verzehr behalten, aber mach dir nichts draus.  Dann muss ich halt wieder früher in die Säure, das gehört nun mal zu unserem jetzigen Leben." }
+    { text: "Ich weiss, nicht viele deiner Fische konnten wir für den Verzehr behalten, aber mach dir nichts draus. Dann muss ich halt wieder früher in die Säure, das gehört nun mal zu unserem jetzigen Leben." }
   ],
 
   ending2: [
-    { text: "Unglaublich, du hast du viele Fische für uns als Nahrung behalten können! Team MoKla, hat es wieder super hinbekommen!" },
-    { text: "Keine Sorge, ich erwarte nicht dass dies jetzt zur Normalität wird haha " }
+    { text: "Unglaublich, du hast so viele Fische für uns als Nahrung behalten können! Team MoKla hat es wieder super hinbekommen!" },
+    { text: "Keine Sorge, ich erwarte nicht, dass dies jetzt zur Normalität wird haha." }
   ],
 
   ending3: [
-    { text: "Von all den Menschen die es geschafft haben sich unter Wasser zu retten, musste ich mit der unnützen Person in ein Team gesteckt werden." }
+    { text: "Von all den Menschen, die es geschafft haben, sich unter Wasser zu retten, musste ich mit der unnützen Person in ein Team gesteckt werden." }
   ],
 
-  endingNeutral: [
-    { text: "Das Ergebnis ist unklar." },
-    { text: "Nicht gut. Nicht schlecht." },
-    { text: "Nur ein weiterer Tag unter Wasser." }
+  ending4: [
+    { text: "4" },
+    { text: "4." }
+  ],
+
+  endingPerfect: [
+    { text: "SECRET ENDING" },
+    { text: "Mona: Kein einziger Fehler. Für einen kurzen Moment fühlt es sich fast so an, als könnten wir das hier wirklich schaffen." }
   ]
 }
-
 };

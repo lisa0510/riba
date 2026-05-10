@@ -44,7 +44,7 @@ class GameState {
   }
 
   isPerfectCut(cut) {
-    return cut >= this.targetCut - 5 && cut <= this.targetCut + 5;
+    return cut >= this.targetCut - 10 && cut <= this.targetCut + 10;
   }
 
   isPerfectBox(box) {
@@ -60,6 +60,14 @@ class GameState {
       ...this.boxResults.box1,
       ...this.boxResults.box2
     ];
+  }
+
+  hasPerfectRun() {
+    const allCuts = this.getAllCuts();
+
+    if (!allCuts.length) return false;
+
+    return allCuts.every((cut) => this.isPerfectCut(cut));
   }
 
   getRightCutPercentage() {
@@ -85,6 +93,14 @@ class GameState {
 
     return (wrongCuts / allCuts.length) * 100;
   }
+
+  getWrongCutCount() {
+  const allCuts = this.getAllCuts();
+
+  return allCuts.filter((cut) =>
+    !this.isPerfectCut(cut)
+  ).length;
+}
 
   getAllChoices() {
     return [
@@ -112,25 +128,52 @@ class GameState {
     return (negativeCount / allChoices.length) * 100;
   }
 
-  getEnding() {
-    const rightPercent = this.getRightCutPercentage();
-    const wrongPercent = this.getWrongCutPercentage();
-    const negativePercent = this.getNegativeSelfTalkPercentage();
+ getEnding() {
+  const allCuts = this.getAllCuts();
 
-    if (wrongPercent > 51 && negativePercent > 31) {
-      return "ending1";
-    }
+  const wrongCuts = allCuts.filter(
+    (cut) => !this.isPerfectCut(cut)
+  ).length;
 
-    if (wrongPercent > 51 && negativePercent <= 31) {
-      return "ending2";
-    }
+  const negativePercent =
+    this.getNegativeSelfTalkPercentage();
 
-    if (rightPercent > 51 && negativePercent > 31) {
-      return "ending3";
-    }
+  const agreedWithBadThoughts =
+    negativePercent >= 50;
 
-    return "endingNeutral";
+  // SECRET PERFECT ENDING
+  if (wrongCuts === 0) {
+    return "endingPerfect";
   }
+
+  // FIRST BOX PERFORMANCE
+  const box1WrongCuts =
+    this.boxResults.box1.filter(
+      (cut) => !this.isPerfectCut(cut)
+    ).length;
+
+  const firstBoxGood =
+    box1WrongCuts <= 1;
+
+  // MANY mistakes + AGREED
+  if (agreedWithBadThoughts) {
+    return "ending4";
+  }
+
+  // MANY mistakes + DISAGREED
+  if (wrongCuts >= 4) {
+    return "ending1";
+  }
+
+  // GOOD first box + DISAGREED
+  if (firstBoxGood) {
+    return "ending2";
+  }
+
+  // BAD first box + DISAGREED
+  return "ending3";
+}
+
 
   getEndingStats() {
     return {
