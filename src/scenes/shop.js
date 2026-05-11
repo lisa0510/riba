@@ -296,7 +296,7 @@ export default class Shop extends Phaser.Scene {
     this.fish.destroy();
 
     const diff = Math.abs(percent - this.targetPercent);
-    const feedbackColor = diff <= 10 ? "#2ecc71" : "#ff4444";
+    const feedbackColor = diff <= 2 ? "#2ecc71" : "#ff4444";
 
     const percentText = this.add.text(
       this.scale.width * 0.23,

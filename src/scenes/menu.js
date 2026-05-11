@@ -9,13 +9,21 @@ export default class Menu extends Phaser.Scene {
     this.load.image("background", "assets/Fish02/UI/Fisch_Menü_UI.png");
     this.load.image("eye", "assets/Fish02/UI/FischAuge_Menü_UI.png");
     this.load.image("headphones", "assets/Fish02/UI/Kopfhörer_Symbol_UI.png");
-
+    this.load.audio("background_music", "assets/audio/underwater.mp3");
     this.load.audio("menu_button", "assets/audio/menubutton.mp3");
   }
 
   create() {
     const { width, height } = this.scale;
+  
+    if (!this.bgMusic || !this.bgMusic.isPlaying) {
+      this.bgMusic = this.sound.add("background_music", {
+        loop: true,
+        volume: 0.4
+      });
 
+      this.bgMusic.play();
+    }
     // Hintergrund
     const bg = this.add.image(width / 2, height / 2, "background");
     bg.setDisplaySize(width, height);
@@ -61,6 +69,7 @@ export default class Menu extends Phaser.Scene {
     startButton.on("pointerout", () => startButton.setStyle({ fill: "#fff" }));
     startButton.on("pointerdown", () => {
       this.sound.play("menu_button");
+      this.bgMusic.stop();
       this.time.delayedCall(150, () => this.scene.start("Intro"));
     });
 
@@ -179,8 +188,7 @@ export default class Menu extends Phaser.Scene {
     const bottomCredits = this.add.text(0, height * 0.22, 
       `Synchronsprecherinnen
 Sara Noaman als Narratorin
-? als Klara 
-Saskia Helg als Mona und Fisch
+Saskia Helg als Klara, Mona und Fisch
 
 Game Soundtrack
 Till Bierich

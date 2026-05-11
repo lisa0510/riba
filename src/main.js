@@ -4,7 +4,7 @@ import Menu from "./scenes/menu.js";
 import Shop from "./scenes/shop.js";
 import Tutorial from "./scenes/tutorial.js";
 import Intro from "./scenes/introtext.js";
-import Ending from "./scenes/Ending.js";
+import Ending from "./scenes/ending.js";
 
 
 const config = {

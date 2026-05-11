@@ -24,27 +24,35 @@ export default class Ending extends Phaser.Scene {
 
     this.add.text(
       width / 2,
-      height * 0.65,
+      height / 2,
       currentEnding.text,
       {
-        fontSize: "26px",
-        color: "#eb3232",
-        backgroundColor: "#000000aa",
-        padding: { x: 25, y: 18 },
-        align: "center",
-        wordWrap: { width: width * 0.7 }
+        fontSize: "35px",
+        fontFamily: "Roboto",
+        fontStyle: "italic",
+        color: "#ffffff",
+        padding: { x: 40, y: 25 },
+        align: "left",
+        wordWrap: { width: width * 0.8 }
       }
     ).setOrigin(0.5);
+
+    let endingLabel;
+
+    if (endingKey.includes("endingPerfect")) {
+      endingLabel = "Geheime Ende entdeckt!";
+    } else {
+      endingLabel = `Ende ${endingNumber} von 4`;
+    }
 
     this.add.text(
       width / 2,
       height * 0.9,
-      `Ende ${endingNumber} von 4`,
+      endingLabel,
       {
-        fontSize: "22px",
-        color: "#b65c5c",
+        fontSize: "25px",
+        color: "#ffffff",
         fontFamily: "Roboto",
-        backgroundColor: "#000000aa",
         padding: { x: 16, y: 8 }
       }
     ).setOrigin(0.5);

@@ -44,7 +44,7 @@ class GameState {
   }
 
   isPerfectCut(cut) {
-    return cut >= this.targetCut - 10 && cut <= this.targetCut + 10;
+    return cut >= this.targetCut - 2 && cut <= this.targetCut + 2;
   }
 
   isPerfectBox(box) {
