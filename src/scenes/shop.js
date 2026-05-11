@@ -23,7 +23,6 @@ export default class Shop extends Phaser.Scene {
     this.load.image("button", "assets/Fish04/Red_Button.png");
 
     this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klara.png");
-    this.load.image("miniwal", "assets/Fish02/MiniWal.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
   }
@@ -368,7 +367,18 @@ export default class Shop extends Phaser.Scene {
         }
       );
     } else {
-      this.startParasiteEncounter();
+      this.dialogueManager.startDialogue(
+        this.currentBox.failureDialogue,
+        () => {
+
+          this.time.delayedCall(400, () => {
+
+            this.startParasiteEncounter();
+
+          });
+
+        }
+      );
     }
   }
 
@@ -508,104 +518,123 @@ showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
   });
 }
 
-  startParasiteEncounter() {
-  
-    const { width, height } = this.scale;
+startParasiteEncounter() {
+  const { width, height } = this.scale;
 
-      if (this.coworker) {
-        this.coworker.setVisible(false);
-      }
+  this.cameras.main.shake(250, 0.0025);
 
-      gameState.setParasiteInteraction(this.currentBoxId, true);
+  const flash = this.add.rectangle(
+    width / 2,
+    height / 2,
+    width,
+    height,
+    0xffffff,
+    0.35
+  ).setDepth(999);
 
-      this.parasite = this.add.image(
-        width / 2,
-        height / 2,
-        "parasite"
-      )
-        .setDepth(-11)
-        .setScale(this.coworkerScale);
-    const parasiteIntro = this.currentBox.parasiteDialogue[0];
-    const parasiteNode = this.currentBox.parasiteDialogue[1];
+  this.time.delayedCall(60, () => {
+    flash.destroy();
+  });
 
-    this.dialogueManager.startDialogue(
-      [{ text: parasiteIntro.text }],
-      () => {
-        this.dialogueManager.startDialogue(
-          [{ text: parasiteNode.text }],
-          () => {
-            this.showChoices(
-              parasiteNode.choices,
+  this.tweens.add({
+    targets: [this.shopBg, this.shopLaser],
+    x: "+=6",
+    duration: 40,
+    yoyo: true,
+    repeat: 2,
+    ease: "Sine.easeInOut"
+  });
 
-              (choice) => {
-                gameState.saveParasiteChoice(
-                  this.currentBoxId,
-                  choice.id
-                );
-
-                if (choice.nextText) {
-                  this.dialogueManager.startDialogue(
-                    [{ text: choice.nextText }],
-                    () => {
-                      if (this.parasite) {
-                        this.parasite.destroy();
-                        this.parasite = null;
-                      }
-
-                      this.startNextStep();
-                    }
-                  );
-                } else {
-                  if (this.parasite) {
-                    this.parasite.destroy();
-                    this.parasite = null;
-                  }
-
-                  this.startNextStep();
-                }
-              },
-
-              () => {
-                gameState.saveParasiteChoice(
-                  this.currentBoxId,
-                  "ignored"
-                );
-
-                if (this.parasite) {
-                  this.parasite.destroy();
-                  this.parasite = null;
-                }
-
-                if (this.coworker) {
-                  this.coworker.destroy();
-                  this.coworker = null;
-                }
-
-                this.coworker = this.add.image(
-                  width * 0.8,
-                  0,
-                  "miniwal"
-                )
-                  .setScale(this.coworkerScale)
-                  .setDepth(-11)
-                  .setOrigin(1, 0);
-
-                this.dialogueManager.startDialogue(
-                  [parasiteNode.ignoreDialogue[0]],
-                  () => {
-                    this.startNextStep();
-                  }
-                );
-              },
-
-              4000
-            );
-          },
-          true
-        );
-      }
-    );
+  if (this.coworker) {
+    this.coworker.setVisible(false);
   }
+
+  gameState.setParasiteInteraction(this.currentBoxId, true);
+
+  this.parasite = this.add.image(
+    width / 2,
+    height / 2,
+    "parasite"
+  )
+    .setDepth(-11)
+    .setScale(this.coworkerScale)
+    .setAlpha(1);
+
+  const parasiteNode = this.currentBox.parasiteDialogue[0];
+
+  if (!parasiteNode) {
+    console.error("parasiteDialogue fehlt in:", this.currentBoxId);
+    this.startNextStep();
+    return;
+  }
+
+  this.tweens.add({
+    targets: this.parasite,
+    alpha: 0.2,
+    duration: 60,
+    yoyo: true,
+    repeat: 4,
+    ease: "Power2",
+    onComplete: () => {
+      if (this.parasite) {
+        this.parasite.setAlpha(1);
+      }
+
+      this.dialogueManager.startDialogue(
+  [{ text: parasiteNode.text }],
+  () => {
+    this.showChoices(
+      parasiteNode.choices,
+
+      (choice) => {
+        gameState.saveParasiteChoice(
+          this.currentBoxId,
+          choice.id
+        );
+
+        if (choice.nextText) {
+          this.dialogueManager.startDialogue(
+            [{ text: choice.nextText }],
+            () => {
+              this.startNextStep();
+            }
+          );
+        } else {
+          this.startNextStep();
+        }
+      },
+
+      () => {
+        gameState.saveParasiteChoice(
+          this.currentBoxId,
+          "ignored"
+        );
+
+        if (
+          parasiteNode.ignoreDialogue &&
+          parasiteNode.ignoreDialogue[0]
+        ) {
+          this.dialogueManager.startDialogue(
+            [parasiteNode.ignoreDialogue[0]],
+            () => {
+              this.startNextStep();
+            }
+          );
+        } else {
+          this.startNextStep();
+        }
+      },
+      //timer in miliseconds
+      10000
+    );
+  },
+
+  true 
+);
+    }
+  
+  });
+}
 
    startNextStep() {
     const { width, height } = this.scale;

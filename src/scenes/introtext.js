@@ -5,7 +5,7 @@ export default class Intro extends Phaser.Scene {
     super("Intro");
   }
   preload() {
-  this.load.audio("sara", "assets/audio/narration/sarav1.wav");
+  this.load.audio("sara", "assets/audio/narration/sara.mp3");
   }
 
   create() {
@@ -24,7 +24,7 @@ export default class Intro extends Phaser.Scene {
 
     this.add.rectangle(width / 2, height / 2, width, height, 0x111816);
     this.introVoice = this.sound.add("sara", {
-        volume: 1
+        volume: 2
       });
 
       this.introVoice.play();
@@ -153,7 +153,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
         return;
       }
 
-      this.scene.start("Shop");
+      this.scene.start("Tutorial");
     };
 
     this.input.keyboard.on("keydown", goNext);

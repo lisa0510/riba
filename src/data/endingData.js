@@ -4,11 +4,11 @@ export const endingData = {
   },
 
   ending2: {
-    text: "ending 2 text hier..."
+    text: "Du hast dich gegen deine bösen Stimmen gewehrt"
   },
 
   ending3: {
-    text: "3"
+    text: "Du hast dich gegen deine bösen Stimmen gewehrt"
   },
 
   ending4: {

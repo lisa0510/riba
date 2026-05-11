@@ -165,7 +165,6 @@ export default class Menu extends Phaser.Scene {
         fontFamily: '"Roboto"',
       }).setOrigin(0.5);
 
-    // --- NEBENEINANDER: GAME DEV & GAME DESIGNER ---
     const leftColumn = this.add.text(-width * 0.15, -height * 0.13, 
       "Game Developer\nLisa Landolt", {
         fontSize: `${Math.max(20, height * 0.025)}px`,
