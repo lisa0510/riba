@@ -21,6 +21,6 @@ export const endingData = {
 
   endingPerfect: {
     image: "endingPerfect",
-    text: "SECRET ENDING"
+    text: "Wow, du hast dir wirklich Mühe gegeben. Die Entwicklerinnen gratulieren dir und jetzt geh und fass Gras an."
   }
 };

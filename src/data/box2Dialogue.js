@@ -59,7 +59,7 @@ preEndingDialogue: {
   ],
 
   endingPerfect: [
-    { text: "SECRET ENDING" }
+    { text: "Klara: Unglaublich, du hast so alle Fische für uns als Nahrung behalten können! Die anderen werden sich freuen." }
   ]
 },
 
@@ -84,8 +84,8 @@ finalDialogues: {
   ],
 
   endingPerfect: [
-    { text: "SECRET ENDING" },
-    { text: "Mona: Kein einziger Fehler. Für einen kurzen Moment fühlt es sich fast so an, als könnten wir das hier wirklich schaffen." }
+    { text: "Klara: Unglaublich, du hast so alle Fische für uns als Nahrung behalten können! Die anderen werden sich freuen." },
+    { text: "Klara: So können wir die Zeit auch nutzen uns einfach mal wieder auf uns zu konzentrieren." }
   ]
 }
 };

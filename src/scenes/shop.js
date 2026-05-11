@@ -15,7 +15,7 @@ export default class Shop extends Phaser.Scene {
   preload() {
     this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
     this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
-    this.load.image("customer", "assets/Fish04/damagedNormal_Klara.png");
+    this.load.image("customer", "assets/Fish04/Normal_Klara.png");
 
     this.load.image("fish", "assets/Fish04/First_Fisch.png");
     this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
@@ -296,7 +296,7 @@ export default class Shop extends Phaser.Scene {
     this.fish.destroy();
 
     const diff = Math.abs(percent - this.targetPercent);
-    const feedbackColor = diff <= 5 ? "#2ecc71" : "#ff4444";
+    const feedbackColor = diff <= 10 ? "#2ecc71" : "#ff4444";
 
     const percentText = this.add.text(
       this.scale.width * 0.23,
