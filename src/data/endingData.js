@@ -1,18 +1,18 @@
 export const endingData = {
   ending1: {
-    text: "Du hast dich gegen deine bösen Stimmen gewehrt"
+    text: "Du hast dich deinen inneren Dämonen entgegengestellt."
   },
 
   ending2: {
-    text: "Du hast dich gegen deine bösen Stimmen gewehrt"
+    text: "Du hast dich gegen deine bösen Stimmen gewehrt."
   },
 
   ending3: {
-    text: "Du hast dich gegen deine bösen Stimmen gewehrt"
+    text: "Du hast dich gegen deine bösen Stimmen gewehrt."
   },
 
   ending4: {
-    text: "Du lernst langsam, dass es besser ist seine bösen Gedanken aus seinem Leben zu schneiden."
+    text: "Du lernst langsam, dass es besser ist, seine bösen Gedanken aus seinem Leben zu schneiden."
   },
 
   endingPerfect: {

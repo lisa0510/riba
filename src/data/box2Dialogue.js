@@ -1,4 +1,8 @@
 export const box2Data = {
+  targetPercent: 70,
+fishTexture: "fish2",
+noteTexture: "note2",
+
   introDialogue: [
     {
       text: "Klara: Bin wieder da! Lukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können."
@@ -7,14 +11,14 @@ export const box2Data = {
 
   successDialogue: [
     {
-      text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freue einen Tag lang nicht in der Säure schwimmen zu müssen."
+      text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage Ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freue einen Tag lang nicht in der Säure schwimmen zu müssen."
     },
   ],
 
   
   failureDialogue: [
   {
-    text: "Klara: Vielen Dank, dass ist doch wieder eine gute Menge. Wenn uns bald auch die letzten Dosen aus gehen und wir uns komplett von Fisch ernähren. Sind wir alle noch froher um deine tägliche Leistung."
+    text: "Klara: Vielen Dank! Das ist doch wieder eine ordentliche Menge. Wenn uns bald die letzten Konserven ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein."
   }
 ],
   parasiteDialogue: [
@@ -42,29 +46,29 @@ export const box2Data = {
 
 preEndingDialogue: {
   ending1: [
-    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffee Pause." },
+    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
     { text: "Klara: ..Hey ist alles okay? Du siehst so bleich aus, du solltest dich für heute ausruhen." },
     { text: "Klara: Ich weiss, nicht viele deiner Fische konnten wir für den Verzehr behalten, aber mach dir nichts draus.  Dann muss ich halt wieder früher in die Säure, das gehört nun mal zu unserem jetzigen Leben." }
   ],
 
   ending2: [
-    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffee Pause." },
+    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
     { text: "Klara: Unglaublich, wie viele geniessbare Fische du retten konntest! Die anderen werden heute endlich mal satt." },
   ],
 
   ending3: [
-    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffee Pause." },
+    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
     { text: "Klara: Unglaublich, du hast so viele Fische für uns als Nahrung behalten können! Die anderen werden sich freuen." },
     { text: "Klara: So können wir die Zeit auch nutzen uns einfach mal wieder auf uns zu konzentrieren." },
   ],
 
   ending4: [
-    { text: "Klara: So, dass waren alle für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffee Pause." },
+    { text: "Klara: So, dass war alles für heute. Beeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
     { text: "in progress" }
   ],
 
   endingPerfect: [
-    { text: "Klara: Unglaublich, du hast so alle Fische für uns als Nahrung behalten können! Die anderen werden sich freuen." },
+    { text: "Klara: Unglaublich, du hast einfach alle Fische für uns als Nahrung behalten können! Die anderen werden sich freuen." },
     { text: "Klara: Es ist fast schon unheimlich, dass du keinen einzigen Fehler gemacht hast..." },
 
   ]
