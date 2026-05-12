@@ -18,8 +18,13 @@ export default class Shop extends Phaser.Scene {
     this.load.image("customer", "assets/Fish04/Normal_Klara.png");
 
     this.load.image("fish", "assets/Fish04/First_Fisch.png");
+    this.load.image("fish2", "assets/Fish04/Second_Fisch.png");
+
     this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
+
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
+    this.load.image("note2", "assets/Fish04/SecondBox_CuttingBoard.png");
+
     this.load.image("button", "assets/Fish04/Red_Button.png");
     this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klara.png");
 
@@ -29,7 +34,7 @@ export default class Shop extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
 
-        this.shopBg = this.add.image(
+    this.shopBg = this.add.image(
       width / 2,
       height / 2,
       "shop_bg"
@@ -56,9 +61,9 @@ export default class Shop extends Phaser.Scene {
     this.shopLaser.setScale(laserScale * 0.8);
 
     this.coworkerScale = Phaser.Math.Clamp(
-    height * 0.0011,
-    0.6,
-    0.7
+      height * 0.0011,
+      0.6,
+      0.7
     );
 
     this.coworker = this.add.image(
@@ -76,7 +81,6 @@ export default class Shop extends Phaser.Scene {
     this.currentFish = 0;
     this.cutResults = [];
     this.choiceButtons = [];
-    this.targetPercent = 30;
 
     this.cutLine = null;
     this.cutLineDirection = 1;
@@ -88,6 +92,7 @@ export default class Shop extends Phaser.Scene {
 
     this.currentBoxId = "box1";
     this.currentBox = box1Data;
+    this.targetPercent = this.currentBox.targetPercent || 30;
 
     this.startCuttingPhase();
   }
@@ -112,6 +117,8 @@ export default class Shop extends Phaser.Scene {
 
   startCuttingPhase() {
     const { width, height } = this.scale;
+
+    this.targetPercent = this.currentBox.targetPercent || 30;
 
     this.blackBg = this.add.rectangle(
       width / 2,
@@ -138,7 +145,7 @@ export default class Shop extends Phaser.Scene {
     this.note1 = this.add.image(
       width / 5,
       height / 3,
-      "note1"
+      this.currentBox.noteTexture || "note1"
     )
       .setDepth(101)
       .setScale(0.4);
@@ -204,7 +211,7 @@ export default class Shop extends Phaser.Scene {
     this.fish = this.add.image(
       width / 1.6,
       height / 3,
-      "fish"
+      this.currentBox.fishTexture || "fish"
     ).setDepth(102);
 
     if (showLine) {
@@ -279,14 +286,21 @@ export default class Shop extends Phaser.Scene {
   }
 
   animateSlice(localX, percent) {
-    const { x, y, displayWidth: w, displayHeight: h } = this.fish;
+    const {
+      x,
+      y,
+      displayWidth: w,
+      displayHeight: h
+    } = this.fish;
 
-    const leftHalf = this.add.image(x, y, "fish")
+    const fishTexture = this.currentBox.fishTexture || "fish";
+
+    const leftHalf = this.add.image(x, y, fishTexture)
       .setDepth(103)
       .setDisplaySize(w, h)
       .setCrop(0, 0, localX, h);
 
-    const rightHalf = this.add.image(x, y, "fish")
+    const rightHalf = this.add.image(x, y, fishTexture)
       .setDepth(103)
       .setDisplaySize(w, h)
       .setCrop(localX, 0, w - localX, h);
@@ -369,180 +383,152 @@ export default class Shop extends Phaser.Scene {
       this.dialogueManager.startDialogue(
         this.currentBox.failureDialogue,
         () => {
-
           this.time.delayedCall(400, () => {
-
             this.startParasiteEncounter();
-
           });
-
         }
       );
     }
   }
 
-showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
-  const { width, height } = this.scale;
+  showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
+    const { width, height } = this.scale;
 
-  const isSmall = width < 1200 || height < 750;
+    const isSmall = width < 1200 || height < 750;
 
-  const baseX = width * 0.08;
-  const dialogueY = height * 0.42;
+    const baseX = width * 0.08;
+    const dialogueY = height * 0.42;
 
-  const choiceWidth = Phaser.Math.Clamp(width * 0.25, 220, 420);
-  const choiceFontSize = isSmall ? "17px" : "20px";
-  const timerFontSize = isSmall ? "22px" : "28px";
+    const choiceWidth = Phaser.Math.Clamp(width * 0.25, 220, 420);
+    const choiceFontSize = isSmall ? "17px" : "20px";
+    const timerFontSize = isSmall ? "22px" : "28px";
 
-  const baseY = dialogueY + Phaser.Math.Clamp(height * 0.24, 150, 250);
-  const spacingY = Phaser.Math.Clamp(height * 0.085, 54, 75);
+    const baseY = dialogueY + Phaser.Math.Clamp(height * 0.24, 150, 250);
+    const spacingY = Phaser.Math.Clamp(height * 0.085, 54, 75);
 
-  const timerX = baseX + choiceWidth - Phaser.Math.Clamp(width * 0.03, 20, 20);
-  const timerY = baseY;
+    const timerX = baseX + choiceWidth - Phaser.Math.Clamp(width * 0.03, 20, 20);
+    const timerY = baseY;
 
-  let choiceMade = false;
-  let timeoutEvent = null;
-  let timerEvent = null;
-  let timerText = null;
-  let remainingSeconds = timeoutMs ? Math.ceil(timeoutMs / 1000) : 0;
+    let choiceMade = false;
+    let timeoutEvent = null;
+    let timerEvent = null;
+    let timerText = null;
+    let remainingSeconds = timeoutMs ? Math.ceil(timeoutMs / 1000) : 0;
 
-  const clearChoices = () => {
-    this.choiceButtons.forEach((button) => button.destroy());
-    this.choiceButtons = [];
+    const clearChoices = () => {
+      this.choiceButtons.forEach((button) => button.destroy());
+      this.choiceButtons = [];
 
-    if (timeoutEvent) {
-      timeoutEvent.remove(false);
-      timeoutEvent = null;
+      if (timeoutEvent) {
+        timeoutEvent.remove(false);
+        timeoutEvent = null;
+      }
+
+      if (timerEvent) {
+        timerEvent.remove(false);
+        timerEvent = null;
+      }
+
+      if (timerText) {
+        timerText.destroy();
+        timerText = null;
+      }
+    };
+
+    if (timeoutCallback && timeoutMs) {
+      timerText = this.add.text(
+        timerX,
+        timerY,
+        `${remainingSeconds}`,
+        {
+          fontSize: timerFontSize,
+          fontFamily: "Roboto",
+          color: "#ffffff",
+          backgroundColor: "#000000cc",
+          padding: { x: 18, y: 10 }
+        }
+      )
+        .setOrigin(0, 0.5)
+        .setDepth(650);
+
+      timerEvent = this.time.addEvent({
+        delay: 1000,
+        loop: true,
+        callback: () => {
+          remainingSeconds--;
+
+          if (timerText) {
+            timerText.setText(`${remainingSeconds}`);
+          }
+
+          if (remainingSeconds <= 0 && timerEvent) {
+            timerEvent.remove(false);
+          }
+        }
+      });
+
+      timeoutEvent = this.time.delayedCall(timeoutMs, () => {
+        if (choiceMade) return;
+
+        choiceMade = true;
+        clearChoices();
+
+        if (this.dialogueManager) {
+          this.dialogueManager.clearDialogue();
+        }
+
+        timeoutCallback();
+      });
     }
 
-    if (timerEvent) {
-      timerEvent.remove(false);
-      timerEvent = null;
-    }
+    choices.forEach((choice, index) => {
+      const xPos = baseX;
+      const yPos = baseY + index * spacingY;
 
-    if (timerText) {
-      timerText.destroy();
-      timerText = null;
-    }
-  };
-
-  if (timeoutCallback && timeoutMs) {
-    timerText = this.add.text(
-      timerX,
-      timerY,
-      `${remainingSeconds}`,
-      {
-        fontSize: timerFontSize,
+      const btn = this.add.text(xPos, yPos, choice.text, {
+        fontSize: choiceFontSize,
         fontFamily: "Roboto",
-        color: "#ffffff",
         backgroundColor: "#000000cc",
-        padding: { x: 18, y: 10 }
-      }
-    )
-      .setOrigin(0, 0.5)
-      .setDepth(650);
+        color: "#ffffff",
+        padding: {
+          x: isSmall ? 14 : 18,
+          y: isSmall ? 9 : 12
+        },
+        align: "left",
+        wordWrap: { width: choiceWidth }
+      })
+        .setOrigin(0, 0.5)
+        .setInteractive({ useHandCursor: true })
+        .setDepth(600);
 
-    timerEvent = this.time.addEvent({
-      delay: 1000,
-      loop: true,
-      callback: () => {
-        remainingSeconds--;
+      btn.on("pointerdown", () => {
+        if (choiceMade) return;
 
-        if (timerText) {
-          timerText.setText(`${remainingSeconds}`);
+        choiceMade = true;
+        clearChoices();
+
+        if (this.dialogueManager) {
+          this.dialogueManager.clearDialogue();
         }
 
-        if (remainingSeconds <= 0 && timerEvent) {
-          timerEvent.remove(false);
-        }
-      }
-    });
+        callback(choice);
+      });
 
-    timeoutEvent = this.time.delayedCall(timeoutMs, () => {
-      if (choiceMade) return;
+      this.choiceButtons.push(btn);
 
-      choiceMade = true;
-      clearChoices();
+      btn.setAlpha(0);
 
-      if (this.dialogueManager) {
-        this.dialogueManager.clearDialogue();
-      }
-
-      timeoutCallback();
+      this.tweens.add({
+        targets: btn,
+        alpha: 1,
+        duration: 500,
+        ease: "Power2"
+      });
     });
   }
 
-  choices.forEach((choice, index) => {
-    const xPos = baseX;
-    const yPos = baseY + index * spacingY;
-
-    const btn = this.add.text(xPos, yPos, choice.text, {
-      fontSize: choiceFontSize,
-      fontFamily: "Roboto",
-      backgroundColor: "#000000cc",
-      color: "#ffffff",
-      padding: {
-        x: isSmall ? 14 : 18,
-        y: isSmall ? 9 : 12
-      },
-      align: "left",
-      wordWrap: { width: choiceWidth }
-    })
-      .setOrigin(0, 0.5)
-      .setInteractive({ useHandCursor: true })
-      .setDepth(600);
-
-    btn.on("pointerdown", () => {
-      if (choiceMade) return;
-
-      choiceMade = true;
-      clearChoices();
-
-      if (this.dialogueManager) {
-        this.dialogueManager.clearDialogue();
-      }
-
-      callback(choice);
-    });
-
-    this.choiceButtons.push(btn);
-
-    btn.setAlpha(0);
-
-    this.tweens.add({
-      targets: btn,
-      alpha: 1,
-      duration: 500,
-      ease: "Power2"
-    });
-  });
-}
-
-startParasiteEncounter() {
+  startParasiteEncounter() {
   const { width, height } = this.scale;
-
-  this.cameras.main.shake(250, 0.0025);
-
-  const flash = this.add.rectangle(
-    width / 2,
-    height / 2,
-    width,
-    height,
-    0xffffff,
-    0.35
-  ).setDepth(999);
-
-  this.time.delayedCall(60, () => {
-    flash.destroy();
-  });
-
-  this.tweens.add({
-    targets: [this.shopBg, this.shopLaser],
-    x: "+=6",
-    duration: 40,
-    yoyo: true,
-    repeat: 2,
-    ease: "Sine.easeInOut"
-  });
 
   if (this.coworker) {
     this.coworker.setVisible(false);
@@ -557,7 +543,7 @@ startParasiteEncounter() {
   )
     .setDepth(-11)
     .setScale(this.coworkerScale)
-    .setAlpha(1);
+    .setAlpha(0);
 
   const parasiteNode = this.currentBox.parasiteDialogue[0];
 
@@ -569,73 +555,93 @@ startParasiteEncounter() {
 
   this.tweens.add({
     targets: this.parasite,
-    alpha: 0.2,
-    duration: 60,
-    yoyo: true,
-    repeat: 4,
+    alpha: 1,
+    duration: 250,
     ease: "Power2",
     onComplete: () => {
-      if (this.parasite) {
-        this.parasite.setAlpha(1);
-      }
+      this.cameras.main.shake(250, 0.0025);
 
-      this.dialogueManager.startDialogue(
-  [{ text: parasiteNode.text }],
-  () => {
-    this.showChoices(
-      parasiteNode.choices,
+      const flash = this.add.rectangle(
+        width / 2,
+        height / 2,
+        width,
+        height,
+        0xffffff,
+        0.35
+      ).setDepth(999);
 
-      (choice) => {
-        gameState.saveParasiteChoice(
-          this.currentBoxId,
-          choice.id
+      this.time.delayedCall(60, () => {
+        flash.destroy();
+      });
+
+      this.tweens.add({
+        targets: [this.shopBg, this.shopLaser],
+        x: "+=6",
+        duration: 40,
+        yoyo: true,
+        repeat: 2,
+        ease: "Sine.easeInOut"
+      });
+
+      this.time.delayedCall(300, () => {
+        this.dialogueManager.startDialogue(
+          [{ text: parasiteNode.text }],
+          () => {
+            this.showChoices(
+              parasiteNode.choices,
+
+              (choice) => {
+                gameState.saveParasiteChoice(
+                  this.currentBoxId,
+                  choice.id
+                );
+
+                if (choice.nextText) {
+                  this.dialogueManager.startDialogue(
+                    [{ text: choice.nextText }],
+                    () => {
+                      this.startNextStep();
+                    },
+                    true
+                  );
+                } else {
+                  this.startNextStep();
+                }
+              },
+
+              () => {
+                gameState.saveParasiteChoice(
+                  this.currentBoxId,
+                  "ignored"
+                );
+
+                if (
+                  parasiteNode.ignoreDialogue &&
+                  parasiteNode.ignoreDialogue[0]
+                ) {
+                  this.dialogueManager.startDialogue(
+                    [parasiteNode.ignoreDialogue[0]],
+                    () => {
+                      this.startNextStep();
+                    },
+                    true
+                  );
+                } else {
+                  this.startNextStep();
+                }
+              },
+              //timer
+              10000
+            );
+          },
+          true
         );
-
-        if (choice.nextText) {
-          this.dialogueManager.startDialogue(
-            [{ text: choice.nextText }],
-            () => {
-              this.startNextStep();
-            }
-          );
-        } else {
-          this.startNextStep();
-        }
-      },
-
-      () => {
-        gameState.saveParasiteChoice(
-          this.currentBoxId,
-          "ignored"
-        );
-
-        if (
-          parasiteNode.ignoreDialogue &&
-          parasiteNode.ignoreDialogue[0]
-        ) {
-          this.dialogueManager.startDialogue(
-            [parasiteNode.ignoreDialogue[0]],
-            () => {
-              this.startNextStep();
-            }
-          );
-        } else {
-          this.startNextStep();
-        }
-      },
-      //timer in miliseconds
-      10000
-    );
-  },
-
-  true 
-);
+      });
     }
-  
   });
 }
 
-   startNextStep() {
+  startNextStep() {
     const { width, height } = this.scale;
 
     if (this.parasite) {
@@ -656,15 +662,21 @@ startParasiteEncounter() {
       this.currentBoxId = "box2";
       this.currentBox = box2Data;
 
+      this.targetPercent = this.currentBox.targetPercent || 70;
+
       this.currentFish = 0;
       this.cutResults = [];
 
-      this.dialogueManager.startDialogue(
-        this.currentBox.introDialogue,
-        () => {
-          this.startCuttingPhase();
-        }
-      );
+      if (this.currentBox.introDialogue) {
+        this.dialogueManager.startDialogue(
+          this.currentBox.introDialogue,
+          () => {
+            this.startCuttingPhase();
+          }
+        );
+      } else {
+        this.startCuttingPhase();
+      }
 
       return;
     }

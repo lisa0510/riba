@@ -1,5 +1,6 @@
 export const box2Data = {
-  targetPercent: 70,
+  
+targetPercent: 70,
 fishTexture: "fish2",
 noteTexture: "note2",
 

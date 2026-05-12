@@ -66,7 +66,7 @@ export default class Intro extends Phaser.Scene {
     this.add.text(
       width * 0.78,
       height * 0.08,
-      "CREW NAME: MONA\nSTATION: ADRIA-03\nDATE: 30.12.2126",
+      "CREW ID: JL305\nSTATION: ADRIA-03\nDATE: 30.12.2126",
       {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
