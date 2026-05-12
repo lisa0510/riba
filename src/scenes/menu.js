@@ -192,10 +192,10 @@ Saskia Helg als Klara, Mona und Fisch
 Game Soundtrack
 Till Bierich
 
-Mentoren
-Benji Osner Technische Betreuung
-Ruth Bosch  Art, Story und Game Design
+Mentor*innen
 Léa Coquoz  Art, Story und Game Design
+Ruth Bosch  Art, Story und Game Design
+Benji Oser Technische Betreuung
 `, {
         fontSize: `${Math.max(22, height * 0.02)}px`,
         fill: "#ffffff",
