@@ -32,7 +32,7 @@ export default class DialogueManager {
     const boxX = width * 0.07;
     const boxY = height * 0.18;
     const boxW = width * 0.32;
-    const boxH = height * 0.35;
+    const boxH = height * 0.3;
 
     this.dialogueBg = this.scene.add.rectangle(
       boxX,

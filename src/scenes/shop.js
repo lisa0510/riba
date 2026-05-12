@@ -196,7 +196,49 @@ export default class Shop extends Phaser.Scene {
     });
 
     this.spawnFish(true);
-    this.enableLineClick();
+    if (this.currentBoxId === "box2") {
+
+      this.canStopLine = false;
+      this.cutInputReady = false;
+
+      const hintText = this.add.text(
+        width / 2,
+        height * 0.8,
+        "Fisch: Vergiss nicht, auch der erfahrenste Fisch kann sich im Netz verfangen. Du gibst dir Mühe beim Schneiden und das ist alles, was zählt blub blub.",
+        {
+          fontSize: "25px",
+          fontFamily: "Roboto",
+          color: "#f4d869",
+          backgroundColor: "#000000cc",
+          padding: { x: 30, y: 18 },
+          align: "center",
+          wordWrap: {width: width * 0.6}
+        }
+      )
+        .setOrigin(0.5)
+        .setDepth(500);
+
+      this.input.once("pointerdown", () => {
+
+        this.tweens.add({
+          targets: hintText,
+          alpha: 0,
+          duration: 250,
+          onComplete: () => {
+
+            hintText.destroy();
+
+            this.enableLineClick();
+          }
+        });
+
+      });
+
+    } else {
+
+      this.enableLineClick();
+
+    }
   }
 
   spawnFish(showLine = true) {
