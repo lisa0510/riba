@@ -21,7 +21,6 @@ export default class Shop extends Phaser.Scene {
     this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish04/Red_Button.png");
-
     this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klara.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
