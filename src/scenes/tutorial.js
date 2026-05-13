@@ -10,8 +10,8 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
     this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
     this.load.image("customer", "assets/Fish04/Normal_Klara.png");
-    this.load.image("fish", "assets/Fish04/First_Fisch.png");
-    this.load.image("cuttingview", "assets/Fish04/CuttingView.png");
+    this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
+    this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish04/Red_Button.png");
 
@@ -242,7 +242,7 @@ startTutorialCutting() {
     if (this.cutLine) this.cutLine.destroy();
 
     this.fish = this.add.image(
-      width / 1.6,
+      width / 1.5,
       height / 3,
       "fish"
     ).setDepth(102);

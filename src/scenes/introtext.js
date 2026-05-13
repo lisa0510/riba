@@ -29,12 +29,9 @@ export default class Intro extends Phaser.Scene {
 
       this.introVoice.play();
 
-
-    // inner monitor
     this.add.rectangle(panelX, panelY, panelW * 0.9, panelH * 0.75, 0x07130e, 0.95)
       .setStrokeStyle(2, 0x3cff9b, 0.7);
 
-    // top bar
     this.add.rectangle(panelX, panelY - panelH * 0.42, panelW * 0.9, 8, 0x3cff9b, 0.85);
 
     this.add.text(
@@ -50,11 +47,10 @@ export default class Intro extends Phaser.Scene {
       }
     ).setOrigin(0.5);
 
-    // small status text
     this.add.text(
       width * 0.14,
       height * 0.08,
-      "DEPTH: -420M\nO2: STABIL\nCOM: LOW SIGNAL",
+      "TIEFE: -420M\nO2: STABIL\nTEMP: 8°C",
       {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
@@ -66,7 +62,7 @@ export default class Intro extends Phaser.Scene {
     this.add.text(
       width * 0.78,
       height * 0.08,
-      "CREW ID: JL305\nSTATION: ADRIA-03\nDATE: 30.12.2126",
+      "CREW ID: JL305\nSTATION: ADRIA-03\nDATUM: 30.12.2126",
       {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
@@ -105,7 +101,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
     let isFinished = false;
 
     const typeEvent = this.time.addEvent({
-      delay: isSmallScreen ? 25 : 40,
+      delay: isSmallScreen ? 30 : 45,
       loop: true,
       callback: () => {
         mainText.setText(introText.slice(0, index));
@@ -114,7 +110,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
         if (index > introText.length) {
           typeEvent.remove(false);
           isFinished = true;
-          hintText.setText("[ PRESS ANY KEY OR CLICK TO START ]");
+          hintText.setText("[ MAUSTASTE KLICKEN ZUM FORTFAHREN ]");
         }
       }
     });
@@ -122,7 +118,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
     const hintText = this.add.text(
       width / 2,
       height * 0.91,
-      "[ PRESS ANY KEY OR CLICK TO SKIP ]",
+      "[ MAUSTASTE KLICKEN ZUM ÜBERSPRINGEN ]",
       {
         fontSize: hintSize,
         color: "#3cff9b",
@@ -148,7 +144,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
       if (!isFinished) {
         typeEvent.remove(false);
         mainText.setText(introText);
-        hintText.setText("[ PRESS ANY KEY OR CLICK TO START ]");
+        hintText.setText("[ MAUSTASTE KLICKEN ZUM FORTFAHREN ]");
         isFinished = true;
         return;
       }

@@ -122,7 +122,7 @@ export default class Menu extends Phaser.Scene {
         fontFamily: '"Roboto"'
       }).setOrigin(0.5);
 
-    const hintText = this.add.text(0, height * 0.9, "[ PRESS ANY KEY OR CLICK TO START ]", {
+    const hintText = this.add.text(0, height * 0.9, "[ MAUSTASTE KLICKEN ZUM FORTFAHREN ]", {
         fontSize: `${Math.max(16, height * 0.02)}px`,
         fill: "#666666",
         fontFamily: '"Roboto"'
