@@ -15,7 +15,7 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
 
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
-    this.load.image("button", "assets/Fish04/Red_Button.png");
+    this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
   }
@@ -195,12 +195,12 @@ export default class Tutorial extends Phaser.Scene {
 
     // BUTTON
     this.cutButton = this.add.image(
-      width * 0.79,
-      height * 0.88,
+      width * 0.88,
+      height * 0.8,
       "button"
     )
       .setDepth(160)
-      .setScale(0.22)
+      .setScale(1.2)
       .setAlpha(1)
       .setInteractive({
         useHandCursor: false
@@ -214,7 +214,8 @@ export default class Tutorial extends Phaser.Scene {
 
       this.tweens.add({
         targets: this.cutButton,
-        scale: 0.25,
+        backgroundColor: "#fff457",
+        scale: 1.4,
         alpha: 1,
         duration: 100,
         ease: "Power2"
@@ -229,7 +230,7 @@ export default class Tutorial extends Phaser.Scene {
 
       this.tweens.add({
         targets: this.cutButton,
-        scale: 0.22,
+        scale: 1.2,
         alpha: 1,
         duration: 100,
         ease: "Power2"
@@ -247,7 +248,7 @@ export default class Tutorial extends Phaser.Scene {
 
       this.tweens.add({
         targets: this.cutButton,
-        scale: 0.22,
+        scale: 1.2,
         alpha: 1,
         duration: 70,
         yoyo: true,

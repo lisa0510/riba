@@ -152,12 +152,12 @@ export default class Shop extends Phaser.Scene {
       .setScale(0.4);
 
     this.cutButton = this.add.image(
-      width * 0.79,
-      height * 0.88,
+      width * 0.88,
+      height * 0.8,
       "button"
     )
       .setDepth(160)
-      .setScale(0.22)
+      .setScale(1.3)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
 
@@ -167,7 +167,7 @@ export default class Shop extends Phaser.Scene {
       );
       this.tweens.add({
         targets: this.cutButton,
-        scale: 0.25,
+        scale: 1.4,
         duration: 100,
         ease: "Power2"
       });
@@ -179,7 +179,7 @@ export default class Shop extends Phaser.Scene {
       );
       this.tweens.add({
         targets: this.cutButton,
-        scale: 0.22,
+        scale: 1.3,
         duration: 100,
         ease: "Power2"
       });
@@ -197,7 +197,7 @@ export default class Shop extends Phaser.Scene {
 
       this.tweens.add({
         targets: this.cutButton,
-        scale: 0.22,
+        scale: 1.4,
         duration: 70,
         yoyo: true,
         ease: "Power2"
