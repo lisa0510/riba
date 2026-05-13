@@ -10,8 +10,10 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
     this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
     this.load.image("customer", "assets/Fish04/Normal_Klara.png");
+
     this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
     this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
+
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish04/Red_Button.png");
 
@@ -19,52 +21,64 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   create() {
-  const { width, height } = this.scale;
 
-  this.shopBg = this.add.image(
-    width / 2,
-    height / 2,
-    "shop_bg"
-  )
-    .setDepth(-12);
+    // CUSTOM CURSOR
+    this.input.setDefaultCursor(
+      "url(assets/Fish05/cursor.png), auto"
+    );
 
-  const bgScale = Math.min(
-    width / this.shopBg.width,
-    height / this.shopBg.height
-  );
+    const { width, height } = this.scale;
 
-  this.shopBg.setScale(bgScale);
-  this.shopLaser = this.add.image(
-    width / 2,
-    height / 1.5,
-    "shop_laser"
-  )
-    .setDepth(-10);
+    this.shopBg = this.add.image(
+      width / 2,
+      height / 2,
+      "shop_bg"
+    )
+      .setDepth(-12);
 
-  const laserScale = Math.min(
-    width / this.shopLaser.width,
-    height / this.shopLaser.height
-  );
-  this.shopLaser.setScale(laserScale * 0.8);
+    const bgScale = Math.min(
+      width / this.shopBg.width,
+      height / this.shopBg.height
+    );
+
+    this.shopBg.setScale(bgScale);
+
+    this.shopLaser = this.add.image(
+      width / 2,
+      height / 1.5,
+      "shop_laser"
+    )
+      .setDepth(-10);
+
+    const laserScale = Math.min(
+      width / this.shopLaser.width,
+      height / this.shopLaser.height
+    );
+
+    this.shopLaser.setScale(laserScale * 0.8);
 
     const coworkerScale = Phaser.Math.Clamp(
-    height * 0.0011,
-    0.6,
-    0.7
-  );
+      height * 0.0011,
+      0.6,
+      0.7
+    );
 
-  this.coworker = this.add.image(
-    width / 2,
-    height / 2,
-    "customer"
-  )
-    .setScale(coworkerScale)
-    .setDepth(-11);
+    this.coworker = this.add.image(
+      width / 2,
+      height / 2,
+      "customer"
+    )
+      .setScale(coworkerScale)
+      .setDepth(-11);
 
     this.dialogueIndex = 0;
+
     this.cuts = [];
+
     this.targetCM = 30;
+
     this.totalFish = 1;
+
     this.currentFish = 0;
 
     this.cutLine = null;
@@ -75,6 +89,7 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   setupMainDialogue() {
+
     const { width, height } = this.scale;
 
     this.currentDialogues = dialogues.tutorial.intro;
@@ -88,15 +103,25 @@ export default class Tutorial extends Phaser.Scene {
         fontFamily: "Roboto",
         color: "#ffffff",
         backgroundColor: "#000000e1",
-        padding: { x: 40, y: 25 },
+        padding: {
+          x: 40,
+          y: 25
+        },
         align: "left",
-        wordWrap: { width: width * 0.2 }
+        wordWrap: {
+          width: width * 0.2
+        }
       }
     )
       .setOrigin(0, 0.5)
       .setDepth(200);
 
-    this.input.on("pointerdown", this.handleProgressDialogue, this);
+    this.input.on(
+      "pointerdown",
+      this.handleProgressDialogue,
+      this
+    );
+
     this.displayNextLine();
   }
 
@@ -105,141 +130,213 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   displayNextLine() {
-    if (this.dialogueIndex < this.currentDialogues.length) {
+
+    if (
+      this.dialogueIndex <
+      this.currentDialogues.length
+    ) {
+
       this.dialogueText.setText(
-        this.currentDialogues[this.dialogueIndex].text
+        this.currentDialogues[
+          this.dialogueIndex
+        ].text
       );
+
       this.dialogueIndex++;
+
     } else {
-      this.input.off("pointerdown", this.handleProgressDialogue, this);
+
+      this.input.off(
+        "pointerdown",
+        this.handleProgressDialogue,
+        this
+      );
+
       this.dialogueText.destroy();
+
       this.startTutorialCutting();
     }
   }
 
-startTutorialCutting() {
-  const { width, height } = this.scale;
+  startTutorialCutting() {
 
-  this.blackBg = this.add.rectangle(
-    width / 2,
-    height / 2,
-    width,
-    height,
-    0x000000,
-    1
-  ).setDepth(99);
-
-  this.cuttingView = this.add.image(
-    width / 2,
-    height / 2,
-    "cuttingview"
-  )
-    .setDepth(100);
-
-  const cuttingScale = Math.min(
-    width / this.cuttingView.width,
-    height / this.cuttingView.height
-  );
-
-  this.cuttingView.setScale(cuttingScale);
-
-  this.note1 = this.add.image(
-    width / 5,
-    height / 3,
-    "note1"
-  )
-    .setDepth(101)
-    .setScale(0.4);
-
-  this.cutButton = this.add.image(
-    width * 0.79,
-    height * 0.88,
-    "button"
-  )
-    .setDepth(160)
-    .setScale(0.22)
-    .setAlpha(1)
-    .setInteractive({ useHandCursor: true });
-
-  this.cutButton.on("pointerover", () => {
-    this.tweens.add({
-      targets: this.cutButton,
-      scale: 0.25,
-      alpha: 1,
-      duration: 100,
-      ease: "Power2"
-    });
-  });
-
-  this.cutButton.on("pointerout", () => {
-    this.tweens.add({
-      targets: this.cutButton,
-      scale: 0.22,
-      alpha: 1,
-      duration: 100,
-      ease: "Power2"
-    });
-  });
-
-
-  this.cutButton.on("pointerdown", () => {
-    if (!this.canStopLine) return;
-    this.sound.play("laser");
-    this.tweens.add({
-      targets: this.cutButton,
-      scale: 0.22,
-      alpha: 1,
-      duration: 70,
-      yoyo: true,
-      ease: "Power2"
-    });
-
-    this.stopLineAndCut();
-  });
-
-
-  this.infoText = this.add.text(
-    width / 2,
-    height * 0.15,
-    "Die Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den roten Knopf drücken, wenn die Linie dort ist.",
-    {
-      fontSize: "28px",
-      fontFamily: "Roboto",
-      color: "#ffffff",
-      backgroundColor: "#000000dc",
-      padding: { x: 40, y: 25 },
-      align: "center",
-      wordWrap: { width: width * 0.6 }
-    }
-  )
-    .setOrigin(0.5)
-    .setDepth(150)
-    .setAlpha(1);
-
-
-  // INFO TEXT FADE OUT
-  this.time.delayedCall(3000, () => {
-    if (!this.infoText) return;
-
-    this.tweens.add({
-      targets: this.infoText,
-      alpha: 0,
-      duration: 500
-    });
-  });
-
-  this.spawnFish();
-
-  this.time.delayedCall(150, () => {
-    this.enableLineClick();
-  });
-}
-
-  spawnFish() {
     const { width, height } = this.scale;
 
-    if (this.fish) this.fish.destroy();
-    if (this.cutLine) this.cutLine.destroy();
+    this.blackBg = this.add.rectangle(
+      width / 2,
+      height / 2,
+      width,
+      height,
+      0x000000,
+      1
+    ).setDepth(99);
+
+    this.cuttingView = this.add.image(
+      width / 2,
+      height / 2,
+      "cuttingview"
+    )
+      .setDepth(100);
+
+    const cuttingScale = Math.min(
+      width / this.cuttingView.width,
+      height / this.cuttingView.height
+    );
+
+    this.cuttingView.setScale(cuttingScale);
+
+    this.note1 = this.add.image(
+      width / 5,
+      height / 3,
+      "note1"
+    )
+      .setDepth(101)
+      .setScale(0.4);
+
+    // BUTTON
+    this.cutButton = this.add.image(
+      width * 0.79,
+      height * 0.88,
+      "button"
+    )
+      .setDepth(160)
+      .setScale(0.22)
+      .setAlpha(1)
+      .setInteractive({
+        useHandCursor: false
+      });
+
+    this.cutButton.on("pointerover", () => {
+
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursorhover.png), pointer"
+      );
+
+      this.tweens.add({
+        targets: this.cutButton,
+        scale: 0.25,
+        alpha: 1,
+        duration: 100,
+        ease: "Power2"
+      });
+    });
+
+    this.cutButton.on("pointerout", () => {
+
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursor.png), auto"
+      );
+
+      this.tweens.add({
+        targets: this.cutButton,
+        scale: 0.22,
+        alpha: 1,
+        duration: 100,
+        ease: "Power2"
+      });
+    });
+
+    this.cutButton.on("pointerdown", () => {
+       this.input.setDefaultCursor(
+        "url(assets/Fish05/cursor.png), pointer"
+      );
+
+      if (!this.canStopLine) return;
+
+      this.sound.play("laser");
+
+      this.tweens.add({
+        targets: this.cutButton,
+        scale: 0.22,
+        alpha: 1,
+        duration: 70,
+        yoyo: true,
+        ease: "Power2"
+      });
+
+      this.stopLineAndCut();
+    });
+
+    // INFO TEXT
+    this.infoText = this.add.text(
+      width / 2,
+      height * 0.15,
+      "Die Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den roten Knopf klicken",
+      {
+        fontSize: "28px",
+        fontFamily: "Roboto",
+        color: "#ffffff",
+        backgroundColor: "#000000dc",
+        padding: {
+          x: 40,
+          y: 25
+        },
+        align: "center",
+        wordWrap: {
+          width: width * 0.6
+        }
+      }
+    )
+      .setOrigin(0.5)
+      .setDepth(150)
+      .setAlpha(1)
+      .setInteractive({
+        useHandCursor: false
+      });
+
+    this.infoText.on("pointerover", () => {
+
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursorhover.png), pointer"
+      );
+    });
+
+    this.infoText.on("pointerout", () => {
+
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursor.png), auto"
+      );
+    });
+
+    this.infoText.on("pointerdown", () => {
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursor.png), pointer"
+      );
+
+      this.tweens.add({
+        targets: this.infoText,
+        alpha: 0,
+        duration: 150,
+        ease: "Power2",
+        onComplete: () => {
+
+          if (this.infoText) {
+
+            this.infoText.destroy();
+            this.infoText = null;
+          }
+        }
+      });
+    });
+
+    this.spawnFish();
+
+    this.time.delayedCall(350, () => {
+      this.enableLineClick();
+    });
+  }
+
+  spawnFish() {
+
+    const { width, height } = this.scale;
+
+    if (this.fish) {
+      this.fish.destroy();
+    }
+
+    if (this.cutLine) {
+      this.cutLine.destroy();
+    }
 
     this.fish = this.add.image(
       width / 1.5,
@@ -251,6 +348,7 @@ startTutorialCutting() {
   }
 
   createMovingCutLine() {
+
     const bounds = this.fish.getBounds();
 
     this.cutLine = this.add.rectangle(
@@ -264,44 +362,58 @@ startTutorialCutting() {
 
     this.cutLineDirection = 1;
     this.cutLineSpeed = 4;
+
     this.canStopLine = false;
   }
 
- enableLineClick() {
-  this.canStopLine = true;
+  enableLineClick() {
 
-  if (this.cutButton) {
-    this.cutButton.setInteractive({ useHandCursor: true });
-    this.cutButton.setAlpha(1);
+    this.canStopLine = true;
+
+    if (this.cutButton) {
+
+      this.cutButton.setInteractive({
+        useHandCursor: false
+      });
+
+      this.cutButton.setAlpha(1);
+    }
   }
-}
 
   update() {
+
     if (!this.cutLine || !this.fish) return;
 
     const bounds = this.fish.getBounds();
 
-    this.cutLine.x += this.cutLineSpeed * this.cutLineDirection;
+    this.cutLine.x +=
+      this.cutLineSpeed *
+      this.cutLineDirection;
 
     if (this.cutLine.x >= bounds.right) {
+
       this.cutLine.x = bounds.right;
       this.cutLineDirection = -1;
     }
 
     if (this.cutLine.x <= bounds.left) {
+
       this.cutLine.x = bounds.left;
       this.cutLineDirection = 1;
     }
   }
 
   stopLineAndCut() {
+
     if (!this.canStopLine) return;
+
     if (!this.cutLine || !this.fish) return;
 
     this.canStopLine = false;
+
     if (this.cutButton) {
-  this.cutButton.disableInteractive();
-}
+      this.cutButton.disableInteractive();
+    }
 
     const bounds = this.fish.getBounds();
 
@@ -324,23 +436,38 @@ startTutorialCutting() {
   }
 
   animateSlice(localX, percent) {
-    const { x, y, displayWidth: w, displayHeight: h } = this.fish;
 
-    const leftHalf = this.add.image(x, y, "fish")
+    const {
+      x,
+      y,
+      displayWidth: w,
+      displayHeight: h
+    } = this.fish;
+
+    const leftHalf = this.add.image(
+      x,
+      y,
+      "fish"
+    )
       .setDisplaySize(w, h)
       .setCrop(0, 0, localX, h)
       .setDepth(103);
 
-    const rightHalf = this.add.image(x, y, "fish")
+    const rightHalf = this.add.image(
+      x,
+      y,
+      "fish"
+    )
       .setDisplaySize(w, h)
       .setCrop(localX, 0, w - localX, h)
       .setDepth(103);
 
     this.fish.destroy();
 
-    const diff = Math.abs(percent - 30); 
+    const diff = Math.abs(percent - 30);
 
     let feedbackColor = "#ff4444";
+
     if (diff <= 2) {
       feedbackColor = "#2ecc71";
     }
@@ -376,6 +503,7 @@ startTutorialCutting() {
     });
 
     this.time.delayedCall(500, () => {
+
       leftHalf.destroy();
       rightHalf.destroy();
       percentText.destroy();
@@ -385,61 +513,76 @@ startTutorialCutting() {
   }
 
   nextFish() {
+
     this.currentFish++;
 
-    if (this.currentFish < this.totalFish) {
+    if (
+      this.currentFish <
+      this.totalFish
+    ) {
+
       this.spawnFish();
 
       this.time.delayedCall(150, () => {
         this.enableLineClick();
       });
+
     } else {
+
       this.finishTutorial();
     }
   }
 
   finishTutorial() {
-  this.canStopLine = false;
 
-  const { width, height } = this.scale;
+    this.canStopLine = false;
 
-  const endHintText = this.add.text(
-    width / 2,
-    height * 0.15,
-    "Klara: Ich sehe du hast es geschafft den Laser zu bedienen. Schneide nun die anderen Fische von der ersten Box auch noch.",
-    {
-      fontSize: "28px",
-      fontFamily: "Roboto",
-      color: "#ffffff",
-      backgroundColor: "#000000dc",
-      padding: { x: 40, y: 25 },
-      align: "center",
-      wordWrap: { width: width * 0.6 }
-    }
-  )
-    .setOrigin(0.5)
-    .setDepth(1000)
-    .setAlpha(0);
+    const { width, height } = this.scale;
 
-  this.tweens.add({
-    targets: endHintText,
-    alpha: 1,
-    duration: 3000,
-    ease: "Power2",
-    onComplete: () => {
+    const endHintText = this.add.text(
+      width / 2,
+      height * 0.15,
+      "Klara: Ich sehe du hast es geschafft den Laser zu bedienen. Schneide nun die anderen Fische von der ersten Box auch noch.",
+      {
+        fontSize: "28px",
+        fontFamily: "Roboto",
+        color: "#ffffff",
+        backgroundColor: "#000000dc",
+        padding: {
+          x: 40,
+          y: 25
+        },
+        align: "center",
+        wordWrap: {
+          width: width * 0.6
+        }
+      }
+    )
+      .setOrigin(0.5)
+      .setDepth(1000)
+      .setAlpha(0);
 
-      this.time.delayedCall(500, () => {
-
-        this.cameras.main.fade(500, 0, 0, 0);
+    this.tweens.add({
+      targets: endHintText,
+      alpha: 1,
+      duration: 3000,
+      ease: "Power2",
+      onComplete: () => {
 
         this.time.delayedCall(500, () => {
-          this.scene.start("Shop");
+
+          this.cameras.main.fade(
+            500,
+            0,
+            0,
+            0
+          );
+
+          this.time.delayedCall(500, () => {
+            this.scene.start("Shop");
+          });
         });
-
-      });
-
-    }
-  });
-
-}
+      }
+    });
+  }
 }

@@ -30,6 +30,9 @@ export default class Shop extends Phaser.Scene {
   }
 
   create() {
+    this.input.setDefaultCursor(
+    "url(assets/Fish05/cursor.png), auto"
+  );
     const { width, height } = this.scale;
 
     this.shopBg = this.add.image(
@@ -156,9 +159,12 @@ export default class Shop extends Phaser.Scene {
       .setDepth(160)
       .setScale(0.22)
       .setAlpha(1)
-      .setInteractive({ useHandCursor: true });
+      .setInteractive({ useHandCursor: false });
 
     this.cutButton.on("pointerover", () => {
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursorhover.png), pointer"
+      );
       this.tweens.add({
         targets: this.cutButton,
         scale: 0.25,
@@ -168,6 +174,9 @@ export default class Shop extends Phaser.Scene {
     });
 
     this.cutButton.on("pointerout", () => {
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursor.png), auto"
+      );
       this.tweens.add({
         targets: this.cutButton,
         scale: 0.22,
@@ -177,6 +186,10 @@ export default class Shop extends Phaser.Scene {
     });
 
     this.cutButton.on("pointerdown", () => {
+      this.input.setDefaultCursor(
+        "url(assets/Fish05/cursor.png), pointer"
+      );
+
       if (!this.canStopLine) return;
       if (!this.cutInputReady) return;
 
@@ -217,6 +230,10 @@ export default class Shop extends Phaser.Scene {
         .setDepth(500);
 
       this.input.once("pointerdown", () => {
+
+        this.input.setDefaultCursor(
+        "url(assets/Fish05/cursor.png), pointer"
+      );
 
         this.tweens.add({
           targets: hintText,
@@ -285,7 +302,7 @@ export default class Shop extends Phaser.Scene {
       this.cutInputReady = true;
 
       if (this.cutButton) {
-        this.cutButton.setInteractive({ useHandCursor: true });
+        this.cutButton.setInteractive({ useHandCursor: false });
         this.cutButton.setAlpha(1);
       }
     });
@@ -538,10 +555,17 @@ export default class Shop extends Phaser.Scene {
         wordWrap: { width: choiceWidth }
       })
         .setOrigin(0, 0.5)
-        .setInteractive({ useHandCursor: true })
+        .setInteractive({ useHandCursor: false })
         .setDepth(600);
 
+      btn.on("pointerover", () => {
+         this.input.setDefaultCursor("url(assets/Fish05/cursorhover.png), auto");
+      });
+      btn.on("pointerout", () => {
+         this.input.setDefaultCursor("url(assets/Fish05/cursor.png), auto");
+      });
       btn.on("pointerdown", () => {
+        this.input.setDefaultCursor("url(assets/Fish05/cursor.png), auto");
         if (choiceMade) return;
 
         choiceMade = true;
@@ -557,7 +581,6 @@ export default class Shop extends Phaser.Scene {
       this.choiceButtons.push(btn);
 
       btn.setAlpha(0);
-
       this.tweens.add({
         targets: btn,
         alpha: 1,
