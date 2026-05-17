@@ -17,6 +17,9 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
 
+    this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
+    this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
+
     this.load.audio("laser", "assets/audio/laser1.mp3");
   }
 
@@ -436,82 +439,88 @@ export default class Tutorial extends Phaser.Scene {
     this.animateSlice(localX, percent);
   }
 
-  animateSlice(localX, percent) {
+ animateSlice(localX, percent) {
+  const {
+    x,
+    y,
+    displayWidth: w,
+    displayHeight: h
+  } = this.fish;
 
-    const {
-      x,
-      y,
-      displayWidth: w,
-      displayHeight: h
-    } = this.fish;
+  const leftHalf = this.add.image(x, y, "fish")
+    .setDisplaySize(w, h)
+    .setCrop(0, 0, localX, h)
+    .setDepth(103);
 
-    const leftHalf = this.add.image(
-      x,
-      y,
-      "fish"
-    )
-      .setDisplaySize(w, h)
-      .setCrop(0, 0, localX, h)
-      .setDepth(103);
+  const rightHalf = this.add.image(x, y, "fish")
+    .setDisplaySize(w, h)
+    .setCrop(localX, 0, w - localX, h)
+    .setDepth(103);
 
-    const rightHalf = this.add.image(
-      x,
-      y,
-      "fish"
-    )
-      .setDisplaySize(w, h)
-      .setCrop(localX, 0, w - localX, h)
-      .setDepth(103);
+  this.fish.destroy();
 
-    this.fish.destroy();
+  const diff = Math.abs(percent - 30);
+  const isOk = diff <= 2;
 
-    const diff = Math.abs(percent - 30);
+  const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
+  const feedbackTexture = isOk ? "good" : "bad";
 
-    let feedbackColor = "#ff4444";
-
-    if (diff <= 2) {
-      feedbackColor = "#2ecc71";
+  const percentText = this.add.text(
+    this.scale.width * 0.12,
+    this.scale.height * 0.8,
+    `${percent}%`,
+    {
+      fontSize: `${Math.max(32, this.scale.width * 0.035)}px`,
+      fontFamily: "Roboto",
+      color: feedbackColor,
+      fontStyle: "bold",
+      stroke: "#000000",
+      strokeThickness: 5
     }
+  )
+    .setOrigin(0, 1)
+    .setDepth(300);
 
-    const percentText = this.add.text(
-      this.scale.width * 0.23,
-      this.scale.height * 0.85,
-      `${percent}%`,
-      {
-        fontSize: `${Math.max(32, this.scale.width * 0.03)}px`,
-        fontFamily: "Roboto",
-        color: feedbackColor,
-        fontStyle: "bold",
-        stroke: "#000000",
-        strokeThickness: 5
-      }
-    )
-      .setOrigin(0, 1)
-      .setDepth(300);
+  const feedbackImg = this.add.image(
+    percentText.x + percentText.width,
+    percentText.y - percentText.height / 2,
+    feedbackTexture
+  )
+    .setOrigin(0, 0.5)
+    .setDepth(300)
+    .setScale(0.25);
 
-    this.tweens.add({
-      targets: leftHalf,
-      x: x - 250,
-      alpha: 0,
-      duration: 350
-    });
+  this.tweens.add({
+    targets: [feedbackImg],
+    scale: 0.6,
+    duration: 100,
+    yoyo: true,
+    ease: "Power2"
+  });
 
-    this.tweens.add({
-      targets: rightHalf,
-      x: x + 250,
-      alpha: 0,
-      duration: 350
-    });
+  this.tweens.add({
+    targets: leftHalf,
+    x: x - 250,
+    alpha: 0,
+    duration: 350
+  });
 
-    this.time.delayedCall(500, () => {
+  this.tweens.add({
+    targets: rightHalf,
+    x: x + 250,
+    alpha: 0,
+    duration: 350
+  });
 
-      leftHalf.destroy();
-      rightHalf.destroy();
-      percentText.destroy();
+  this.time.delayedCall(1000, () => {
+    leftHalf.destroy();
+    rightHalf.destroy();
+    percentText.destroy();
+    feedbackImg.destroy();
 
-      this.nextFish();
-    });
-  }
+    this.nextFish();
+  });
+}
 
   nextFish() {
 
