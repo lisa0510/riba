@@ -395,6 +395,7 @@ export default class Shop extends Phaser.Scene {
     .setDepth(300)
     .setScale(0.25);
 
+
   this.tweens.add({
     targets: leftHalf,
     x: x - 250,
