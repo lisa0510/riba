@@ -16,15 +16,15 @@ export default class Shop extends Phaser.Scene {
     this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
     this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
     this.load.image("customer", "assets/Fish04/Normal_Klara.png");
-
     this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
     this.load.image("fish2", "assets/Fish05/Fish02_Grey.png");
     this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("note2", "assets/Fish04/SecondBox_CuttingBoard.png");
-
     this.load.image("button", "assets/Fish04/Red_Button.png");
     this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klara.png");
+    this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
+    this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
   }
@@ -343,68 +343,83 @@ export default class Shop extends Phaser.Scene {
   }
 
   animateSlice(localX, percent) {
-    const {
-      x,
-      y,
-      displayWidth: w,
-      displayHeight: h
-    } = this.fish;
+  const {
+    x,
+    y,
+    displayWidth: w,
+    displayHeight: h
+  } = this.fish;
 
-    const fishTexture = this.currentBox.fishTexture || "fish";
+  const fishTexture = this.currentBox.fishTexture || "fish";
 
-    const leftHalf = this.add.image(x, y, fishTexture)
-      .setDepth(103)
-      .setDisplaySize(w, h)
-      .setCrop(0, 0, localX, h);
+  const leftHalf = this.add.image(x, y, fishTexture)
+    .setDepth(103)
+    .setDisplaySize(w, h)
+    .setCrop(0, 0, localX, h);
 
-    const rightHalf = this.add.image(x, y, fishTexture)
-      .setDepth(103)
-      .setDisplaySize(w, h)
-      .setCrop(localX, 0, w - localX, h);
+  const rightHalf = this.add.image(x, y, fishTexture)
+    .setDepth(103)
+    .setDisplaySize(w, h)
+    .setCrop(localX, 0, w - localX, h);
 
-    this.fish.destroy();
+  this.fish.destroy();
 
-    const diff = Math.abs(percent - this.targetPercent);
-    const feedbackColor = diff <= 1 ? "#2ecc71" : "#ff4444";
+  const diff = Math.abs(percent - this.targetPercent);
+  const isOk = diff <= 1;
 
-    const percentText = this.add.text(
-      this.scale.width * 0.23,
-      this.scale.height * 0.85,
-      `${percent}%`,
-      {
-        fontSize: `${Math.max(32, this.scale.width * 0.03)}px`,
-        fontFamily: "Roboto",
-        color: feedbackColor,
-        fontStyle: "bold",
-        stroke: "#000000",
-        strokeThickness: 5
-      }
-    )
-      .setOrigin(0, 1)
-      .setDepth(300);
+  const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
+  const feedbackTexture = isOk ? "good" : "bad";
 
-    this.tweens.add({
-      targets: leftHalf,
-      x: x - 250,
-      alpha: 0,
-      duration: 350
-    });
+  const percentText = this.add.text(
+    this.scale.width * 0.12,
+    this.scale.height * 0.8,
+    `${percent}%`,
+    {
+      fontSize: `${Math.max(32, this.scale.width * 0.035)}px`,
+      fontFamily: "Roboto",
+      color: feedbackColor,
+      fontStyle: "bold",
+      stroke: "#000000",
+      strokeThickness: 5
+    }
+  )
+    .setOrigin(0, 1)
+    .setDepth(300);
 
-    this.tweens.add({
-      targets: rightHalf,
-      x: x + 250,
-      alpha: 0,
-      duration: 350
-    });
+  const feedbackImg = this.add.image(
+    percentText.x + percentText.width,
+    percentText.y - percentText.height / 2,
+    feedbackTexture
+  )
+    .setOrigin(0, 0.5)
+    .setDepth(300)
+    .setScale(0.25);
 
-    this.time.delayedCall(800, () => {
-      leftHalf.destroy();
-      rightHalf.destroy();
-      percentText.destroy();
 
-      this.nextFish();
-    });
-  }
+  this.tweens.add({
+    targets: leftHalf,
+    x: x - 250,
+    alpha: 0,
+    duration: 350
+  });
+
+  this.tweens.add({
+    targets: rightHalf,
+    x: x + 250,
+    alpha: 0,
+    duration: 350
+  });
+
+  this.time.delayedCall(800, () => {
+    leftHalf.destroy();
+    rightHalf.destroy();
+    percentText.destroy();
+    feedbackImg.destroy();
+
+    this.nextFish();
+  });
+}
+  
 
   nextFish() {
     this.currentFish++;
