@@ -29,10 +29,10 @@ export default class DialogueManager {
       this.dialogues[0].text &&
       this.dialogues[0].text.includes("Mona:");
 
-    const boxX = width * 0.07;
-    const boxY = height * 0.18;
-    const boxW = width * 0.32;
-    const boxH = height * 0.3;
+    const boxX = width * 0.08;
+    const boxY = height * 0.17;
+    const boxW = width * 0.24;
+    const boxH = height * 0.42;
 
     this.dialogueBg = this.scene.add.rectangle(
       boxX,

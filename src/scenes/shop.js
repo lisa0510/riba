@@ -13,15 +13,15 @@ export default class Shop extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
-    this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
+    this.load.image("shop_bg", "assets/Fish05/Backround_Greyscale.png");
+    this.load.image("shop_laser", "assets/Fish05/Fordergrund_Grey.png");
     this.load.image("customer", "assets/Fish04/Normal_Klara.png");
     this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
     this.load.image("fish2", "assets/Fish05/Fish02_Grey.png");
     this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("note2", "assets/Fish04/SecondBox_CuttingBoard.png");
-    this.load.image("button", "assets/Fish04/Red_Button.png");
+    this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
     this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klara.png");
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
@@ -152,8 +152,8 @@ export default class Shop extends Phaser.Scene {
       .setScale(0.4);
 
     this.cutButton = this.add.image(
-      width * 0.88,
-      height * 0.8,
+      width * 0.93,
+      height * 0.81,
       "button"
     )
       .setDepth(160)
@@ -266,14 +266,16 @@ export default class Shop extends Phaser.Scene {
     this.cutInputReady = false;
 
     this.fish = this.add.image(
-      width / 1.5,
-      height / 3,
-      this.currentBox.fishTexture || "fish"
-    ).setDepth(102);
+    width / 1.5,
+    height / 3,
+    this.currentBox.fishTexture || "fish"
+  ).setDepth(102);
 
-    if (showLine) {
-      this.createMovingCutLine();
-    }
+  this.createFishPath();
+
+  if (showLine) {
+    this.createMovingCutLine();
+  }
   }
 
   createMovingCutLine() {
@@ -329,9 +331,7 @@ export default class Shop extends Phaser.Scene {
       this.fish.displayWidth
     );
 
-    const percent = Math.round(
-      (localX / this.fish.displayWidth) * 100
-    );
+    const percent = this.getPercentOnFishPath(this.cutLine.x);
 
     this.cutResults.push(percent);
     gameState.saveCut(this.currentBoxId, percent);
@@ -371,7 +371,7 @@ export default class Shop extends Phaser.Scene {
   const feedbackTexture = isOk ? "good" : "bad";
 
   const percentText = this.add.text(
-    this.scale.width * 0.12,
+    this.scale.width * 0.09,
     this.scale.height * 0.8,
     `${percent}%`,
     {
@@ -432,7 +432,86 @@ export default class Shop extends Phaser.Scene {
     }
   }
 
+  createFishPath() {
+  if (!this.fish) return;
+
+  const bounds = this.fish.getBounds();
+
+  if (this.fishPathDebug) {
+    this.fishPathDebug.destroy();
+  }
+
+  // BOX 1: gerader Fisch
+  if (this.currentBoxId === "box1") {
+    const startX = bounds.left + bounds.width * 0.04;
+    const startY = this.fish.y;
+
+    const endX = bounds.left + bounds.width * 0.96;
+    const endY = this.fish.y;
+
+    this.fishPath = new Phaser.Curves.Path(startX, startY);
+    this.fishPath.lineTo(endX, endY);
+  }
+
+  // BOX 2: gebogener Fisch
+  if (this.currentBoxId === "box2") {
+  const startX = bounds.left + bounds.width * 0.1;
+  const startY = bounds.top + bounds.height * 0.50;
+
+  this.fishPath = new Phaser.Curves.Path(startX, startY);
+
+  this.fishPath.splineTo([
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.25, bounds.top + bounds.height * 0.5),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.42, bounds.top + bounds.height * 0.66),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.60, bounds.top + bounds.height * 0.58),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.75, bounds.top + bounds.height * 0.30),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.90, bounds.top + bounds.height * 0.42)
+  ]);
+}
+
+  this.drawFishPathDebug();
+}
+
+drawFishPathDebug() {
+  if (!this.fishPath) return;
+
+  if (this.fishPathDebug) {
+    this.fishPathDebug.destroy();
+  }
+
+  this.fishPathDebug = this.add.graphics().setDepth(500);
+  this.fishPathDebug.lineStyle(3, 0xff0000, 1);
+  this.fishPath.draw(this.fishPathDebug);
+}
+
+getPercentOnFishPath(cutX) {
+  if (!this.fishPath) return 0;
+
+  let closestT = 0;
+  let closestDistance = Infinity;
+
+  const steps = 150;
+
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const point = this.fishPath.getPoint(t);
+
+    const distance = Math.abs(point.x - cutX);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestT = t;
+    }
+  }
+
+  return Math.round(closestT * 100);
+}
+
   finishBox() {
+    if (this.fishPathDebug) {
+      this.fishPathDebug.destroy();
+      this.fishPathDebug = null;
+    }
     if (this.blackBg) this.blackBg.destroy();
     if (this.cuttingView) this.cuttingView.destroy();
     if (this.note1) this.note1.destroy();

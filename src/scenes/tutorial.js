@@ -7,8 +7,8 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish04/Back_TalkView.png");
-    this.load.image("shop_laser", "assets/Fish04/Front_TalkView.png");
+    this.load.image("shop_bg", "assets/Fish05/Backround_Greyscale.png");
+    this.load.image("shop_laser", "assets/Fish05/Fordergrund_Grey.png");
     this.load.image("customer", "assets/Fish04/Normal_Klara.png");
 
     this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
@@ -40,7 +40,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.shopBg.setScale(bgScale);
 
-    this.shopLaser = this.add.image(width / 2, height / 1.5, "shop_laser")
+    this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser")
       .setDepth(-10);
 
     const laserScale = Math.min(
@@ -48,7 +48,7 @@ export default class Tutorial extends Phaser.Scene {
       height / this.shopLaser.height
     );
 
-    this.shopLaser.setScale(laserScale * 0.8);
+    this.shopLaser.setScale(laserScale);
 
     const coworkerScale = Phaser.Math.Clamp(
       height * 0.0011,
@@ -89,7 +89,7 @@ export default class Tutorial extends Phaser.Scene {
         fontSize: "25px",
         fontFamily: "Roboto",
         color: "#ffffff",
-        backgroundColor: "#000000e1",
+        backgroundColor: "#000000c9",
         padding: { x: 40, y: 25 },
         align: "left",
         wordWrap: { width: width * 0.2 }
@@ -146,11 +146,32 @@ export default class Tutorial extends Phaser.Scene {
       .setDepth(101)
       .setScale(0.4);
 
-    this.cutButton = this.add.image(width * 0.88, height * 0.8, "button")
+    this.cutButton = this.add.image(width * 0.93, height * 0.81, "button")
       .setDepth(160)
       .setScale(1.2)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
+ 
+      this.buttonGlow = this.add.image(
+      this.cutButton.x,
+      this.cutButton.y,
+      "button"
+    )
+      .setDepth(159)
+      .setScale(1.4)
+      .setAlpha(0.25)
+      .setTint(0xff4444)
+      .setBlendMode(Phaser.BlendModes.ADD);
+
+      this.tweens.add({
+      targets: this.buttonGlow,
+      alpha: 0.55,
+      scale: 1.6,
+      duration: 900,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut"
+    });
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
@@ -277,13 +298,11 @@ export default class Tutorial extends Phaser.Scene {
 
   createFishPath() {
     const bounds = this.fish.getBounds();
-
     const startX = bounds.left + bounds.width * 0.04;
     const startY = this.fish.y;
-
     const endX = bounds.left + bounds.width * 0.96;
     const endY = this.fish.y;
-
+    //erstelle Linienpfad von startX,startY zu endX,endY
     this.fishPath = new Phaser.Curves.Path(startX, startY);
     this.fishPath.lineTo(endX, endY);
 
@@ -297,6 +316,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.fishPathDebug = this.add.graphics().setDepth(500);
     this.fishPathDebug.lineStyle(3, 0xff0000, 1);
+    //debug Linie zeichnen
     this.fishPath.draw(this.fishPathDebug);
   }
 
@@ -372,6 +392,9 @@ export default class Tutorial extends Phaser.Scene {
     if (this.cutButton) {
       this.cutButton.disableInteractive();
     }
+    if (this.buttonGlow) {
+      this.buttonGlow.destroy();
+    }
 
     const bounds = this.fish.getBounds();
 
@@ -423,7 +446,7 @@ export default class Tutorial extends Phaser.Scene {
     const feedbackTexture = isOk ? "good" : "bad";
 
     const percentText = this.add.text(
-      this.scale.width * 0.12,
+      this.scale.width * 0.09,
       this.scale.height * 0.8,
       `${percent}%`,
       {
