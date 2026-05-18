@@ -50,7 +50,7 @@ export default class Shop extends Phaser.Scene {
 
     this.shopLaser = this.add.image(
       width / 2,
-      height / 1.5,
+      height / 2,
       "shop_laser"
     ).setDepth(-10);
 
@@ -59,7 +59,7 @@ export default class Shop extends Phaser.Scene {
       height / this.shopLaser.height
     );
 
-    this.shopLaser.setScale(laserScale * 0.8);
+    this.shopLaser.setScale(laserScale);
 
     this.coworkerScale = Phaser.Math.Clamp(
       height * 0.0011,
@@ -702,7 +702,7 @@ getPercentOnFishPath(cutX) {
     .setScale(this.coworkerScale)
     .setAlpha(0);
 
-  const parasiteNode = this.currentBox.parasiteDialogue[0];
+  const parasiteNode = this.currentBox.parasiteDialogue;
 
   if (!parasiteNode) {
     console.error("parasiteDialogue fehlt in:", this.currentBoxId);
@@ -774,10 +774,10 @@ getPercentOnFishPath(cutX) {
 
                 if (
                   parasiteNode.ignoreDialogue &&
-                  parasiteNode.ignoreDialogue[0]
+                  parasiteNode.ignoreDialogue
                 ) {
                   this.dialogueManager.startDialogue(
-                    [parasiteNode.ignoreDialogue[0]],
+                    [parasiteNode.ignoreDialogue],
                     () => {
                       this.startNextStep();
                     },
