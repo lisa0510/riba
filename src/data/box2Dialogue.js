@@ -4,23 +4,25 @@ targetPercent: 70,
 fishTexture: "fish2",
 noteTexture: "note2",
 
-  introDialogue:
+  introDialogue: [
     {
       text: "Klara: Bin wieder da! Lukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können."
-    },
+    }
+  ],
 
-  successDialogue: 
+  successDialogue: [
     {
       text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage Ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freue einen Tag lang nicht in der Säure schwimmen zu müssen."
     },
+  ],
 
   
-  failureDialogue:
+  failureDialogue: [
   {
     text: "Klara: Vielen Dank! Das ist doch wieder eine ordentliche Menge. Wenn uns bald die letzten Konserven ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein."
-  },
-
-  parasiteDialogue: 
+  }
+],
+  parasiteDialogue: [
      {
       text: "Mona: Nur so wenige sind essbar? Bald gehen uns die letzten Dosen aus und dann müssen wir uns komplett von saurem Fisch ernähren. Was machen wir dann wenn du genauso wenig leistest?",
       choices: [
@@ -40,7 +42,8 @@ noteTexture: "note2",
           text: "Mona: Mich zu ignorieren löst nicht deine Probleme!"
         }
       ]
-    },
+    }
+  ],
 
 preEndingDialogue: {
   ending1: [

@@ -15,14 +15,19 @@ export default class DialogueManager {
 
   startDialogue(dialogues, onComplete = null, keepOpen = false) {
     this.clearDialogue();
+
+    this.dialogues = dialogues || [];
     this.currentIndex = 0;
     this.onComplete = onComplete;
     this.keepOpen = keepOpen;
     this.canClickNext = false;
 
     const { width, height } = this.scene.scale;
-    this.dialogues = dialogues;
-    const isParasite = this.dialogues?.text?.includes("Mona:");
+
+    const isParasite =
+      this.dialogues[0] &&
+      this.dialogues[0].text &&
+      this.dialogues[0].text.includes("Mona:");
 
     const boxX = width * 0.08;
     const boxY = height * 0.17;
