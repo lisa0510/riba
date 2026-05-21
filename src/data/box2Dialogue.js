@@ -6,7 +6,7 @@ noteTexture: "note2",
 
   introDialogue: [
     {
-      text: "Klara: Bin wieder da! Lukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können."
+      text: "Klara: Bin wieder da! \n\nLukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können."
     }
   ],
 

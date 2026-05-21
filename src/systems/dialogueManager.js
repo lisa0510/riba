@@ -3,9 +3,6 @@ export default class DialogueManager {
     this.scene = scene;
 
     this.dialogueText = null;
-    this.dialogueBg = null;
-    this.glitchEvent = null;
-
     this.dialogues = [];
     this.currentIndex = 0;
     this.onComplete = null;
@@ -29,42 +26,25 @@ export default class DialogueManager {
       this.dialogues[0].text &&
       this.dialogues[0].text.includes("Mona:");
 
-    const boxX = width * 0.08;
-    const boxY = height * 0.17;
-    const boxW = width * 0.24;
-    const boxH = height * 0.42;
-
-    this.dialogueBg = this.scene.add.rectangle(
-      boxX,
-      boxY,
-      boxW,
-      boxH,
-      0x000000,
-      0.78
-    )
-      .setOrigin(0, 0)
-      .setDepth(501);
 
     this.dialogueText = this.scene.add.text(
-      boxX + width * 0.025,
-      boxY + height * 0.04,
+      width * 0.08,
+      height * 0.28,
       "",
       {
         fontSize: "25px",
         fontFamily: "Roboto",
         color: isParasite ? "#ff4444" : "#ffffff",
+        padding: { x: 40, y: 25 },
         align: "left",
-        wordWrap: { width: boxW - width * 0.05 },
+        wordWrap: { width: width * 0.2 },
+        backgroundColor: "#000000c9",
         stroke: isParasite ? "#550000" : "#000000",
         strokeThickness: isParasite ? 3 : 0
       }
     )
       .setOrigin(0, 0)
       .setDepth(502);
-
-    if (isParasite) {
-      this.startTextGlitch();
-    }
 
     this.showCurrentDialogue();
 
@@ -76,38 +56,6 @@ export default class DialogueManager {
         this.nextDialogue,
         this
       );
-    });
-  }
-
-  startTextGlitch() {
-    const originalX = this.dialogueText.x;
-    const originalY = this.dialogueText.y;
-
-    this.glitchEvent = this.scene.time.addEvent({
-      delay: 45,
-      loop: true,
-      callback: () => {
-        if (!this.dialogueText) return;
-
-        this.dialogueText.setPosition(
-          originalX + Phaser.Math.Between(-2, 2),
-          originalY + Phaser.Math.Between(-1, 1)
-        );
-
-        this.dialogueText.setColor(
-          Phaser.Math.Between(0, 10) > 7
-            ? "#ff8888"
-            : "#ff4444"
-        );
-      }
-    });
-
-    this.scene.tweens.add({
-      targets: this.dialogueText,
-      alpha: 0.8,
-      duration: 80,
-      yoyo: true,
-      repeat: -1
     });
   }
 
@@ -147,13 +95,7 @@ export default class DialogueManager {
   }
 
   clearDialogue() {
-    if (this.glitchEvent) {
-      this.glitchEvent.destroy();
-      this.glitchEvent = null;
-    }
-
     if (this.dialogueText) {
-      this.scene.tweens.killTweensOf(this.dialogueText);
       this.dialogueText.destroy();
     }
 

@@ -77,7 +77,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.dialogueText = this.add.text(
       width * 0.08,
-      height * 0.42,
+      height * 0.45,
       "",
       {
         fontSize: "25px",
@@ -534,7 +534,7 @@ export default class Tutorial extends Phaser.Scene {
     this.tweens.add({
       targets: endHintText,
       alpha: 1,
-      duration: 3000,
+      duration: 1500,
       ease: "Power2",
       onComplete: () => {
         this.time.delayedCall(1000, () => {
