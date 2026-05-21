@@ -5,7 +5,8 @@ export default class Intro extends Phaser.Scene {
     super("Intro");
   }
   preload() {
-  this.load.audio("sara", "assets/audio/narration/sara.mp3");
+  this.load.audio("intro", "assets/audio/narration/intro.wav");
+  this.load.audio("background_music", "assets/audio/underwater.mp3");
   }
 
   create() {
@@ -23,11 +24,15 @@ export default class Intro extends Phaser.Scene {
     const panelY = height * 0.5;
 
     this.add.rectangle(width / 2, height / 2, width, height, 0x111816);
-    this.introVoice = this.sound.add("sara", {
-        volume: 2
+    this.introVoice = this.sound.add("intro", {
+        volume: 3
       });
 
-      this.introVoice.play();
+    this.introVoice.play();
+    this.backgroundMusic = this.sound.add("background_music", {
+      volume: 0.6
+    });
+    this.backgroundMusic.play();
 
     this.add.rectangle(panelX, panelY, panelW * 0.9, panelH * 0.75, 0x07130e, 0.95)
       .setStrokeStyle(2, 0x3cff9b, 0.7);
@@ -75,12 +80,11 @@ export default class Intro extends Phaser.Scene {
       this.add.rectangle(width / 2, y, width, 1, 0x3cff9b, 0.035);
     }
 
-    const introText = `Als die Sonne begann, die Erdoberfläche zu verbrennen, befanden wir uns auf unserer Arbeitsstation in der Adria.
+    const introText = `Als die Sonne begann, die Erdoberfläche zu verbrennen, befand sich eine Gruppe von Sättigungstaucherinnen in ihrer Arbeitsstation in der Adria.
 
-Die Versäuerung der Ozeane war ein Nebeneffekt, der unser Überleben stark erschwerte, da sich die essbaren Lebewesen auf unbekannte Weise veränderten. 
-So wurde die Nahrung knapp und wir mussten lernen, das Fischfleisch von den Kiemen und jenen Stellen zu befreien, die sich für Menschen als giftig erwiesen hatten.
+Die Versäuerung der Ozeane war ein Nebeneffekt, der das Überleben stark erschwerte, da sich die essbaren Lebewesen auf unbekannte Weise veränderten. So wurde die Nahrung knapp, und die überlebenden Menschen mussten lernen, das Fischfleisch von den Kiemen und jenen Stellen zu befreien, die sich für sie als giftig erwiesen hatten.
 
-Dein Name ist Mona. Du bist eins der Crew-Mitglieder und hast dich dazu entschlossen die Aufgabe dieser Zubereitung der Fische zu übernehmen.
+Dein Name ist Mona. Du bist eines der Crewmitglieder und hast dich dazu entschlossen, die Aufgabe der Zubereitung der Fische zu übernehmen.
 Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushalten kann.`;
 
     const mainText = this.add.text(
@@ -101,7 +105,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
     let isFinished = false;
 
     const typeEvent = this.time.addEvent({
-      delay: isSmallScreen ? 30 : 45,
+      delay: isSmallScreen ? 35 : 50,
       loop: true,
       callback: () => {
         mainText.setText(introText.slice(0, index));

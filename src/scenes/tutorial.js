@@ -9,7 +9,7 @@ export default class Tutorial extends Phaser.Scene {
   preload() {
     this.load.image("shop_bg", "assets/Fish05/Backround_Greyscale.png");
     this.load.image("shop_laser", "assets/Fish05/Fordergrund_Grey.png");
-    this.load.image("customer", "assets/Fish04/Normal_Klara.png");
+    this.load.image("customer", "assets/Fish05/Klara1.png");
 
     this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
     this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
@@ -50,14 +50,8 @@ export default class Tutorial extends Phaser.Scene {
 
     this.shopLaser.setScale(laserScale);
 
-    const coworkerScale = Phaser.Math.Clamp(
-      height * 0.0011,
-      0.6,
-      0.7
-    );
-
-    this.coworker = this.add.image(width / 2, height / 2, "customer")
-      .setScale(coworkerScale)
+    this.coworker = this.add.image(width / 2, height / 1.7, "customer")
+      .setScale(1.1)
       .setDepth(-11);
 
     this.dialogueIndex = 0;
@@ -160,7 +154,7 @@ export default class Tutorial extends Phaser.Scene {
       .setDepth(159)
       .setScale(1.4)
       .setAlpha(0.25)
-      .setTint(0xff4444)
+      .setTint(0x1d22a5)
       .setBlendMode(Phaser.BlendModes.ADD);
 
       this.tweens.add({
@@ -225,12 +219,12 @@ export default class Tutorial extends Phaser.Scene {
     this.infoText = this.add.text(
       width / 2,
       height * 0.15,
-      "Die Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den roten Knopf klicken",
+      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den roten Knopf betätigen!",
       {
         fontSize: "28px",
         fontFamily: "Roboto",
         color: "#ffffff",
-        backgroundColor: "#000000dc",
+        backgroundColor: "#1d22a5c0",
         padding: { x: 40, y: 25 },
         align: "center",
         wordWrap: { width: width * 0.6 }
@@ -268,15 +262,13 @@ export default class Tutorial extends Phaser.Scene {
             this.infoText.destroy();
             this.infoText = null;
           }
+          this.enableLineClick();
         }
       });
     });
 
     this.spawnFish();
 
-    this.time.delayedCall(350, () => {
-      this.enableLineClick();
-    });
   }
 
   spawnFish() {
@@ -492,7 +484,7 @@ export default class Tutorial extends Phaser.Scene {
       duration: 350
     });
 
-    this.time.delayedCall(1500, () => {
+    this.time.delayedCall(2000, () => {
       leftHalf.destroy();
       rightHalf.destroy();
       percentText.destroy();

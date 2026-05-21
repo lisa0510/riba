@@ -25,7 +25,7 @@ export default class Menu extends Phaser.Scene {
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("background_music", {
         loop: true,
-        volume: 0.4
+        volume: 0.6
       });
 
       this.bgMusic.play();
@@ -54,7 +54,6 @@ export default class Menu extends Phaser.Scene {
 
     this.maxEyeDistance = width < 1200 ? 28 : 40;
 
-    // LAYOUT
     const menuX = width < 1200
       ? width * 0.16
       : width * 0.12;
@@ -86,7 +85,6 @@ export default class Menu extends Phaser.Scene {
       height * 0.01
     );
 
-    // TITLE
     this.add.text(menuX, titleY, "RIBA", {
       fontSize: `${titleFontSize}px`,
       fill: "#fff",
@@ -130,7 +128,7 @@ export default class Menu extends Phaser.Scene {
 
     startButton.on("pointerdown", () => {
 
-      this.sound.play("menu_button");
+      this.sound.play("menu_button", { volume: 0.6 });
 
       if (this.bgMusic) {
         this.bgMusic.stop();
@@ -176,7 +174,7 @@ export default class Menu extends Phaser.Scene {
     });
 
     creditsButton.on("pointerdown", () => {
-      this.sound.play("menu_button");
+      this.sound.play("menu_button", { volume: 0.6 });
       this.createCreditsPopup();
     });
 
