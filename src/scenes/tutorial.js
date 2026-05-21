@@ -280,7 +280,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.fish = this.add.image(
       width / 1.5,
-      height / 3,
+      height / 2.5,
       "fish"
     ).setDepth(102);
 
@@ -521,7 +521,7 @@ export default class Tutorial extends Phaser.Scene {
         fontSize: "28px",
         fontFamily: "Roboto",
         color: "#ffffff",
-        backgroundColor: "#000000dc",
+        backgroundColor: "#1d22a5c0",
         padding: { x: 40, y: 25 },
         align: "center",
         wordWrap: { width: width * 0.6 }
@@ -537,10 +537,10 @@ export default class Tutorial extends Phaser.Scene {
       duration: 3000,
       ease: "Power2",
       onComplete: () => {
-        this.time.delayedCall(500, () => {
-          this.cameras.main.fade(500, 0, 0, 0);
+        this.time.delayedCall(1000, () => {
+          this.cameras.main.fade(1000, 0, 0, 0);
 
-          this.time.delayedCall(500, () => {
+          this.time.delayedCall(1000, () => {
             this.scene.start("Shop");
           });
         });

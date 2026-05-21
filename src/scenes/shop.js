@@ -267,7 +267,7 @@ export default class Shop extends Phaser.Scene {
 
     this.fish = this.add.image(
     width / 1.5,
-    height / 3,
+    height / 2.5,
     this.currentBox.fishTexture || "fish"
   ).setDepth(102);
 
