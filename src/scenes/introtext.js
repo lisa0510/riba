@@ -11,9 +11,7 @@ export default class Intro extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
-
     const isSmallScreen = width < 1200 || height < 750;
-
     const headerSize = isSmallScreen ? "17px" : "24px";
     const bodySize = isSmallScreen ? "15px" : "22px";
     const hintSize = isSmallScreen ? "14px" : "18px";

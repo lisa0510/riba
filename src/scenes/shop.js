@@ -41,6 +41,20 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("box2monaagree", "assets/audio/box2/box2monaagree.mp3");
     this.load.audio("binwiederda", "assets/audio/box2/binwiederda.mp3");
     this.load.audio("fishaudio", "assets/audio/box2/fish.mp3");
+    this.load.audio("endingklaraoverall", "assets/audio/ending/endingklaraoverall.mp3");
+    this.load.audio("ending2satt", "assets/audio/ending/ending2satt.mp3");
+    this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
+    this.load.audio("ending1hey", "assets/audio/ending/ending1hey.mp3");
+    this.load.audio("ending1verzehr", "assets/audio/ending/ending1verzehr.mp3");
+    this.load.audio("ending2satt", "assets/audio/ending/ending2satt.mp3");
+    this.load.audio("ending3unglaublich", "assets/audio/ending/ending3unglaublich.mp3");
+    this.load.audio("ending3Zeit", "assets/audio/ending/ending3Zeit.mp3");
+    this.load.audio("ending4haha", "assets/audio/ending/ending4haha.mp3");
+    this.load.audio("ending4huh", "assets/audio/ending/ending4huh.mp3");
+    this.load.audio("ending4mona", "assets/audio/ending/ending4mona.mp3");
+    this.load.audio("ending5unglaublich", "assets/audio/ending/ending5unglaublich.mp3");
+    this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
+
   }
 
   create() {

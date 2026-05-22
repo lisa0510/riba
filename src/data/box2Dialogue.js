@@ -54,32 +54,72 @@ noteTexture: "note2",
 
 preEndingDialogue: {
   ending1: [
-    { text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
-    { text: "Klara: ..Hey ist alles okay? Du siehst so bleich aus, du solltest dich für heute ausruhen." },
-    { text: "Klara: Ich weiss, nicht viele deiner Fische konnten wir für den Verzehr behalten, aber mach dir nichts draus.  Dann muss ich halt wieder früher in die Säure, das gehört nun mal zu unserem jetzigen Leben." }
+    {
+      text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause.",
+      voice: "endingklaraoverall"
+    },
+    {
+      text: "Klara: ..Hey ist alles okay?\n\nDu siehst so bleich aus, du solltest dich für heute ausruhen.",
+      voice: "ending1hey"
+    },
+    {
+      text: "Klara: Ich weiss, nicht viele deiner Fische konnten wir für den Verzehr behalten, aber mach dir nichts draus.  Dann muss ich halt wieder früher in die Säure, das gehört nun mal zu unserem jetzigen Leben.",
+      voice: "ending1verzehr"
+    }
   ],
 
   ending2: [
-    { text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
-    { text: "Klara: Unglaublich, wie viele geniessbare Fische du retten konntest! Die anderen werden heute endlich mal satt." },
+    {
+      text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause.",
+      voice: "endingklaraoverall"
+    },
+    {
+      text: "Klara: Unglaublich, wie viele geniessbare Fische du retten konntest! Die anderen werden heute endlich mal satt.",
+      voice: "ending2satt"
+    }
   ],
 
-  ending3: [
-    { text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
-    { text: "Klara: Unglaublich, du hast so viele Fische für uns als Nahrung behalten können! Die anderen werden sich freuen." },
-    { text: "Klara: So können wir die Zeit auch nutzen uns einfach mal wieder auf uns zu konzentrieren." },
+    ending3: [
+    {
+      text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause.",
+      voice: "endingklaraoverall"
+    },
+    {
+      text: "Klara: Unglaublich, du hast so viele Fische für uns als Nahrung behalten können! Die anderen werden sich freuen.",
+      voice: "ending3unglaublich"
+    },
+      {
+      text: "Klara: So können wir die Zeit auch nutzen uns einfach mal wieder auf uns zu konzentrieren.",
+      voice: "ending3Zeit"
+    }
   ],
 
   ending4: [
-    { text: "Klara: So, dass war alles für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause." },
-    { text: "in progress" }
+    {
+      text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause.",
+      voice: "endingklaraoverall"
+    },
+    {
+      text: "Ending 4",
+      voice: "ending3unglaublich"
+    },
+      {
+      text: "inprogress",
+      voice: "ending3Zeit"
+    }
   ],
 
   endingPerfect: [
-    { text: "Klara: Unglaublich, du hast einfach alle Fische für uns als Nahrung behalten können! Die anderen werden sich freuen." },
-    { text: "Klara: Es ist fast schon unheimlich, dass du keinen einzigen Fehler gemacht hast..." },
+    {
+      text: "Klara: So, dass waren alle für heute! \nBeeil dich mit dem Aufräumen, während ich mich hier aus diesem Anzug zwänge, ich hab jetzt richtig Bock auf unsere Kaffeepause.",
+      voice: "ending5unglaublich"
+    },
+    {
+      text: "Klara: Es ist fast schon unheimlich, dass du keinen einzigen Fehler gemacht hast...",
+      voice: "ending5unheimlich"
+    }
+  ],
 
-  ]
 },
 
 };
