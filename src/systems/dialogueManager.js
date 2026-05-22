@@ -3,6 +3,9 @@ export default class DialogueManager {
     this.scene = scene;
 
     this.dialogueText = null;
+    this.dialogueBg = null;
+    this.currentVoice = null;
+
     this.dialogues = [];
     this.currentIndex = 0;
     this.onComplete = null;
@@ -21,26 +24,39 @@ export default class DialogueManager {
 
     const { width, height } = this.scene.scale;
 
-    const isParasite =
+    const isMona =
       this.dialogues[0] &&
       this.dialogues[0].text &&
       this.dialogues[0].text.includes("Mona:");
 
+    const boxX = width * 0.08;
+    const boxY = height * 0.17;
+    const boxW = width * 0.24;
+    const boxH = height * 0.42;
+
+    this.dialogueBg = this.scene.add.rectangle(
+      boxX,
+      boxY,
+      boxW,
+      boxH,
+      0x000000,
+      0.78
+    )
+      .setOrigin(0, 0)
+      .setDepth(501);
 
     this.dialogueText = this.scene.add.text(
-      width * 0.08,
-      height * 0.28,
+      boxX + width * 0.025,
+      boxY + height * 0.04,
       "",
       {
         fontSize: "25px",
         fontFamily: "Roboto",
-        color: isParasite ? "#ff4444" : "#ffffff",
-        padding: { x: 40, y: 25 },
+        color: isMona ? "#ff4444" : "#ffffff",
         align: "left",
-        wordWrap: { width: width * 0.2 },
-        backgroundColor: "#000000c9",
-        stroke: isParasite ? "#550000" : "#000000",
-        strokeThickness: isParasite ? 3 : 0
+        wordWrap: { width: boxW - width * 0.05 },
+        stroke: isMona ? "#550000" : "#000000",
+        strokeThickness: isMona ? 3 : 0
       }
     )
       .setOrigin(0, 0)
@@ -63,9 +79,23 @@ export default class DialogueManager {
     if (!this.dialogueText) return;
     if (!this.dialogues[this.currentIndex]) return;
 
-    this.dialogueText.setText(
-      this.dialogues[this.currentIndex].text
-    );
+    const currentDialogue = this.dialogues[this.currentIndex];
+
+    this.dialogueText.setText(currentDialogue.text);
+
+    if (currentDialogue.voice) {
+      if (this.currentVoice) {
+        this.currentVoice.stop();
+        this.currentVoice.destroy();
+        this.currentVoice = null;
+      }
+
+      this.currentVoice = this.scene.sound.add(currentDialogue.voice, {
+        volume: 1
+      });
+
+      this.currentVoice.play();
+    }
 
     this.currentIndex++;
   }
@@ -95,6 +125,12 @@ export default class DialogueManager {
   }
 
   clearDialogue() {
+    if (this.currentVoice) {
+      this.currentVoice.stop();
+      this.currentVoice.destroy();
+      this.currentVoice = null;
+    }
+
     if (this.dialogueText) {
       this.dialogueText.destroy();
     }

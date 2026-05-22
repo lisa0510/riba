@@ -21,6 +21,8 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
+    this.load.audio("tutorial1klara", "assets/audio/tutorial/tutorial1klara.mp3");
+    this.load.audio("tutorial2klara", "assets/audio/tutorial/tutorial2klara.mp3");
   }
 
   create() {
@@ -101,18 +103,41 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   displayNextLine() {
-    if (this.dialogueIndex < this.currentDialogues.length) {
-      this.dialogueText.setText(
-        this.currentDialogues[this.dialogueIndex].text
+  if (this.dialogueIndex < this.currentDialogues.length) {
+    const currentDialogue =
+      this.currentDialogues[this.dialogueIndex];
+
+    this.dialogueText.setText(
+      currentDialogue.text
+    );
+
+    if (currentDialogue.voice) {
+      if (this.currentVoice) {
+        this.currentVoice.stop();
+      }
+
+      this.currentVoice = this.sound.add(
+        currentDialogue.voice,
+        {
+          volume: 1
+        }
       );
 
-      this.dialogueIndex++;
-    } else {
-      this.input.off("pointerdown", this.handleProgressDialogue, this);
-      this.dialogueText.destroy();
-      this.startTutorialCutting();
+      this.currentVoice.play();
     }
+
+    this.dialogueIndex++;
+  } else {
+    if (this.currentVoice) {
+      this.currentVoice.stop();
+      this.currentVoice = null;
+    }
+
+    this.input.off("pointerdown", this.handleProgressDialogue, this);
+    this.dialogueText.destroy();
+    this.startTutorialCutting();
   }
+}
 
   startTutorialCutting() {
     const { width, height } = this.scale;

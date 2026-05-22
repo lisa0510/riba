@@ -6,40 +6,47 @@ noteTexture: "note2",
 
   introDialogue: [
     {
-      text: "Klara: Bin wieder da! \n\nLukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können."
+      text: "Klara: Bin wieder da! \n\nLukas hat die Fische der zweiten Box nun auch auf ihre toxische Ausbreitung untersuchen können.",
+      voice: "binwiederda"
     }
   ],
 
   successDialogue: [
     {
-      text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage Ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freue einen Tag lang nicht in der Säure schwimmen zu müssen."
+      text: "Klara: Perfekt, mit so viel Fisch, können wir uns wieder erstmals ein paar Tage Ruhe gönnen. Du weisst nicht wie sehr ich mich darauf freue einen Tag lang nicht in der Säure schwimmen zu müssen.",
+      voice: "box2keinfehler"
     },
   ],
 
   
   failureDialogue: [
   {
-    text: "Klara: Vielen Dank! Das ist doch wieder eine ordentliche Menge. Wenn uns bald die letzten Konserven ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein."
+    text: "Klara: Vielen Dank! Das ist doch wieder eine ordentliche Menge. Wenn uns bald die letzten Konserven ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein.",
+    voice: "box2failedresponse"
   }
 ],
   parasiteDialogue: [
      {
       text: "Mona: Nur so wenige sind essbar? Bald gehen uns die letzten Dosen aus und dann müssen wir uns komplett von saurem Fisch ernähren. Was machen wir dann wenn du genauso wenig leistest?",
+      voice: "box2glitchmona",
       choices: [
         {
           id: "disagree2",
           text: "Klara redet so nicht",
-          nextText: "Mona: Du schreist ja auch nicht jeden Gedanken den du hast in die Welt hinaus. Vertrau mir, dieser Gedanke ist noch der mildeste den ich über dich äussern kann."
+          nextText: "Mona: Du schreist ja auch nicht jeden Gedanken den du hast in die Welt hinaus. Vertrau mir, dieser Gedanke ist noch der mildeste den ich über dich äussern kann.",
+          voice: "box2disagree"
         },
         {
           id: "negative2",
           text: "Was soll ich denn machen?",
-          nextText: "Mona: Mühe! Meinst du ich bin froh täglich in der Säure schwimmen zu müssen? Trotz allem gebe ich mein bestes, aber das ist dir wohl ein Fremdwort."
+          nextText: "Mona: Mühe! Meinst du ich bin froh täglich in der Säure schwimmen zu müssen? Trotz allem gebe ich mein bestes, aber das ist dir wohl ein Fremdwort.",
+          voice: "box2monaagree"
         }
       ],
       ignoreDialogue: [
         {
-          text: "Mona: Mich zu ignorieren löst nicht deine Probleme!"
+          text: "Mona: Mich zu ignorieren löst nicht deine Probleme!",
+          voice: "box2ignore"
         }
       ]
     }

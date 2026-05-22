@@ -27,12 +27,26 @@ export default class Shop extends Phaser.Scene {
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
+    this.load.audio("box1_fehlerresponse", "assets/audio/box1/box1_fehlerresponse.mp3");
+    this.load.audio("box1failedagree", "assets/audio/box1/box1failedagree.mp3");
+    this.load.audio("box1faileddisagree", "assets/audio/box1/box1faileddisagree.mp3");
+    this.load.audio("box1glitchmona", "assets/audio/box1/box1glitchmona.mp3");
+    this.load.audio("box1ignore", "assets/audio/box1/box1ignore.mp3");
+    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.mp3");
+    this.load.audio("box2disagree", "assets/audio/box2/box2disagree.mp3");
+    this.load.audio("box2failedresponse", "assets/audio/box2/box2failedresponse.mp3");
+    this.load.audio("box2glitchmona", "assets/audio/box2/box2glitchmona.mp3");
+    this.load.audio("box2ignore", "assets/audio/box2/box2ignore.mp3");
+    this.load.audio("box2keinfehler", "assets/audio/box2/box2keinfehler.mp3");
+    this.load.audio("box2monaagree", "assets/audio/box2/box2monaagree.mp3");
+    this.load.audio("binwiederda", "assets/audio/box2/binwiederda.mp3");
+    this.load.audio("fishaudio", "assets/audio/box2/fish.mp3");
   }
 
   create() {
     this.input.setDefaultCursor(
-    "url(assets/Fish05/cursor.png), auto"
-  );
+      "url(assets/Fish05/cursor.png), auto"
+    );
     const { width, height } = this.scale;
 
     this.shopBg = this.add.image(
@@ -223,7 +237,7 @@ export default class Shop extends Phaser.Scene {
           backgroundColor: "#000000cc",
           padding: { x: 30, y: 18 },
           align: "center",
-          wordWrap: {width: width * 0.6}
+          wordWrap: { width: width * 0.6 }
         }
       )
         .setOrigin(0.5)
@@ -232,8 +246,8 @@ export default class Shop extends Phaser.Scene {
       this.input.once("pointerdown", () => {
 
         this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), pointer"
-      );
+          "url(assets/Fish05/cursor.png), pointer"
+        );
 
         this.tweens.add({
           targets: hintText,
@@ -266,16 +280,16 @@ export default class Shop extends Phaser.Scene {
     this.cutInputReady = false;
 
     this.fish = this.add.image(
-    width / 1.5,
-    height / 2.5,
-    this.currentBox.fishTexture || "fish"
-  ).setDepth(102);
+      width / 1.5,
+      height / 2.5,
+      this.currentBox.fishTexture || "fish"
+    ).setDepth(102);
 
-  this.createFishPath();
+    this.createFishPath();
 
-  if (showLine) {
-    this.createMovingCutLine();
-  }
+    if (showLine) {
+      this.createMovingCutLine();
+    }
   }
 
   createMovingCutLine() {
@@ -343,83 +357,83 @@ export default class Shop extends Phaser.Scene {
   }
 
   animateSlice(localX, percent) {
-  const {
-    x,
-    y,
-    displayWidth: w,
-    displayHeight: h
-  } = this.fish;
+    const {
+      x,
+      y,
+      displayWidth: w,
+      displayHeight: h
+    } = this.fish;
 
-  const fishTexture = this.currentBox.fishTexture || "fish";
+    const fishTexture = this.currentBox.fishTexture || "fish";
 
-  const leftHalf = this.add.image(x, y, fishTexture)
-    .setDepth(103)
-    .setDisplaySize(w, h)
-    .setCrop(0, 0, localX, h);
+    const leftHalf = this.add.image(x, y, fishTexture)
+      .setDepth(103)
+      .setDisplaySize(w, h)
+      .setCrop(0, 0, localX, h);
 
-  const rightHalf = this.add.image(x, y, fishTexture)
-    .setDepth(103)
-    .setDisplaySize(w, h)
-    .setCrop(localX, 0, w - localX, h);
+    const rightHalf = this.add.image(x, y, fishTexture)
+      .setDepth(103)
+      .setDisplaySize(w, h)
+      .setCrop(localX, 0, w - localX, h);
 
-  this.fish.destroy();
+    this.fish.destroy();
 
-  const diff = Math.abs(percent - this.targetPercent);
-  const isOk = diff <= 1;
+    const diff = Math.abs(percent - this.targetPercent);
+    const isOk = diff <= 1;
 
-  const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
-  const feedbackTexture = isOk ? "good" : "bad";
+    const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
+    const feedbackTexture = isOk ? "good" : "bad";
 
-  const percentText = this.add.text(
-    this.scale.width * 0.09,
-    this.scale.height * 0.8,
-    `${percent}%`,
-    {
-      fontSize: `${Math.max(32, this.scale.width * 0.035)}px`,
-      fontFamily: "Roboto",
-      color: feedbackColor,
-      fontStyle: "bold",
-      stroke: "#000000",
-      strokeThickness: 5
-    }
-  )
-    .setOrigin(0, 1)
-    .setDepth(300);
+    const percentText = this.add.text(
+      this.scale.width * 0.09,
+      this.scale.height * 0.8,
+      `${percent}%`,
+      {
+        fontSize: `${Math.max(32, this.scale.width * 0.035)}px`,
+        fontFamily: "Roboto",
+        color: feedbackColor,
+        fontStyle: "bold",
+        stroke: "#000000",
+        strokeThickness: 5
+      }
+    )
+      .setOrigin(0, 1)
+      .setDepth(300);
 
-  const feedbackImg = this.add.image(
-    percentText.x + percentText.width,
-    percentText.y - percentText.height / 2,
-    feedbackTexture
-  )
-    .setOrigin(0, 0.5)
-    .setDepth(300)
-    .setScale(0.25);
+    const feedbackImg = this.add.image(
+      percentText.x + percentText.width,
+      percentText.y - percentText.height / 2,
+      feedbackTexture
+    )
+      .setOrigin(0, 0.5)
+      .setDepth(300)
+      .setScale(0.25);
 
 
-  this.tweens.add({
-    targets: leftHalf,
-    x: x - 250,
-    alpha: 0,
-    duration: 350
-  });
+    this.tweens.add({
+      targets: leftHalf,
+      x: x - 250,
+      alpha: 0,
+      duration: 350
+    });
 
-  this.tweens.add({
-    targets: rightHalf,
-    x: x + 250,
-    alpha: 0,
-    duration: 350
-  });
+    this.tweens.add({
+      targets: rightHalf,
+      x: x + 250,
+      alpha: 0,
+      duration: 350
+    });
 
-  this.time.delayedCall(800, () => {
-    leftHalf.destroy();
-    rightHalf.destroy();
-    percentText.destroy();
-    feedbackImg.destroy();
+    this.time.delayedCall(800, () => {
+      leftHalf.destroy();
+      rightHalf.destroy();
+      percentText.destroy();
+      feedbackImg.destroy();
 
-    this.nextFish();
-  });
-}
-  
+      this.nextFish();
+    });
+  }
+
 
   nextFish() {
     this.currentFish++;
@@ -433,79 +447,79 @@ export default class Shop extends Phaser.Scene {
   }
 
   createFishPath() {
-  if (!this.fish) return;
+    if (!this.fish) return;
 
-  const bounds = this.fish.getBounds();
+    const bounds = this.fish.getBounds();
 
-  if (this.fishPathDebug) {
-    this.fishPathDebug.destroy();
-  }
-
-  // BOX 1: gerader Fisch
-  if (this.currentBoxId === "box1") {
-    const startX = bounds.left + bounds.width * 0.04;
-    const startY = this.fish.y;
-
-    const endX = bounds.left + bounds.width * 0.96;
-    const endY = this.fish.y;
-
-    this.fishPath = new Phaser.Curves.Path(startX, startY);
-    this.fishPath.lineTo(endX, endY);
-  }
-
-  // BOX 2: gebogener Fisch
-  if (this.currentBoxId === "box2") {
-  const startX = bounds.left + bounds.width * 0.1;
-  const startY = bounds.top + bounds.height * 0.50;
-
-  this.fishPath = new Phaser.Curves.Path(startX, startY);
-
-  this.fishPath.splineTo([
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.25, bounds.top + bounds.height * 0.5),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.42, bounds.top + bounds.height * 0.66),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.60, bounds.top + bounds.height * 0.58),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.75, bounds.top + bounds.height * 0.30),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.90, bounds.top + bounds.height * 0.42)
-  ]);
-}
-
-  this.drawFishPathDebug();
-}
-
-drawFishPathDebug() {
-  if (!this.fishPath) return;
-
-  if (this.fishPathDebug) {
-    this.fishPathDebug.destroy();
-  }
-
-  this.fishPathDebug = this.add.graphics().setDepth(500);
-  this.fishPathDebug.lineStyle(3, 0xff0000, 1);
-  this.fishPath.draw(this.fishPathDebug);
-}
-
-getPercentOnFishPath(cutX) {
-  if (!this.fishPath) return 0;
-
-  let closestT = 0;
-  let closestDistance = Infinity;
-
-  const steps = 150;
-
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const point = this.fishPath.getPoint(t);
-
-    const distance = Math.abs(point.x - cutX);
-
-    if (distance < closestDistance) {
-      closestDistance = distance;
-      closestT = t;
+    if (this.fishPathDebug) {
+      this.fishPathDebug.destroy();
     }
+
+    // BOX 1: gerader Fisch
+    if (this.currentBoxId === "box1") {
+      const startX = bounds.left + bounds.width * 0.04;
+      const startY = this.fish.y;
+
+      const endX = bounds.left + bounds.width * 0.96;
+      const endY = this.fish.y;
+
+      this.fishPath = new Phaser.Curves.Path(startX, startY);
+      this.fishPath.lineTo(endX, endY);
+    }
+
+    // BOX 2: gebogener Fisch
+    if (this.currentBoxId === "box2") {
+      const startX = bounds.left + bounds.width * 0.1;
+      const startY = bounds.top + bounds.height * 0.50;
+
+      this.fishPath = new Phaser.Curves.Path(startX, startY);
+
+      this.fishPath.splineTo([
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.25, bounds.top + bounds.height * 0.5),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.42, bounds.top + bounds.height * 0.66),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.60, bounds.top + bounds.height * 0.58),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.75, bounds.top + bounds.height * 0.30),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.90, bounds.top + bounds.height * 0.42)
+      ]);
+    }
+
+    this.drawFishPathDebug();
   }
 
-  return Math.round(closestT * 100);
-}
+  drawFishPathDebug() {
+    if (!this.fishPath) return;
+
+    if (this.fishPathDebug) {
+      this.fishPathDebug.destroy();
+    }
+
+    this.fishPathDebug = this.add.graphics().setDepth(500);
+    this.fishPathDebug.lineStyle(3, 0xff0000, 1);
+    this.fishPath.draw(this.fishPathDebug);
+  }
+
+  getPercentOnFishPath(cutX) {
+    if (!this.fishPath) return 0;
+
+    let closestT = 0;
+    let closestDistance = Infinity;
+
+    const steps = 150;
+
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const point = this.fishPath.getPoint(t);
+
+      const distance = Math.abs(point.x - cutX);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestT = t;
+      }
+    }
+
+    return Math.round(closestT * 100);
+  }
 
   finishBox() {
     if (this.fishPathDebug) {
@@ -653,10 +667,10 @@ getPercentOnFishPath(cutX) {
         .setDepth(600);
 
       btn.on("pointerover", () => {
-         this.input.setDefaultCursor("url(assets/Fish05/cursorhover.png), auto");
+        this.input.setDefaultCursor("url(assets/Fish05/cursorhover.png), auto");
       });
       btn.on("pointerout", () => {
-         this.input.setDefaultCursor("url(assets/Fish05/cursor.png), auto");
+        this.input.setDefaultCursor("url(assets/Fish05/cursor.png), auto");
       });
       btn.on("pointerdown", () => {
         this.input.setDefaultCursor("url(assets/Fish05/cursor.png), auto");
@@ -685,118 +699,118 @@ getPercentOnFishPath(cutX) {
   }
 
   startParasiteEncounter() {
-  const { width, height } = this.scale;
+    const { width, height } = this.scale;
 
-  if (this.coworker) {
-    this.coworker.setVisible(false);
-  }
-
-  gameState.setParasiteInteraction(this.currentBoxId, true);
-
-  this.parasite = this.add.image(
-    width / 2,
-    height / 2,
-    "parasite"
-  )
-    .setDepth(-11)
-    .setScale(this.coworkerScale)
-    .setAlpha(0);
-
-  const parasiteNode = this.currentBox.parasiteDialogue[0];
-
-  if (!parasiteNode) {
-    console.error("parasiteDialogue fehlt in:", this.currentBoxId);
-    this.startNextStep();
-    return;
-  }
-
-  this.tweens.add({
-    targets: this.parasite,
-    alpha: 1,
-    duration: 250,
-    ease: "Power2",
-    onComplete: () => {
-      this.cameras.main.shake(250, 0.0025);
-
-      const flash = this.add.rectangle(
-        width / 2,
-        height / 2,
-        width,
-        height,
-        0xffffff,
-        0.35
-      ).setDepth(999);
-
-      this.time.delayedCall(60, () => {
-        flash.destroy();
-      });
-
-      this.tweens.add({
-        targets: [this.shopBg, this.shopLaser],
-        x: "+=6",
-        duration: 40,
-        yoyo: true,
-        repeat: 2,
-        ease: "Sine.easeInOut"
-      });
-
-      this.time.delayedCall(300, () => {
-        this.dialogueManager.startDialogue(
-          [{ text: parasiteNode.text }],
-          () => {
-            this.showChoices(
-              parasiteNode.choices,
-
-              (choice) => {
-                gameState.saveParasiteChoice(
-                  this.currentBoxId,
-                  choice.id
-                );
-
-                if (choice.nextText) {
-                  this.dialogueManager.startDialogue(
-                    [{ text: choice.nextText }],
-                    () => {
-                      this.startNextStep();
-                    },
-                    true
-                  );
-                } else {
-                  this.startNextStep();
-                }
-              },
-
-              () => {
-                gameState.saveParasiteChoice(
-                  this.currentBoxId,
-                  "ignored"
-                );
-
-                if (
-                  parasiteNode.ignoreDialogue &&
-                  parasiteNode.ignoreDialogue[0]
-                ) {
-                  this.dialogueManager.startDialogue(
-                    [parasiteNode.ignoreDialogue[0]],
-                    () => {
-                      this.startNextStep();
-                    },
-                    true
-                  );
-                } else {
-                  this.startNextStep();
-                }
-              },
-              //timer
-              10000
-            );
-          },
-          true
-        );
-      });
+    if (this.coworker) {
+      this.coworker.setVisible(false);
     }
-  });
-}
+
+    gameState.setParasiteInteraction(this.currentBoxId, true);
+
+    this.parasite = this.add.image(
+      width / 2,
+      height / 2,
+      "parasite"
+    )
+      .setDepth(-11)
+      .setScale(this.coworkerScale)
+      .setAlpha(0);
+
+    const parasiteNode = this.currentBox.parasiteDialogue[0];
+
+    if (!parasiteNode) {
+      console.error("parasiteDialogue fehlt in:", this.currentBoxId);
+      this.startNextStep();
+      return;
+    }
+
+    this.tweens.add({
+      targets: this.parasite,
+      alpha: 1,
+      duration: 250,
+      ease: "Power2",
+      onComplete: () => {
+        this.cameras.main.shake(250, 0.0025);
+
+        const flash = this.add.rectangle(
+          width / 2,
+          height / 2,
+          width,
+          height,
+          0xffffff,
+          0.35
+        ).setDepth(999);
+
+        this.time.delayedCall(60, () => {
+          flash.destroy();
+        });
+
+        this.tweens.add({
+          targets: [this.shopBg, this.shopLaser],
+          x: "+=6",
+          duration: 40,
+          yoyo: true,
+          repeat: 2,
+          ease: "Sine.easeInOut"
+        });
+
+        this.time.delayedCall(300, () => {
+          this.dialogueManager.startDialogue(
+            [{ text: parasiteNode.text }],
+            () => {
+              this.showChoices(
+                parasiteNode.choices,
+
+                (choice) => {
+                  gameState.saveParasiteChoice(
+                    this.currentBoxId,
+                    choice.id
+                  );
+
+                  if (choice.nextText) {
+                    this.dialogueManager.startDialogue(
+                      [{ text: choice.nextText }],
+                      () => {
+                        this.startNextStep();
+                      },
+                      true
+                    );
+                  } else {
+                    this.startNextStep();
+                  }
+                },
+
+                () => {
+                  gameState.saveParasiteChoice(
+                    this.currentBoxId,
+                    "ignored"
+                  );
+
+                  if (
+                    parasiteNode.ignoreDialogue &&
+                    parasiteNode.ignoreDialogue[0]
+                  ) {
+                    this.dialogueManager.startDialogue(
+                      [parasiteNode.ignoreDialogue[0]],
+                      () => {
+                        this.startNextStep();
+                      },
+                      true
+                    );
+                  } else {
+                    this.startNextStep();
+                  }
+                },
+                //timer
+                10000
+              );
+            },
+            true
+          );
+        });
+      }
+    });
+  }
 
   startNextStep() {
     const { width, height } = this.scale;
