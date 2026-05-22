@@ -152,7 +152,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
         isFinished = true;
         return;
       }
-
+      this.backgroundMusic.stop();
       this.scene.start("Tutorial");
     };
 

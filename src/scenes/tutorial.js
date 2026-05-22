@@ -227,7 +227,10 @@ export default class Tutorial extends Phaser.Scene {
 
       if (!this.canStopLine) return;
 
-      this.sound.play("laser");
+       this.laser = this.sound.add("laser", {
+        volume: 0.3
+      });
+      this.laser.play();
 
       this.tweens.add({
         targets: this.cutButton,

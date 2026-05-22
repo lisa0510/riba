@@ -3,7 +3,6 @@ export default class DialogueManager {
     this.scene = scene;
 
     this.dialogueText = null;
-    this.dialogueBg = null;
     this.currentVoice = null;
 
     this.dialogues = [];
@@ -30,36 +29,30 @@ export default class DialogueManager {
       this.dialogues[0].text.includes("Mona:");
 
     const boxX = width * 0.08;
-    const boxY = height * 0.17;
-    const boxW = width * 0.24;
-    const boxH = height * 0.42;
-
-    this.dialogueBg = this.scene.add.rectangle(
-      boxX,
-      boxY,
-      boxW,
-      boxH,
-      0x000000,
-      0.78
-    )
-      .setOrigin(0, 0)
-      .setDepth(501);
+    const boxY = height * 0.4;
 
     this.dialogueText = this.scene.add.text(
-      boxX + width * 0.025,
-      boxY + height * 0.04,
+      boxX,
+      boxY,
       "",
       {
         fontSize: "25px",
         fontFamily: "Roboto",
         color: isMona ? "#ff4444" : "#ffffff",
+        backgroundColor: "#000000cc",
+        padding: {
+          x: 25,
+          y: 18
+        },
         align: "left",
-        wordWrap: { width: boxW - width * 0.05 },
+        wordWrap: {
+          width: width * 0.22
+        },
         stroke: isMona ? "#550000" : "#000000",
         strokeThickness: isMona ? 3 : 0
       }
     )
-      .setOrigin(0, 0)
+      .setOrigin(0, 0.5) //.setOrigin(0, 0.5) // x/y ist links mittig
       .setDepth(502);
 
     this.showCurrentDialogue();
@@ -135,10 +128,6 @@ export default class DialogueManager {
       this.dialogueText.destroy();
     }
 
-    if (this.dialogueBg) {
-      this.dialogueBg.destroy();
-    }
-
     this.scene.input.off(
       "pointerdown",
       this.nextDialogue,
@@ -146,7 +135,6 @@ export default class DialogueManager {
     );
 
     this.dialogueText = null;
-    this.dialogueBg = null;
     this.keepOpen = false;
     this.canClickNext = false;
   }

@@ -206,8 +206,10 @@ export default class Shop extends Phaser.Scene {
 
       if (!this.canStopLine) return;
       if (!this.cutInputReady) return;
-
-      this.sound.play("laser");
+      this.laser = this.sound.add("laser", {
+        volume: 0.3
+      });
+      this.laser.play();
 
       this.tweens.add({
         targets: this.cutButton,
@@ -243,7 +245,18 @@ export default class Shop extends Phaser.Scene {
         .setOrigin(0.5)
         .setDepth(500);
 
+      this.fishVoice = this.sound.add("fishaudio", {
+        volume: 1
+      });
+
+      this.fishVoice.play();
+
       this.input.once("pointerdown", () => {
+        if (this.fishVoice) {
+          this.fishVoice.stop();
+          this.fishVoice.destroy();
+          this.fishVoice = null;
+        }
 
         this.input.setDefaultCursor(
           "url(assets/Fish05/cursor.png), pointer"
@@ -756,7 +769,7 @@ export default class Shop extends Phaser.Scene {
 
         this.time.delayedCall(300, () => {
           this.dialogueManager.startDialogue(
-            [{ text: parasiteNode.text }],
+            [parasiteNode],
             () => {
               this.showChoices(
                 parasiteNode.choices,
@@ -769,7 +782,10 @@ export default class Shop extends Phaser.Scene {
 
                   if (choice.nextText) {
                     this.dialogueManager.startDialogue(
-                      [{ text: choice.nextText }],
+                      [{
+                        text: choice.nextText,
+                        voice: choice.voice
+                      }],
                       () => {
                         this.startNextStep();
                       },

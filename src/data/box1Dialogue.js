@@ -12,7 +12,7 @@ noteTexture: "note1",
 ],  
   failureDialogue: [
   {
-    text: "Klara: Danke, lass mich die in unser Lager bringen. Hoffen wir bei der nächsten Box können wir mehr behalten. Wenn die Rationen zu klein ausfallen, wird Laura ja immer so gestresst...",
+    text: "Klara: Danke!\n\nLass mich die in unser Lager bringen. Hoffen wir bei der nächsten Box können wir mehr behalten. Wenn die Rationen zu klein ausfallen, wird Laura ja immer so gestresst...",
     voice: "box1_fehlerresponse"
   }
 ],
