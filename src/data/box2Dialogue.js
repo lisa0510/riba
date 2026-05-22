@@ -100,12 +100,20 @@ preEndingDialogue: {
       voice: "endingklaraoverall"
     },
     {
-      text: "Ending 4",
-      voice: "ending3unglaublich"
+      text: "Mona: Nicht nur der Anzug erdrückt mich, auch deine Präsenz tut es.",
+      voice: "ending4mona"
     },
       {
-      text: "inprogress",
-      voice: "ending3Zeit"
+      text: "Klara: Huh?\n\nWieso schaust du plötzlich so traurig?",
+      voice: "ending4huh",
+      choices: [
+        {
+          id: "ending4cut",
+          text: "Kann ich dir beim ausziehen helfen?",
+          nextText: "Klara: Hahaha, okay? Also sehr gerne. Das Ausziehen ist fast noch schlimmer als das Anziehen. Du hast mir noch nie deine Hilfe angeboten, das hat mich nur kurz überrascht...",
+          voice: "ending4haha",
+        }
+      ]
     }
   ],
 

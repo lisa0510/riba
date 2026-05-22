@@ -15,14 +15,14 @@ export default class Shop extends Phaser.Scene {
   preload() {
     this.load.image("shop_bg", "assets/Fish05/Backround_Greyscale.png");
     this.load.image("shop_laser", "assets/Fish05/Fordergrund_Grey.png");
-    this.load.image("customer", "assets/Fish04/Normal_Klara.png");
+    this.load.image("customer", "assets/Fish05/Klara1.png");
     this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
     this.load.image("fish2", "assets/Fish05/Fish02_Grey.png");
     this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("note2", "assets/Fish04/SecondBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
-    this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klara.png");
+    this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klaratest.png");
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
 
@@ -97,10 +97,10 @@ export default class Shop extends Phaser.Scene {
 
     this.coworker = this.add.image(
       width / 2,
-      height / 2,
+      height / 1.7,
       "customer"
     )
-      .setScale(this.coworkerScale)
+      .setScale(1)
       .setDepth(-11);
 
     this.dialogueManager = new DialogueManager(this);
@@ -127,11 +127,33 @@ export default class Shop extends Phaser.Scene {
   }
 
   update() {
+
+    // ENDING 4 PARASITE LASER
+    if (this.ending4CutActive && this.cutLine) {
+
+      this.cutLine.x +=
+        this.cutLineSpeed * this.cutLineDirection;
+
+      if (this.cutLine.x >= this.cutLineMaxX) {
+        this.cutLine.x = this.cutLineMaxX;
+        this.cutLineDirection = -1;
+      }
+
+      if (this.cutLine.x <= this.cutLineMinX) {
+        this.cutLine.x = this.cutLineMinX;
+        this.cutLineDirection = 1;
+      }
+
+      return;
+    }
+
+    // NORMAL FISH CUTTING
     if (!this.cutLine || !this.fish) return;
 
     const bounds = this.fish.getBounds();
 
-    this.cutLine.x += this.cutLineSpeed * this.cutLineDirection;
+    this.cutLine.x +=
+      this.cutLineSpeed * this.cutLineDirection;
 
     if (this.cutLine.x >= bounds.right) {
       this.cutLine.x = bounds.right;
@@ -587,9 +609,7 @@ export default class Shop extends Phaser.Scene {
 
   showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
     const { width, height } = this.scale;
-
     const isSmall = width < 1200 || height < 750;
-
     const baseX = width * 0.08;
     const dialogueY = height * 0.42;
 
@@ -857,8 +877,8 @@ export default class Shop extends Phaser.Scene {
       this.coworker = null;
     }
 
-    this.coworker = this.add.image(width / 2, height / 1.8, "customer")
-      .setScale(this.coworkerScale)
+    this.coworker = this.add.image(width / 2, height / 1.7, "customer")
+      .setScale(1)
       .setDepth(-11);
 
     if (this.currentBoxId === "box1") {
@@ -889,11 +909,134 @@ export default class Shop extends Phaser.Scene {
     }
   }
 
+  startEnding4ParasiteCut(onComplete) {
+    const bounds = this.parasite.getBounds();
+
+    this.cutLine = this.add.rectangle(
+      bounds.left,
+      bounds.centerY,
+      5,
+      bounds.height,
+      0xffffff,
+      0.95
+    ).setDepth(200);
+
+    this.cutLineMinX = bounds.left;
+    this.cutLineMaxX = bounds.right;
+    this.cutLineDirection = 1;
+    this.cutLineSpeed = 7;
+    this.ending4CutActive = true;
+
+    this.ending4CutHandler = () => {
+      if (!this.ending4CutActive) return;
+
+      this.ending4CutActive = false;
+
+      this.sound.play("laser", {
+        volume: 0.4
+      });
+
+      if (this.cutLine) {
+        this.cutLine.destroy();
+        this.cutLine = null;
+      }
+
+      this.cameras.main.shake(300, 0.006);
+
+      this.tweens.add({
+        targets: this.parasite,
+        alpha: 0,
+        scale: this.coworkerScale * 1.25,
+        angle: 8,
+        duration: 500,
+        ease: "Power2",
+        onComplete: () => {
+          if (onComplete) onComplete();
+        }
+      });
+    };
+
+    this.time.delayedCall(200, () => {
+      this.input.once("pointerdown", this.ending4CutHandler);
+    });
+  }
+
   startFinalPath() {
     const ending = gameState.getEnding();
 
     const preEndingDialogue =
       box2Data.preEndingDialogue[ending];
+
+    if (ending === "ending4") {
+      this.dialogueManager.startDialogue(
+        [preEndingDialogue[0]],
+        () => {
+          if (this.coworker) {
+            this.coworker.destroy();
+            this.coworker = null;
+          }
+
+          this.parasite = this.add.image(
+            this.scale.width / 2,
+            this.scale.height / 2,
+            "parasite"
+          )
+            .setScale(this.coworkerScale)
+            .setDepth(-11);
+
+          this.dialogueManager.startDialogue(
+            [preEndingDialogue[1]],
+            () => {
+              this.dialogueManager.clearDialogue();
+
+              this.startEnding4ParasiteCut(() => {
+                if (this.parasite) {
+                  this.parasite.destroy();
+                  this.parasite = null;
+                }
+
+                this.coworker = this.add.image(
+                  this.scale.width / 2,
+                  this.scale.height / 1.7,
+                  "customer"
+                )
+                  .setScale(1)
+                  .setDepth(-11);
+
+                this.dialogueManager.startDialogue(
+                  [preEndingDialogue[2]],
+                  () => {
+                    this.showChoices(
+                      preEndingDialogue[2].choices,
+                      (choice) => {
+                        this.dialogueManager.clearDialogue();
+
+                        this.dialogueManager.startDialogue(
+                          [
+                            {
+                              text: choice.nextText,
+                              voice: choice.voice
+                            }
+                          ],
+                          () => {
+                            this.scene.start("Ending", {
+                              ending: ending
+                            });
+                          }
+                        );
+                      }
+                    );
+                  },
+                  true
+                );
+              });
+            }
+          );
+        }
+      );
+
+      return;
+    }
 
     this.dialogueManager.startDialogue(
       preEndingDialogue,
