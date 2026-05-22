@@ -406,7 +406,9 @@ export default class Shop extends Phaser.Scene {
     this.fish.destroy();
 
     const diff = Math.abs(percent - this.targetPercent);
-    const isOk = diff <= 1;
+    const isOk =
+      percent >= this.targetPercent &&
+      percent <= this.targetPercent + gameState.cutThreshold;
 
     const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
     const feedbackTexture = isOk ? "good" : "bad";

@@ -4,6 +4,12 @@ class GameState {
   }
 
   reset() {
+    this.targetCut = 30;
+
+    // tolerance ONLY above the target
+    // example: target 30 + threshold 5 = 30-35 OK, 29 FAIL
+    this.cutThreshold = 5;
+
     this.boxTargets = {
       box1: 30,
       box2: 70
@@ -30,10 +36,6 @@ class GameState {
     };
   }
 
-  getTargetCut(box) {
-    return this.boxTargets[box] || 30;
-  }
-
   saveCut(box, percent) {
     this.boxResults[box].push(percent);
   }
@@ -50,47 +52,40 @@ class GameState {
     this.parasiteInteractions[box] = interacted;
   }
 
-  isPerfectCut(cut, box) {
-    const target = this.getTargetCut(box);
+  getTargetForBox(box) {
+    return this.boxTargets[box] || this.targetCut;
+  }
 
+  isPerfectCut(cut, target = this.targetCut) {
     return (
-      cut >= target - 1 &&
-      cut <= target + 1
+      cut >= target &&
+      cut <= target + this.cutThreshold
     );
   }
 
   isPerfectBox(box) {
     const results = this.boxResults[box];
+    const target = this.getTargetForBox(box);
 
     if (!results.length) return false;
 
     return results.every((cut) =>
-      this.isPerfectCut(cut, box)
+      this.isPerfectCut(cut, target)
     );
   }
 
   getAllCuts() {
     return [
-      ...this.boxResults.box1.map((cut) => ({
-        cut,
-        box: "box1"
-      })),
-
-      ...this.boxResults.box2.map((cut) => ({
-        cut,
-        box: "box2"
-      }))
+      ...this.boxResults.box1,
+      ...this.boxResults.box2
     ];
   }
 
   hasPerfectRun() {
-    const allCuts = this.getAllCuts();
+    const box1Perfect = this.isPerfectBox("box1");
+    const box2Perfect = this.isPerfectBox("box2");
 
-    if (!allCuts.length) return false;
-
-    return allCuts.every(({ cut, box }) =>
-      this.isPerfectCut(cut, box)
-    );
+    return box1Perfect && box2Perfect;
   }
 
   getRightCutPercentage() {
@@ -98,34 +93,31 @@ class GameState {
 
     if (!allCuts.length) return 0;
 
-    const rightCuts = allCuts.filter(
-      ({ cut, box }) =>
-        this.isPerfectCut(cut, box)
+    const box1Right = this.boxResults.box1.filter((cut) =>
+      this.isPerfectCut(cut, this.boxTargets.box1)
     ).length;
 
-    return (rightCuts / allCuts.length) * 100;
+    const box2Right = this.boxResults.box2.filter((cut) =>
+      this.isPerfectCut(cut, this.boxTargets.box2)
+    ).length;
+
+    return ((box1Right + box2Right) / allCuts.length) * 100;
   }
 
   getWrongCutPercentage() {
-    const allCuts = this.getAllCuts();
-
-    if (!allCuts.length) return 0;
-
-    const wrongCuts = allCuts.filter(
-      ({ cut, box }) =>
-        !this.isPerfectCut(cut, box)
-    ).length;
-
-    return (wrongCuts / allCuts.length) * 100;
+    return 100 - this.getRightCutPercentage();
   }
 
   getWrongCutCount() {
-    const allCuts = this.getAllCuts();
-
-    return allCuts.filter(
-      ({ cut, box }) =>
-        !this.isPerfectCut(cut, box)
+    const box1Wrong = this.boxResults.box1.filter((cut) =>
+      !this.isPerfectCut(cut, this.boxTargets.box1)
     ).length;
+
+    const box2Wrong = this.boxResults.box2.filter((cut) =>
+      !this.isPerfectCut(cut, this.boxTargets.box2)
+    ).length;
+
+    return box1Wrong + box2Wrong;
   }
 
   getAllChoices() {
@@ -144,90 +136,57 @@ class GameState {
 
     const negativeChoices = [
       "negative1",
-      "negative2",
+      "negative2"
     ];
 
-    const negativeCount = allChoices.filter(
-      (choiceId) =>
-        negativeChoices.includes(choiceId)
+    const negativeCount = allChoices.filter((choiceId) =>
+      negativeChoices.includes(choiceId)
     ).length;
 
-    return (
-      (negativeCount / allChoices.length) * 100
-    );
+    return (negativeCount / allChoices.length) * 100;
   }
 
   getEnding() {
-    const allCuts = this.getAllCuts();
+    const wrongCuts = this.getWrongCutCount();
 
-    const wrongCuts = allCuts.filter(
-      ({ cut, box }) =>
-        !this.isPerfectCut(cut, box)
+    const box1WrongCuts = this.boxResults.box1.filter((cut) =>
+      !this.isPerfectCut(cut, this.boxTargets.box1)
     ).length;
 
-    const box1WrongCuts =
-      this.boxResults.box1.filter(
-        (cut) =>
-          !this.isPerfectCut(cut, "box1")
-      ).length;
+    const box2WrongCuts = this.boxResults.box2.filter((cut) =>
+      !this.isPerfectCut(cut, this.boxTargets.box2)
+    ).length;
 
-    const box2WrongCuts =
-      this.boxResults.box2.filter(
-        (cut) =>
-          !this.isPerfectCut(cut, "box2")
-      ).length;
-
-    const negativePercent =
-      this.getNegativeSelfTalkPercentage();
-
-    const agreedWithBadThoughts =
-      negativePercent >= 50;
+    const negativePercent = this.getNegativeSelfTalkPercentage();
+    const agreedWithBadThoughts = negativePercent >= 50;
 
     const box1Bad = box1WrongCuts >= 2;
     const box2Bad = box2WrongCuts >= 2;
 
-    // Secret perfect ending
     if (wrongCuts === 0) {
       return "endingPerfect";
     }
 
-    // Ending 4
     if (agreedWithBadThoughts) {
       return "ending4";
     }
 
-    // Ending 1
-    if (
-      box1Bad &&
-      box2Bad &&
-      !agreedWithBadThoughts
-    ) {
+    if (box1Bad && box2Bad && !agreedWithBadThoughts) {
       return "ending1";
     }
 
-    // Ending 2
-    if (
-      !box1Bad &&
-      !agreedWithBadThoughts
-    ) {
+    if (!box1Bad && !agreedWithBadThoughts) {
       return "ending2";
     }
 
-    // Ending 3
     return "ending3";
   }
 
   getEndingStats() {
     return {
-      rightPercent:
-        this.getRightCutPercentage(),
-
-      wrongPercent:
-        this.getWrongCutPercentage(),
-
-      negativePercent:
-        this.getNegativeSelfTalkPercentage(),
-
+      rightPercent: this.getRightCutPercentage(),
+      wrongPercent: this.getWrongCutPercentage(),
+      negativePercent: this.getNegativeSelfTalkPercentage(),
       ending: this.getEnding()
     };
   }
