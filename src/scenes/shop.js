@@ -877,9 +877,16 @@ export default class Shop extends Phaser.Scene {
       this.coworker = null;
     }
 
-    this.coworker = this.add.image(width / 2, height / 1.7, "customer")
-      .setScale(1)
-      .setDepth(-11);
+    this.coworker = this.add.image(-600,this.scale.height / 1.7,"customer").setScale(1).setDepth(-11);
+
+    this.tweens.add({
+      targets: this.coworker,
+      x: this.scale.width / 2,
+      duration: 500,
+      ease: "Cubic.easeOut"
+    });
+
+
 
     if (this.currentBoxId === "box1") {
       this.currentBoxId = "box2";

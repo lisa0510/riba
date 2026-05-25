@@ -21,7 +21,7 @@ noteTexture: "note2",
   
   failureDialogue: [
   {
-    text: "Klara: Vielen Dank!\n\nDas ist doch wieder eine gute Menge. Wenn uns bald die letzten Konserven ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein.",
+    text: "Klara: Vielen Dank!\n\nDas ist doch wieder eine gute Menge. Wenn uns bald die letzten Dosen ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein.",
     voice: "box2failedresponse"
   }
 ],
