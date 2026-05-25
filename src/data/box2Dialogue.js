@@ -21,7 +21,7 @@ noteTexture: "note2",
   
   failureDialogue: [
   {
-    text: "Klara: Vielen Dank!\n\nDas ist doch wieder eine gute Menge. Wenn uns bald die letzten Dosen ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein.",
+    text: "Klara: Vielen Dank!\n\nDas ist doch wieder eine gute Menge. Wenn uns bald auch die letzten Dosen ausgehen und wir uns komplett von Fisch ernähren müssen, werden wir alle noch dankbarer für deine tägliche Arbeit sein.",
     voice: "box2failedresponse"
   }
 ],
@@ -109,7 +109,7 @@ preEndingDialogue: {
       choices: [
         {
           id: "ending4cut",
-          text: "Kann ich dir beim ausziehen helfen?",
+          text: "Kann ich dir beim Ausziehen helfen?",
           nextText: "Klara: Hahaha, okay? Also sehr gerne. Das Ausziehen ist fast noch schlimmer als das Anziehen. Du hast mir noch nie deine Hilfe angeboten, das hat mich nur kurz überrascht...",
           voice: "ending4haha",
         }

@@ -50,7 +50,7 @@ export default class Menu extends Phaser.Scene {
       "eye"
     );
 
-    this.eye.setScale(width < 1200 ? 0.28 : 0.4);
+    this.eye.setScale(width < 1200 ? 0.23 : 0.3);
 
     this.maxEyeDistance = width < 1200 ? 28 : 40;
 
@@ -88,95 +88,272 @@ export default class Menu extends Phaser.Scene {
     this.add.text(menuX, titleY, "RIBA", {
       fontSize: `${titleFontSize}px`,
       fill: "#fff",
-      fontFamily: '"Roboto"',
+      fontFamily: '"Quantico"',
       fontWeight: "900"
     }).setOrigin(0.5);
 
     // START BUTTON
-    const startButton = this.add.text(
-      menuX,
-      startY,
-      "START",
-      {
-        fontSize: `${buttonFontSize}px`,
-        fill: "#ffffff",
-        fontFamily: '"Roboto"',
-        backgroundColor: "#000000aa",
-        padding: {
-          x: buttonPaddingX,
-          y: buttonPaddingY
-        }
-      }
-    )
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: false,
-        cursor: "url(assets/Fish05/cursorhover.png), pointer"
-      });
+    // START GAME LIQUID GLASS BUTTON
+const buttonW = Math.max(230, width * 0.16);
+const buttonH = Math.max(58, height * 0.07);
 
-    startButton.on("pointerover", () => {
-      startButton.setStyle({
-        fill: "rgb(0, 4, 255)"
-      });
-    });
+const startButtonBg = this.add.rectangle(
+  menuX,
+  startY,
+  buttonW,
+  buttonH,
+  0xffffff,
+  0.12
+)
+  .setOrigin(0.5)
+  .setStrokeStyle(2, 0xffffff, 0.35)
+  .setDepth(5)
+  .setInteractive({
+    useHandCursor: false,
+    cursor: "url(assets/Fish05/cursorhover.png), pointer"
+  });
 
-    startButton.on("pointerout", () => {
-      startButton.setStyle({
-        fill: "#fff"
-      });
-    });
+const startButtonGlow = this.add.rectangle(
+  menuX,
+  startY,
+  buttonW + 10,
+  buttonH + 10,
+  0x9be7ff,
+  0.08
+)
+  .setOrigin(0.5)
+  .setDepth(4);
 
-    startButton.on("pointerdown", () => {
+const startButtonText = this.add.text(
+  menuX,
+  startY,
+  "START GAME",
+  {
+    fontSize: `${Math.max(24, width * 0.022)}px`,
+    fill: "#ffffff",
+    fontFamily: '"Quantico"',
+    letterSpacing: 2
+  }
+)
+  .setOrigin(0.5)
+  .setDepth(6);
 
-      this.sound.play("menu_button", { volume: 0.6 });
+this.tweens.add({
+  targets: startButtonGlow,
+  alpha: 0.18,
+  scaleX: 1.04,
+  scaleY: 1.12,
+  duration: 1200,
+  yoyo: true,
+  repeat: -1,
+  ease: "Sine.easeInOut"
+});
 
-      if (this.bgMusic) {
-        this.bgMusic.stop();
-      }
+startButtonBg.on("pointerover", () => {
+  startButtonBg.setFillStyle(0xffffff, 0.15);
+  startButtonBg.setStrokeStyle(2, 0xffffff, 0.75);
+  startButtonText.setStyle({ fill: "rgb(210, 242, 245)" });
 
-      this.time.delayedCall(150, () => {
-        this.scene.start("Intro");
-      });
-    });
+  this.tweens.add({
+    targets: [startButtonBg, startButtonGlow, startButtonText],
+    scaleX: 1.06,
+    scaleY: 1.06,
+    duration: 120,
+    ease: "Power2"
+  });
+});
 
-    // CREDITS BUTTON
-    const creditsButton = this.add.text(
-      menuX,
-      creditsY,
-      "Credits",
-      {
-        fontSize: `${buttonFontSize}px`,
-        fill: "#ffffff",
-        fontFamily: '"Roboto Condensed"',
-        backgroundColor: "#000000aa",
-        padding: {
-          x: buttonPaddingX,
-          y: buttonPaddingY
-        }
-      }
-    )
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: false,
-        cursor: "url(assets/Fish05/cursorhover.png), pointer"
-      });
+startButtonBg.on("pointerout", () => {
+  startButtonBg.setFillStyle(0xffffff, 0.12);
+  startButtonBg.setStrokeStyle(2, 0xffffff, 0.35);
+  startButtonText.setStyle({ fill: "#ffffff" });
 
-    creditsButton.on("pointerover", () => {
-      creditsButton.setStyle({
-        fill: "rgb(0, 4, 255)"
-      });
-    });
+  this.tweens.add({
+    targets: [startButtonBg, startButtonGlow, startButtonText],
+    scaleX: 1,
+    scaleY: 1,
+    duration: 120,
+    ease: "Power2"
+  });
+});
 
-    creditsButton.on("pointerout", () => {
-      creditsButton.setStyle({
-        fill: "#fff"
-      });
-    });
+startButtonBg.on("pointerdown", () => {
+  this.sound.play("menu_button", { volume: 0.6 });
 
-    creditsButton.on("pointerdown", () => {
-      this.sound.play("menu_button", { volume: 0.6 });
-      this.createCreditsPopup();
-    });
+  if (this.bgMusic) {
+    this.bgMusic.stop();
+  }
+
+  this.tweens.add({
+    targets: [startButtonBg, startButtonGlow, startButtonText],
+    alpha: 0,
+    duration: 180,
+    ease: "Power2",
+    onComplete: () => {
+      this.scene.start("Intro");
+    }
+  });
+});
+
+
+   //
+// CREDITS LIQUID GLASS BUTTON
+//
+
+const creditsButtonBg = this.add.rectangle(
+  menuX,
+  creditsY,
+
+  buttonW,
+  buttonH,
+
+  0xffffff,
+  0.12
+)
+  .setOrigin(0.5)
+  .setStrokeStyle(
+    2,
+    0xffffff,
+    0.35
+  )
+  .setDepth(5)
+  .setInteractive({
+    useHandCursor: false,
+    cursor:
+      "url(assets/Fish05/cursorhover.png), pointer"
+  });
+
+const creditsButtonGlow = this.add.rectangle(
+  menuX,
+  creditsY,
+
+  buttonW + 10,
+  buttonH + 10,
+
+  0x9be7ff,
+  0.08
+)
+  .setOrigin(0.5)
+  .setDepth(4);
+
+const creditsButtonText = this.add.text(
+  menuX,
+  creditsY,
+
+  "CREDITS",
+  {
+    fontSize: `${Math.max(24, width * 0.022)}px`,
+    fill: "#ffffff",
+    fontFamily: '"Quantico"',
+    letterSpacing: 2
+  }
+)
+  .setOrigin(0.5)
+  .setDepth(6);
+
+// AMBIENT PULSE
+this.tweens.add({
+  targets: creditsButtonGlow,
+  alpha: 0.18,
+  scaleX: 1.04,
+  scaleY: 1.12,
+  duration: 1200,
+  yoyo: true,
+  repeat: -1,
+  ease: "Sine.easeInOut"
+});
+
+// HOVER
+creditsButtonBg.on("pointerover", () => {
+
+  creditsButtonBg.setFillStyle(
+    0xffffff,
+    0.15
+  );
+
+  creditsButtonBg.setStrokeStyle(
+    2,
+    0xffffff,
+    0.75
+  );
+
+  creditsButtonText.setStyle({
+    fill: "rgb(210, 242, 245)"
+  });
+
+  this.tweens.add({
+    targets: [
+      creditsButtonBg,
+      creditsButtonGlow,
+      creditsButtonText
+    ],
+
+    scaleX: 1.06,
+    scaleY: 1.06,
+
+    duration: 120,
+    ease: "Power2"
+  });
+});
+
+// OUT
+creditsButtonBg.on("pointerout", () => {
+
+  creditsButtonBg.setFillStyle(
+    0xffffff,
+    0.12
+  );
+
+  creditsButtonBg.setStrokeStyle(
+    2,
+    0xffffff,
+    0.35
+  );
+
+  creditsButtonText.setStyle({
+    fill: "#ffffff"
+  });
+
+  this.tweens.add({
+    targets: [
+      creditsButtonBg,
+      creditsButtonGlow,
+      creditsButtonText
+    ],
+
+    scaleX: 1,
+    scaleY: 1,
+
+    duration: 120,
+    ease: "Power2"
+  });
+});
+
+// CLICK
+creditsButtonBg.on("pointerdown", () => {
+
+  this.sound.play(
+    "menu_button",
+    { volume: 0.6 }
+  );
+
+  this.tweens.add({
+    targets: [
+      creditsButtonBg,
+      creditsButtonGlow,
+      creditsButtonText
+    ],
+
+    scaleX: 0.96,
+    scaleY: 0.96,
+
+    duration: 70,
+    yoyo: true,
+    ease: "Power2"
+  });
+
+  this.createCreditsPopup();
+});
 
     this.createPopup();
   }

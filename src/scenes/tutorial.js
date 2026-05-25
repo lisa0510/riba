@@ -84,60 +84,68 @@ export default class Tutorial extends Phaser.Scene {
       {
         fontSize: "25px",
         fontFamily: "Roboto",
-        color: "#ffffff",
-        backgroundColor: "#000000c9",
-        padding: { x: 40, y: 25 },
+        color: "#d8f7ff",
+        backgroundColor: "#04141bcc",
+        padding: {x: 40,y: 25 },
         align: "left",
-        wordWrap: { width: width * 0.2 }
+        wordWrap: {
+          width: width * 0.2
+        },
+        stroke: "#00e5ff55",
+        strokeThickness: 1
       }
     )
       .setOrigin(0, 0.5)
       .setDepth(200);
 
+
+
     this.input.on("pointerdown", this.handleProgressDialogue, this);
     this.displayNextLine();
   }
+
+
 
   handleProgressDialogue() {
     this.displayNextLine();
   }
 
   displayNextLine() {
-  if (this.dialogueIndex < this.currentDialogues.length) {
-    const currentDialogue =
-      this.currentDialogues[this.dialogueIndex];
+    if (this.dialogueIndex < this.currentDialogues.length) {
+      const currentDialogue =
+        this.currentDialogues[this.dialogueIndex];
 
-    this.dialogueText.setText(
-      currentDialogue.text
-    );
-
-    if (currentDialogue.voice) {
-      if (this.currentVoice) {
-        this.currentVoice.stop();
-      }
-
-      this.currentVoice = this.sound.add(
-        currentDialogue.voice,
-        {
-          volume: 1
-        }
+      this.dialogueText.setText(
+        currentDialogue.text
       );
 
-      this.currentVoice.play();
-    }
+      if (currentDialogue.voice) {
+        if (this.currentVoice) {
+          this.currentVoice.stop();
+        }
 
-    this.dialogueIndex++;
-  } else {
-    if (this.currentVoice) {
-      this.currentVoice.stop();
-      this.currentVoice = null;
-    }
+        this.currentVoice = this.sound.add(
+          currentDialogue.voice,
+          {
+            volume: 1
+          }
+        );
 
-    this.input.off("pointerdown", this.handleProgressDialogue, this);
-    this.dialogueText.destroy();
-    this.startTutorialCutting();
+        this.currentVoice.play();
+      }
+
+      this.dialogueIndex++;
+    } else {
+      if (this.currentVoice) {
+        this.currentVoice.stop();
+        this.currentVoice = null;
+      }
+
+      this.input.off("pointerdown", this.handleProgressDialogue, this);
+      this.dialogueText.destroy();
+      this.startTutorialCutting();
+    }
   }
-}
 
   startTutorialCutting() {
     const { width, height } = this.scale;
@@ -170,8 +178,8 @@ export default class Tutorial extends Phaser.Scene {
       .setScale(1.2)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
- 
-      this.buttonGlow = this.add.image(
+
+    this.buttonGlow = this.add.image(
       this.cutButton.x,
       this.cutButton.y,
       "button"
@@ -182,7 +190,7 @@ export default class Tutorial extends Phaser.Scene {
       .setTint(0x1d22a5)
       .setBlendMode(Phaser.BlendModes.ADD);
 
-      this.tweens.add({
+    this.tweens.add({
       targets: this.buttonGlow,
       alpha: 0.55,
       scale: 1.6,
@@ -227,7 +235,7 @@ export default class Tutorial extends Phaser.Scene {
 
       if (!this.canStopLine) return;
 
-       this.laser = this.sound.add("laser", {
+      this.laser = this.sound.add("laser", {
         volume: 0.3
       });
       this.laser.play();
@@ -275,9 +283,15 @@ export default class Tutorial extends Phaser.Scene {
       );
     });
 
-    this.infoText.on("pointerdown", () => {
+    this.closeInfoText = () => {
+
       this.input.setDefaultCursor(
         "url(assets/Fish05/cursor.png), pointer"
+      );
+
+      this.input.off(
+        "pointerdown",
+        this.closeInfoText
       );
 
       this.tweens.add({
@@ -286,13 +300,22 @@ export default class Tutorial extends Phaser.Scene {
         duration: 150,
         ease: "Power2",
         onComplete: () => {
+
           if (this.infoText) {
             this.infoText.destroy();
             this.infoText = null;
           }
+
           this.enableLineClick();
         }
       });
+    };
+
+    this.time.delayedCall(200, () => {
+      this.input.on(
+        "pointerdown",
+        this.closeInfoText
+      );
     });
 
     this.spawnFish();
@@ -316,22 +339,22 @@ export default class Tutorial extends Phaser.Scene {
     this.createMovingCutLine();
   }
 
- createFishPath() {
-  const bounds = this.fish.getBounds();
+  createFishPath() {
+    const bounds = this.fish.getBounds();
 
-  const startX = bounds.left + bounds.width * 0.04;
-  const startY = this.fish.y;
+    const startX = bounds.left + bounds.width * 0.04;
+    const startY = this.fish.y;
 
-  const endX = bounds.left + bounds.width * 0.96;
-  const endY = this.fish.y;
+    const endX = bounds.left + bounds.width * 0.96;
+    const endY = this.fish.y;
 
-  this.fishPath = new Phaser.Curves.Path(
-    startX,
-    startY
-  );
+    this.fishPath = new Phaser.Curves.Path(
+      startX,
+      startY
+    );
 
-  this.fishPath.lineTo(endX, endY);
-}
+    this.fishPath.lineTo(endX, endY);
+  }
 
   drawFishPathDebug() {
     if (this.fishPathDebug) {
