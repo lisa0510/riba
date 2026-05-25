@@ -520,22 +520,23 @@ export default class Shop extends Phaser.Scene {
 
     // BOX 2: gebogener Fisch
     if (this.currentBoxId === "box2") {
-      const startX = bounds.left + bounds.width * 0.1;
-      const startY = bounds.top + bounds.height * 0.50;
+  const startX = bounds.left + bounds.width * 0.17;
+  const startY = bounds.top + bounds.height * 0.37;
 
-      this.fishPath = new Phaser.Curves.Path(startX, startY);
+  this.fishPath = new Phaser.Curves.Path(startX, startY);
+      //Kontrollpunkte x,y
+  this.fishPath.splineTo([
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.22, bounds.top + bounds.height * 0.46),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.36, bounds.top + bounds.height * 0.60),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.54, bounds.top + bounds.height * 0.56),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.68, bounds.top + bounds.height * 0.24),
+    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.89, bounds.top + bounds.height * 0.42)
+  ]);
+}
 
-      this.fishPath.splineTo([
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.25, bounds.top + bounds.height * 0.5),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.42, bounds.top + bounds.height * 0.66),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.60, bounds.top + bounds.height * 0.58),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.75, bounds.top + bounds.height * 0.30),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.90, bounds.top + bounds.height * 0.42)
-      ]);
-    }
-
-    this.drawFishPathDebug();
   }
+
+  //line für developer, zeigt den Pfad des Fisches an, ist ingame aktuell nicht sichtbar
 
   drawFishPathDebug() {
     if (!this.fishPath) return;

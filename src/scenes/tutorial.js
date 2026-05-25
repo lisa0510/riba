@@ -316,18 +316,22 @@ export default class Tutorial extends Phaser.Scene {
     this.createMovingCutLine();
   }
 
-  createFishPath() {
-    const bounds = this.fish.getBounds();
-    const startX = bounds.left + bounds.width * 0.04;
-    const startY = this.fish.y;
-    const endX = bounds.left + bounds.width * 0.96;
-    const endY = this.fish.y;
-    //erstelle Linienpfad von startX,startY zu endX,endY
-    this.fishPath = new Phaser.Curves.Path(startX, startY);
-    this.fishPath.lineTo(endX, endY);
+ createFishPath() {
+  const bounds = this.fish.getBounds();
 
-    this.drawFishPathDebug();
-  }
+  const startX = bounds.left + bounds.width * 0.04;
+  const startY = this.fish.y;
+
+  const endX = bounds.left + bounds.width * 0.96;
+  const endY = this.fish.y;
+
+  this.fishPath = new Phaser.Curves.Path(
+    startX,
+    startY
+  );
+
+  this.fishPath.lineTo(endX, endY);
+}
 
   drawFishPathDebug() {
     if (this.fishPathDebug) {
