@@ -22,6 +22,9 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
     this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
+    this.load.audio("badcut", "assets/audio/bad2.mp3");
+    this.load.audio("goodcut", "assets/audio/ok2.mp3");
+    this.load.audio("toomuchcut", "assets/audio/ok1.mp3");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
     this.load.audio("tutorial1klara", "assets/audio/tutorial/tutorial1klara.mp3");
@@ -495,11 +498,13 @@ export default class Tutorial extends Phaser.Scene {
 
     let feedbackTexture;
     let feedbackColor;
+    let feedbackSound;
 
     if (percent < 30) {
 
       feedbackTexture = "bad";
       feedbackColor = "#ff4444";
+      feedbackSound = "badcut";
 
     }
 
@@ -507,15 +512,19 @@ export default class Tutorial extends Phaser.Scene {
 
       feedbackTexture = "good";
       feedbackColor = "#2ecc71";
+      feedbackSound = "goodcut";
 
     }
-
     else {
 
       feedbackTexture = "toomuch";
       feedbackColor = "#ffd166";
+      feedbackSound = "toomuchcut";
 
     }
+    this.sound.play(feedbackSound, {
+      volume: 0.6
+    });
 
     const percentText = this.add.text(
       this.scale.width * 0.09,

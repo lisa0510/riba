@@ -55,6 +55,9 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("ending4mona", "assets/audio/ending/ending4mona.mp3");
     this.load.audio("ending5unglaublich", "assets/audio/ending/ending5unglaublich.mp3");
     this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
+    this.load.audio("badcut", "assets/audio/bad2.mp3");
+    this.load.audio("goodcut", "assets/audio/ok2.mp3");
+    this.load.audio("toomuchcut", "assets/audio/ok1.mp3");
 
     this.load.audio("backgroundmusic", "assets/audio/riba.wav");
 
@@ -442,23 +445,35 @@ export default class Shop extends Phaser.Scene {
     let feedbackTexture;
     let feedbackColor;
 
-    if (percent < this.targetPercent) {
-      feedbackTexture = "bad";
-      feedbackColor = "#ff4444";
-    }
+    let feedbackSound;
 
-    else if (
-      percent >= this.targetPercent &&
-      percent <= this.targetPercent + gameState.cutThreshold
-    ) {
-      feedbackTexture = "good";
-      feedbackColor = "#2ecc71";
-    }
+// UNDERCUT
+if (percent < this.targetPercent) {
+  feedbackTexture = "bad";
+  feedbackColor = "#ff4444";
+  feedbackSound = "badcut";
+}
 
-    else {
-      feedbackTexture = "toomuch";
-      feedbackColor = "#ffd166";
-    }
+// PERFECT
+else if (
+  percent >= this.targetPercent &&
+  percent <= this.targetPercent + gameState.cutThreshold
+) {
+  feedbackTexture = "good";
+  feedbackColor = "#2ecc71";
+  feedbackSound = "goodcut";
+}
+
+// OVERCUT
+else {
+  feedbackTexture = "toomuch";
+  feedbackColor = "#ffd166";
+  feedbackSound = "toomuchcut";
+}
+
+this.sound.play(feedbackSound, {
+  volume: 0.6
+});
 
     const percentText = this.add.text(
       this.scale.width * 0.09,
