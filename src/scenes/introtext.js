@@ -6,7 +6,7 @@ export default class Intro extends Phaser.Scene {
   }
   preload() {
   this.load.audio("intro", "assets/audio/narration/intro.wav");
-  this.load.audio("background_music", "assets/audio/underwater.mp3");
+  this.load.audio("background", "assets/audio/underwater.mp3");
   }
 
   create() {
@@ -27,8 +27,8 @@ export default class Intro extends Phaser.Scene {
       });
 
     this.introVoice.play();
-    this.backgroundMusic = this.sound.add("background_music", {
-      volume: 0.6
+    this.backgroundMusic = this.sound.add("background", {
+      volume: 0.3
     });
     this.backgroundMusic.play();
 

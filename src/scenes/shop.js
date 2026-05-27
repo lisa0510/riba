@@ -55,6 +55,8 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("ending5unglaublich", "assets/audio/ending/ending5unglaublich.mp3");
     this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
 
+    this.load.audio("backgroundmusic", "assets/audio/riba.wav");
+
   }
 
   create() {
@@ -62,6 +64,15 @@ export default class Shop extends Phaser.Scene {
       "url(assets/Fish05/cursor.png), auto"
     );
     const { width, height } = this.scale;
+
+    if (!this.bgMusic || !this.bgMusic.isPlaying) {
+      this.bgMusic = this.sound.add("backgroundmusic", {
+        loop: true,
+        volume: 0.7
+      });
+
+      this.bgMusic.play();
+    }
 
     this.shopBg = this.add.image(
       width / 2,
@@ -243,7 +254,7 @@ export default class Shop extends Phaser.Scene {
       if (!this.canStopLine) return;
       if (!this.cutInputReady) return;
       this.laser = this.sound.add("laser", {
-        volume: 0.3
+        volume: 0.2
       });
       this.laser.play();
 

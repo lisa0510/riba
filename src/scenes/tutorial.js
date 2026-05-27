@@ -17,6 +17,8 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
 
+    this.load.audio("bg_music", "assets/audio/riba.wav");
+
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
 
@@ -29,6 +31,14 @@ export default class Tutorial extends Phaser.Scene {
     this.input.setDefaultCursor(
       "url(assets/Fish05/cursor.png), auto"
     );
+
+    if (!this.bgMusic || !this.bgMusic.isPlaying) {
+      this.bgMusic = this.sound.add("bg_music", {
+        volume: 0.7
+      });
+
+      this.bgMusic.play();
+    }
 
     const { width, height } = this.scale;
 
@@ -86,7 +96,7 @@ export default class Tutorial extends Phaser.Scene {
         fontFamily: "Roboto",
         color: "#d8f7ff",
         backgroundColor: "#04141bcc",
-        padding: {x: 40,y: 25 },
+        padding: { x: 40, y: 25 },
         align: "left",
         wordWrap: {
           width: width * 0.2
@@ -236,7 +246,7 @@ export default class Tutorial extends Phaser.Scene {
       if (!this.canStopLine) return;
 
       this.laser = this.sound.add("laser", {
-        volume: 0.3
+        volume: 0.2
       });
       this.laser.play();
 
@@ -594,7 +604,20 @@ export default class Tutorial extends Phaser.Scene {
       onComplete: () => {
         this.time.delayedCall(1000, () => {
           this.cameras.main.fade(1000, 0, 0, 0);
+          if (this.bgMusic) {
+            this.tweens.add({
+              targets: this.bgMusic,
+              volume: 0,
+              duration: 800,
+              ease: "Sine.easeOut",
+              onComplete: () => {
+                this.bgMusic.stop();
+                this.bgMusic.destroy();
+                this.bgMusic = null;
+              }
+            });
 
+          }
           this.time.delayedCall(1000, () => {
             this.scene.start("Shop");
           });

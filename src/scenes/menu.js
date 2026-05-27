@@ -10,7 +10,7 @@ export default class Menu extends Phaser.Scene {
     this.load.image("eye", "assets/Fish02/UI/FischAuge_Menü_UI.png");
     this.load.image("headphones", "assets/Fish02/UI/Kopfhörer_Symbol_UI.png");
 
-    this.load.audio("background_music", "assets/audio/underwater.mp3");
+    this.load.audio("background_music", "assets/audio/soundtrack.wav");
     this.load.audio("menu_button", "assets/audio/menubutton.mp3");
   }
 
@@ -25,13 +25,12 @@ export default class Menu extends Phaser.Scene {
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("background_music", {
         loop: true,
-        volume: 0.6
+        volume: 2
       });
 
       this.bgMusic.play();
     }
 
-    // BACKGROUND
     const bg = this.add.image(
       width / 2,
       height / 2,
@@ -39,9 +38,6 @@ export default class Menu extends Phaser.Scene {
     );
 
     bg.setDisplaySize(width, height);
-
-
-    // AIR BUBBLES
     this.bubbles = this.add.group();
 
     this.time.addEvent({
@@ -100,12 +96,10 @@ export default class Menu extends Phaser.Scene {
     this.add.text(menuX, titleY, "RIBA", {
       fontSize: `${titleFontSize}px`,
       fill: "#fff",
-      fontFamily: '"Quantico"',
+      fontFamily: '""',
       fontWeight: "900"
     }).setOrigin(0.5);
 
-    // START BUTTON
-    // START GAME LIQUID GLASS BUTTON
     const buttonW = Math.max(230, width * 0.16);
     const buttonH = Math.max(58, height * 0.07);
 
@@ -190,10 +184,11 @@ export default class Menu extends Phaser.Scene {
     });
 
     startButtonBg.on("pointerdown", () => {
-      this.sound.play("menu_button", { volume: 0.6 });
-
+      this.sound.play("menu_button", { volume: 0.5 });
       if (this.bgMusic) {
         this.bgMusic.stop();
+        this.bgMusic.destroy();
+        this.bgMusic = null;
       }
 
       this.tweens.add({
@@ -207,10 +202,6 @@ export default class Menu extends Phaser.Scene {
       });
     });
 
-
-    //
-    // CREDITS LIQUID GLASS BUTTON
-    //
 
     const creditsButtonBg = this.add.rectangle(
       menuX,
@@ -346,7 +337,7 @@ export default class Menu extends Phaser.Scene {
 
       this.sound.play(
         "menu_button",
-        { volume: 0.6 }
+        { volume: 0.5 }
       );
 
       this.tweens.add({
@@ -371,47 +362,47 @@ export default class Menu extends Phaser.Scene {
   }
 
   createBubble() {
-  const { width, height } = this.scale;
+    const { width, height } = this.scale;
 
-  const bubbleSize = Phaser.Math.Between(6, 20);
-  const startX = Phaser.Math.Between(0, width);
-  const startY = height + bubbleSize + 20;
+    const bubbleSize = Phaser.Math.Between(6, 20);
+    const startX = Phaser.Math.Between(0, width);
+    const startY = height + bubbleSize + 20;
 
-  const bubble = this.add.circle(
-    startX,
-    startY,
-    bubbleSize,
-    0xffffff,
-    0.12
-  )
-    .setStrokeStyle(2, 0xffffff, 0.16)
-    .setDepth(1);
+    const bubble = this.add.circle(
+      startX,
+      startY,
+      bubbleSize,
+      0xffffff,
+      0.12
+    )
+      .setStrokeStyle(2, 0xffffff, 0.16)
+      .setDepth(1);
 
-  const drift = Phaser.Math.Between(-80, 80);
-  const duration = Phaser.Math.Between(5000, 9000);
+    const drift = Phaser.Math.Between(-80, 80);
+    const duration = Phaser.Math.Between(5000, 9000);
 
-  this.tweens.add({
-    targets: bubble,
-    x: startX + drift,
-    y: -bubbleSize,
-    alpha: 0,
-    duration: duration,
-    ease: "Sine.easeInOut",
-    onComplete: () => {
-      bubble.destroy();
-    }
-  });
+    this.tweens.add({
+      targets: bubble,
+      x: startX + drift,
+      y: -bubbleSize,
+      alpha: 0,
+      duration: duration,
+      ease: "Sine.easeInOut",
+      onComplete: () => {
+        bubble.destroy();
+      }
+    });
 
-  this.tweens.add({
-    targets: bubble,
-    scaleX: 1.25,
-    scaleY: 0.95,
-    duration: 1200,
-    yoyo: true,
-    repeat: -1,
-    ease: "Sine.easeInOut"
-  });
-}
+    this.tweens.add({
+      targets: bubble,
+      scaleX: 1.25,
+      scaleY: 0.95,
+      duration: 1200,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut"
+    });
+  }
 
   createPopup() {
 

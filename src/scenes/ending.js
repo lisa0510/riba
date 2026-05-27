@@ -7,21 +7,15 @@ export default class Ending extends Phaser.Scene {
   }
 
   preload() {
-    this.load.audio("background", "assets/audio/underwater.mp3");
     this.load.audio("ending1", "assets/audio/narration/ending1.wav");
     this.load.audio("ending2", "assets/audio/narration/ending2.wav");
     this.load.audio("ending3", "assets/audio/narration/ending3.wav");
     this.load.audio("ending4", "assets/audio/narration/ending4.wav");
     this.load.audio("ending5", "assets/audio/narration/ending5.wav");
+    
   }
 
   create(data) {
-    this.backgroundMusic = this.sound.add("background");
-    this.backgroundMusic.play({
-      volume: 0.6,
-      loop: true
-    });
-
     const { width, height } = this.scale;
 
     const endingKey = data.ending || "ending1";
