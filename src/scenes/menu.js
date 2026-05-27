@@ -40,6 +40,18 @@ export default class Menu extends Phaser.Scene {
 
     bg.setDisplaySize(width, height);
 
+
+    // AIR BUBBLES
+    this.bubbles = this.add.group();
+
+    this.time.addEvent({
+      delay: 500,
+      loop: true,
+      callback: () => {
+        this.createBubble();
+      }
+    });
+
     // EYE
     this.eyeCenterX = width / 2;
     this.eyeCenterY = height * 0.35;
@@ -94,269 +106,312 @@ export default class Menu extends Phaser.Scene {
 
     // START BUTTON
     // START GAME LIQUID GLASS BUTTON
-const buttonW = Math.max(230, width * 0.16);
-const buttonH = Math.max(58, height * 0.07);
+    const buttonW = Math.max(230, width * 0.16);
+    const buttonH = Math.max(58, height * 0.07);
 
-const startButtonBg = this.add.rectangle(
-  menuX,
-  startY,
-  buttonW,
-  buttonH,
-  0xffffff,
-  0.12
-)
-  .setOrigin(0.5)
-  .setStrokeStyle(2, 0xffffff, 0.35)
-  .setDepth(5)
-  .setInteractive({
-    useHandCursor: false,
-    cursor: "url(assets/Fish05/cursorhover.png), pointer"
-  });
+    const startButtonBg = this.add.rectangle(
+      menuX,
+      startY,
+      buttonW,
+      buttonH,
+      0xffffff,
+      0.12
+    )
+      .setOrigin(0.5)
+      .setStrokeStyle(2, 0xffffff, 0.35)
+      .setDepth(5)
+      .setInteractive({
+        useHandCursor: false,
+        cursor: "url(assets/Fish05/cursorhover.png), pointer"
+      });
 
-const startButtonGlow = this.add.rectangle(
-  menuX,
-  startY,
-  buttonW + 10,
-  buttonH + 10,
-  0x9be7ff,
-  0.08
-)
-  .setOrigin(0.5)
-  .setDepth(4);
+    const startButtonGlow = this.add.rectangle(
+      menuX,
+      startY,
+      buttonW + 10,
+      buttonH + 10,
+      0x9be7ff,
+      0.08
+    )
+      .setOrigin(0.5)
+      .setDepth(4);
 
-const startButtonText = this.add.text(
-  menuX,
-  startY,
-  "START GAME",
-  {
-    fontSize: `${Math.max(24, width * 0.022)}px`,
-    fill: "#ffffff",
-    fontFamily: '"Quantico"',
-    letterSpacing: 2
-  }
-)
-  .setOrigin(0.5)
-  .setDepth(6);
+    const startButtonText = this.add.text(
+      menuX,
+      startY,
+      "START GAME",
+      {
+        fontSize: `${Math.max(24, width * 0.022)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Quantico"',
+        letterSpacing: 2
+      }
+    )
+      .setOrigin(0.5)
+      .setDepth(6);
 
-this.tweens.add({
-  targets: startButtonGlow,
-  alpha: 0.18,
-  scaleX: 1.04,
-  scaleY: 1.12,
-  duration: 1200,
-  yoyo: true,
-  repeat: -1,
-  ease: "Sine.easeInOut"
-});
+    this.tweens.add({
+      targets: startButtonGlow,
+      alpha: 0.18,
+      scaleX: 1.04,
+      scaleY: 1.12,
+      duration: 1200,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut"
+    });
 
-startButtonBg.on("pointerover", () => {
-  startButtonBg.setFillStyle(0xffffff, 0.15);
-  startButtonBg.setStrokeStyle(2, 0xffffff, 0.75);
-  startButtonText.setStyle({ fill: "rgb(210, 242, 245)" });
+    startButtonBg.on("pointerover", () => {
+      startButtonBg.setFillStyle(0xffffff, 0.15);
+      startButtonBg.setStrokeStyle(2, 0xffffff, 0.75);
+      startButtonText.setStyle({ fill: "rgb(210, 242, 245)" });
 
-  this.tweens.add({
-    targets: [startButtonBg, startButtonGlow, startButtonText],
-    scaleX: 1.06,
-    scaleY: 1.06,
-    duration: 120,
-    ease: "Power2"
-  });
-});
+      this.tweens.add({
+        targets: [startButtonBg, startButtonGlow, startButtonText],
+        scaleX: 1.06,
+        scaleY: 1.06,
+        duration: 120,
+        ease: "Power2"
+      });
+    });
 
-startButtonBg.on("pointerout", () => {
-  startButtonBg.setFillStyle(0xffffff, 0.12);
-  startButtonBg.setStrokeStyle(2, 0xffffff, 0.35);
-  startButtonText.setStyle({ fill: "#ffffff" });
+    startButtonBg.on("pointerout", () => {
+      startButtonBg.setFillStyle(0xffffff, 0.12);
+      startButtonBg.setStrokeStyle(2, 0xffffff, 0.35);
+      startButtonText.setStyle({ fill: "#ffffff" });
 
-  this.tweens.add({
-    targets: [startButtonBg, startButtonGlow, startButtonText],
-    scaleX: 1,
-    scaleY: 1,
-    duration: 120,
-    ease: "Power2"
-  });
-});
+      this.tweens.add({
+        targets: [startButtonBg, startButtonGlow, startButtonText],
+        scaleX: 1,
+        scaleY: 1,
+        duration: 120,
+        ease: "Power2"
+      });
+    });
 
-startButtonBg.on("pointerdown", () => {
-  this.sound.play("menu_button", { volume: 0.6 });
+    startButtonBg.on("pointerdown", () => {
+      this.sound.play("menu_button", { volume: 0.6 });
 
-  if (this.bgMusic) {
-    this.bgMusic.stop();
-  }
+      if (this.bgMusic) {
+        this.bgMusic.stop();
+      }
 
-  this.tweens.add({
-    targets: [startButtonBg, startButtonGlow, startButtonText],
-    alpha: 0,
-    duration: 180,
-    ease: "Power2",
-    onComplete: () => {
-      this.scene.start("Intro");
-    }
-  });
-});
+      this.tweens.add({
+        targets: [startButtonBg, startButtonGlow, startButtonText],
+        alpha: 0,
+        duration: 180,
+        ease: "Power2",
+        onComplete: () => {
+          this.scene.start("Intro");
+        }
+      });
+    });
 
 
-   //
-// CREDITS LIQUID GLASS BUTTON
-//
+    //
+    // CREDITS LIQUID GLASS BUTTON
+    //
 
-const creditsButtonBg = this.add.rectangle(
-  menuX,
-  creditsY,
+    const creditsButtonBg = this.add.rectangle(
+      menuX,
+      creditsY,
 
-  buttonW,
-  buttonH,
+      buttonW,
+      buttonH,
 
-  0xffffff,
-  0.12
-)
-  .setOrigin(0.5)
-  .setStrokeStyle(
-    2,
-    0xffffff,
-    0.35
-  )
-  .setDepth(5)
-  .setInteractive({
-    useHandCursor: false,
-    cursor:
-      "url(assets/Fish05/cursorhover.png), pointer"
-  });
+      0xffffff,
+      0.12
+    )
+      .setOrigin(0.5)
+      .setStrokeStyle(
+        2,
+        0xffffff,
+        0.35
+      )
+      .setDepth(5)
+      .setInteractive({
+        useHandCursor: false,
+        cursor:
+          "url(assets/Fish05/cursorhover.png), pointer"
+      });
 
-const creditsButtonGlow = this.add.rectangle(
-  menuX,
-  creditsY,
+    const creditsButtonGlow = this.add.rectangle(
+      menuX,
+      creditsY,
 
-  buttonW + 10,
-  buttonH + 10,
+      buttonW + 10,
+      buttonH + 10,
 
-  0x9be7ff,
-  0.08
-)
-  .setOrigin(0.5)
-  .setDepth(4);
+      0x9be7ff,
+      0.08
+    )
+      .setOrigin(0.5)
+      .setDepth(4);
 
-const creditsButtonText = this.add.text(
-  menuX,
-  creditsY,
+    const creditsButtonText = this.add.text(
+      menuX,
+      creditsY,
 
-  "CREDITS",
-  {
-    fontSize: `${Math.max(24, width * 0.022)}px`,
-    fill: "#ffffff",
-    fontFamily: '"Quantico"',
-    letterSpacing: 2
-  }
-)
-  .setOrigin(0.5)
-  .setDepth(6);
+      "CREDITS",
+      {
+        fontSize: `${Math.max(24, width * 0.022)}px`,
+        fill: "#ffffff",
+        fontFamily: '"Quantico"',
+        letterSpacing: 2
+      }
+    )
+      .setOrigin(0.5)
+      .setDepth(6);
 
-// AMBIENT PULSE
-this.tweens.add({
-  targets: creditsButtonGlow,
-  alpha: 0.18,
-  scaleX: 1.04,
-  scaleY: 1.12,
-  duration: 1200,
-  yoyo: true,
-  repeat: -1,
-  ease: "Sine.easeInOut"
-});
+    // AMBIENT PULSE
+    this.tweens.add({
+      targets: creditsButtonGlow,
+      alpha: 0.18,
+      scaleX: 1.04,
+      scaleY: 1.12,
+      duration: 1200,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut"
+    });
 
-// HOVER
-creditsButtonBg.on("pointerover", () => {
+    // HOVER
+    creditsButtonBg.on("pointerover", () => {
 
-  creditsButtonBg.setFillStyle(
-    0xffffff,
-    0.15
-  );
+      creditsButtonBg.setFillStyle(
+        0xffffff,
+        0.15
+      );
 
-  creditsButtonBg.setStrokeStyle(
-    2,
-    0xffffff,
-    0.75
-  );
+      creditsButtonBg.setStrokeStyle(
+        2,
+        0xffffff,
+        0.75
+      );
 
-  creditsButtonText.setStyle({
-    fill: "rgb(210, 242, 245)"
-  });
+      creditsButtonText.setStyle({
+        fill: "rgb(210, 242, 245)"
+      });
 
-  this.tweens.add({
-    targets: [
-      creditsButtonBg,
-      creditsButtonGlow,
-      creditsButtonText
-    ],
+      this.tweens.add({
+        targets: [
+          creditsButtonBg,
+          creditsButtonGlow,
+          creditsButtonText
+        ],
 
-    scaleX: 1.06,
-    scaleY: 1.06,
+        scaleX: 1.06,
+        scaleY: 1.06,
 
-    duration: 120,
-    ease: "Power2"
-  });
-});
+        duration: 120,
+        ease: "Power2"
+      });
+    });
 
-// OUT
-creditsButtonBg.on("pointerout", () => {
+    // OUT
+    creditsButtonBg.on("pointerout", () => {
 
-  creditsButtonBg.setFillStyle(
-    0xffffff,
-    0.12
-  );
+      creditsButtonBg.setFillStyle(
+        0xffffff,
+        0.12
+      );
 
-  creditsButtonBg.setStrokeStyle(
-    2,
-    0xffffff,
-    0.35
-  );
+      creditsButtonBg.setStrokeStyle(
+        2,
+        0xffffff,
+        0.35
+      );
 
-  creditsButtonText.setStyle({
-    fill: "#ffffff"
-  });
+      creditsButtonText.setStyle({
+        fill: "#ffffff"
+      });
 
-  this.tweens.add({
-    targets: [
-      creditsButtonBg,
-      creditsButtonGlow,
-      creditsButtonText
-    ],
+      this.tweens.add({
+        targets: [
+          creditsButtonBg,
+          creditsButtonGlow,
+          creditsButtonText
+        ],
 
-    scaleX: 1,
-    scaleY: 1,
+        scaleX: 1,
+        scaleY: 1,
 
-    duration: 120,
-    ease: "Power2"
-  });
-});
+        duration: 120,
+        ease: "Power2"
+      });
+    });
 
-// CLICK
-creditsButtonBg.on("pointerdown", () => {
+    // CLICK
+    creditsButtonBg.on("pointerdown", () => {
 
-  this.sound.play(
-    "menu_button",
-    { volume: 0.6 }
-  );
+      this.sound.play(
+        "menu_button",
+        { volume: 0.6 }
+      );
 
-  this.tweens.add({
-    targets: [
-      creditsButtonBg,
-      creditsButtonGlow,
-      creditsButtonText
-    ],
+      this.tweens.add({
+        targets: [
+          creditsButtonBg,
+          creditsButtonGlow,
+          creditsButtonText
+        ],
 
-    scaleX: 0.96,
-    scaleY: 0.96,
+        scaleX: 0.96,
+        scaleY: 0.96,
 
-    duration: 70,
-    yoyo: true,
-    ease: "Power2"
-  });
+        duration: 70,
+        yoyo: true,
+        ease: "Power2"
+      });
 
-  this.createCreditsPopup();
-});
+      this.createCreditsPopup();
+    });
 
     this.createPopup();
   }
+
+  createBubble() {
+  const { width, height } = this.scale;
+
+  const bubbleSize = Phaser.Math.Between(6, 20);
+  const startX = Phaser.Math.Between(0, width);
+  const startY = height + bubbleSize + 20;
+
+  const bubble = this.add.circle(
+    startX,
+    startY,
+    bubbleSize,
+    0xffffff,
+    0.12
+  )
+    .setStrokeStyle(2, 0xffffff, 0.16)
+    .setDepth(1);
+
+  const drift = Phaser.Math.Between(-80, 80);
+  const duration = Phaser.Math.Between(5000, 9000);
+
+  this.tweens.add({
+    targets: bubble,
+    x: startX + drift,
+    y: -bubbleSize,
+    alpha: 0,
+    duration: duration,
+    ease: "Sine.easeInOut",
+    onComplete: () => {
+      bubble.destroy();
+    }
+  });
+
+  this.tweens.add({
+    targets: bubble,
+    scaleX: 1.25,
+    scaleY: 0.95,
+    duration: 1200,
+    yoyo: true,
+    repeat: -1,
+    ease: "Sine.easeInOut"
+  });
+}
 
   createPopup() {
 

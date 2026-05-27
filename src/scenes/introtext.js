@@ -40,11 +40,11 @@ export default class Intro extends Phaser.Scene {
     this.add.text(
       panelX,
       panelY - panelH * 0.52,
-      "UNTERWASSER-FORSCHUNGSSTATION ADRIA-03 // SYSTEMPROTOKOLL",
+      "UNTERWASSER-ARBEITSSTATION ADRIA-03 // SYSTEMPROTOKOLL",
       {
         fontSize: headerSize,
         color: "#3cff9b",
-        fontFamily: "Courier New",
+        fontFamily: "Quantico",
         align: "center",
         wordWrap: { width: panelW * 0.9 }
       }
@@ -57,7 +57,7 @@ export default class Intro extends Phaser.Scene {
       {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
-        fontFamily: "Courier New",
+        fontFamily: "Quantico",
         lineSpacing: 6
       }
     );
@@ -69,7 +69,7 @@ export default class Intro extends Phaser.Scene {
       {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
-        fontFamily: "Courier New",
+        fontFamily: "Quantico",
         lineSpacing: 6
       }
     );
@@ -92,7 +92,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
       {
         fontSize: bodySize,
         color: "#b7ffd8",
-        fontFamily: "Courier New",
+        fontFamily: "Quantico",
         align: "left",
         wordWrap: { width: panelW * 0.78 },
         lineSpacing: isSmallScreen ? 6 : 10
@@ -124,7 +124,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
       {
         fontSize: hintSize,
         color: "#3cff9b",
-        fontFamily: "Courier New",
+        fontFamily: "Quantico",
         align: "center"
       }
     ).setOrigin(0.5);

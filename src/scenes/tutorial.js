@@ -255,7 +255,7 @@ export default class Tutorial extends Phaser.Scene {
     this.infoText = this.add.text(
       width / 2,
       height * 0.15,
-      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den roten Knopf betätigen!",
+      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den Knopf betätigen!",
       {
         fontSize: "28px",
         fontFamily: "Roboto",
