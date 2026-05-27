@@ -21,6 +21,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
+    this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
     this.load.audio("tutorial1klara", "assets/audio/tutorial/tutorial1klara.mp3");
@@ -94,15 +95,11 @@ export default class Tutorial extends Phaser.Scene {
       {
         fontSize: "25px",
         fontFamily: "Roboto",
-        color: "#d8f7ff",
-        backgroundColor: "#04141bcc",
+        color: "#ffffff",
+        backgroundColor: "#000000d3",
         padding: { x: 40, y: 25 },
         align: "left",
-        wordWrap: {
-          width: width * 0.2
-        },
-        stroke: "#00e5ff55",
-        strokeThickness: 1
+        wordWrap: { width: width * 0.2 },
       }
     )
       .setOrigin(0, 0.5)
@@ -265,7 +262,7 @@ export default class Tutorial extends Phaser.Scene {
     this.infoText = this.add.text(
       width / 2,
       height * 0.15,
-      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den Knopf betätigen!",
+      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneid nur das Unbrauchbare weg. Jeder Millimeter gesundes Fleisch zählt. Dazu kannst du einfach auf den Knopf betätigen!",
       {
         fontSize: "28px",
         fontFamily: "Roboto",
@@ -496,11 +493,29 @@ export default class Tutorial extends Phaser.Scene {
 
     this.fish.destroy();
 
-    const diff = Math.abs(percent - 30);
-    const isOk = diff <= 2;
+    let feedbackTexture;
+    let feedbackColor;
 
-    const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
-    const feedbackTexture = isOk ? "good" : "bad";
+    if (percent < 30) {
+
+      feedbackTexture = "bad";
+      feedbackColor = "#ff4444";
+
+    }
+
+    else if (percent >= 30 && percent <= 35) {
+
+      feedbackTexture = "good";
+      feedbackColor = "#2ecc71";
+
+    }
+
+    else {
+
+      feedbackTexture = "toomuch";
+      feedbackColor = "#ffd166";
+
+    }
 
     const percentText = this.add.text(
       this.scale.width * 0.09,

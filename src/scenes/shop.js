@@ -25,6 +25,7 @@ export default class Shop extends Phaser.Scene {
     this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klaratest.png");
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
+    this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
     this.load.audio("box1_fehlerresponse", "assets/audio/box1/box1_fehlerresponse.mp3");
@@ -438,13 +439,26 @@ export default class Shop extends Phaser.Scene {
 
     this.fish.destroy();
 
-    const diff = Math.abs(percent - this.targetPercent);
-    const isOk =
-      percent >= this.targetPercent &&
-      percent <= this.targetPercent + gameState.cutThreshold;
+    let feedbackTexture;
+    let feedbackColor;
 
-    const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
-    const feedbackTexture = isOk ? "good" : "bad";
+    if (percent < this.targetPercent) {
+      feedbackTexture = "bad";
+      feedbackColor = "#ff4444";
+    }
+
+    else if (
+      percent >= this.targetPercent &&
+      percent <= this.targetPercent + gameState.cutThreshold
+    ) {
+      feedbackTexture = "good";
+      feedbackColor = "#2ecc71";
+    }
+
+    else {
+      feedbackTexture = "toomuch";
+      feedbackColor = "#ffd166";
+    }
 
     const percentText = this.add.text(
       this.scale.width * 0.09,
@@ -531,19 +545,19 @@ export default class Shop extends Phaser.Scene {
 
     // BOX 2: gebogener Fisch
     if (this.currentBoxId === "box2") {
-  const startX = bounds.left + bounds.width * 0.17;
-  const startY = bounds.top + bounds.height * 0.37;
+      const startX = bounds.left + bounds.width * 0.17;
+      const startY = bounds.top + bounds.height * 0.37;
 
-  this.fishPath = new Phaser.Curves.Path(startX, startY);
+      this.fishPath = new Phaser.Curves.Path(startX, startY);
       //Kontrollpunkte x,y
-  this.fishPath.splineTo([
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.22, bounds.top + bounds.height * 0.46),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.36, bounds.top + bounds.height * 0.60),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.54, bounds.top + bounds.height * 0.56),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.68, bounds.top + bounds.height * 0.24),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.89, bounds.top + bounds.height * 0.42)
-  ]);
-}
+      this.fishPath.splineTo([
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.22, bounds.top + bounds.height * 0.46),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.36, bounds.top + bounds.height * 0.60),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.54, bounds.top + bounds.height * 0.56),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.68, bounds.top + bounds.height * 0.24),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.89, bounds.top + bounds.height * 0.42)
+      ]);
+    }
 
   }
 
@@ -889,7 +903,7 @@ export default class Shop extends Phaser.Scene {
       this.coworker = null;
     }
 
-    this.coworker = this.add.image(-600,this.scale.height / 1.7,"customer").setScale(1).setDepth(-11);
+    this.coworker = this.add.image(-600, this.scale.height / 1.7, "customer").setScale(1).setDepth(-11);
 
     this.tweens.add({
       targets: this.coworker,
