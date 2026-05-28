@@ -96,7 +96,7 @@ export default class Menu extends Phaser.Scene {
     this.add.text(menuX, titleY, "RIBA", {
       fontSize: `${titleFontSize}px`,
       fill: "#fff",
-      fontFamily: '""',
+      fontFamily: '"Quantico"',
       fontWeight: "900"
     }).setOrigin(0.5);
 

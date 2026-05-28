@@ -57,7 +57,7 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
     this.load.audio("badcut", "assets/audio/bad2.mp3");
     this.load.audio("goodcut", "assets/audio/ok2.mp3");
-    this.load.audio("toomuchcut", "assets/audio/ok1.mp3");
+    this.load.audio("toomuchcut", "assets/audio/toomuch.mp3");
 
     this.load.audio("backgroundmusic", "assets/audio/riba.wav");
 
