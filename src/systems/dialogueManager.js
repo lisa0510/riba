@@ -84,7 +84,7 @@ export default class DialogueManager {
       }
 
       this.currentVoice = this.scene.sound.add(currentDialogue.voice, {
-        volume: 1
+        volume: 2
       });
 
       this.currentVoice.play();

@@ -15,7 +15,7 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
-    
+
     this.input.setDefaultCursor(
       "url(assets/Fish05/cursor.png), auto"
     );
@@ -515,7 +515,6 @@ export default class Menu extends Phaser.Scene {
   }
 
   createCreditsPopup() {
-
     const { width, height } = this.scale;
 
     if (this.creditsOverlay) return;
@@ -533,84 +532,113 @@ export default class Menu extends Phaser.Scene {
 
     this.creditsContainer = this.add.container(
       width / 2,
-      height / 2
+      height * 0.87
     ).setDepth(201);
 
     const title = this.add.text(
       0,
-      -height * 0.4,
+      0,
       "CREDITS",
       {
         fontSize: `${Math.max(42, height * 0.065)}px`,
         fill: "#ffffff",
-        fontFamily: '"Roboto"',
-        fontWeight: "900"
+        fontFamily: '"Quantico"',
+        fontWeight: "900",
+        align: "center"
       }
     ).setOrigin(0.5);
 
-    const subtitle = this.add.text(
+    const credits = [
+      ["Lisa Landolt", "Game Entwicklerin"],
+      ["Jennifer Beeler", "Game Art Designerin"],
+      ["", ""],
+
+      ["SYNCHRONSPRECHERINNEN", ""],
+      ["Sara Noaman", "Narratorin"],
+      ["Saskia Helg", "Klara, Mona und Fisch"],
+
+
+      ["SOUNDTRACK", ""],
+      ["Till Bierich", "Game Soundtrack Komponist"],
+
+
+      ["MENTOR*INNEN", ""],
+      ["Léa Coquoz", "Mentorin Art, Story und Game Design"],
+      ["Ruth Bosch", "Mentorin Art, Story und Game Design"],
+      ["Benji Oser", "Technische Betreuung"]
+    ];
+
+    const rowStartY = height * 0.18;
+    const rowGap = Math.max(55, height * 0.07);
+
+    const creditObjects = [title];
+
+    credits.forEach((credit, index) => {
+      const y = rowStartY + index * rowGap;
+
+      if (credit[1] === "") {
+        const sectionText = this.add.text(
+          0,
+          y,
+          credit[0],
+          {
+            fontSize: `${Math.max(24, height * 0.025)}px`,
+            fill: "#ffffff",
+            fontFamily: '"Quantico"',
+            align: "center"
+          }
+        ).setOrigin(0.5);
+
+        creditObjects.push(sectionText);
+        return;
+      }
+
+      const nameText = this.add.text(
+        -width * 0.08,
+        y,
+        credit[0],
+        {
+          fontSize: `${Math.max(22, height * 0.03)}px`,
+          fill: "#ffffff",
+          fontFamily: '"Roboto"',
+          align: "right"
+        }
+      ).setOrigin(1, 0.5);
+
+      const jobText = this.add.text(
+        width * 0.08,
+        y,
+        credit[1],
+        {
+          fontSize: `${Math.max(22, height * 0.03)}px`,
+          fill: "#bbbbbb",
+          fontFamily: '"Roboto"',
+          align: "left"
+        }
+      ).setOrigin(0, 0.5);
+
+      creditObjects.push(nameText, jobText);
+    });
+
+    const endText = this.add.text(
       0,
-      -height * 0.3,
-      "Bachelorarbeit 2026, Digital Ideation",
+      rowStartY + credits.length * rowGap + height * 0.2,
+      "Danke an all unseren Playtestern, Unterstützern und Freunde!\n\n\n\n\n\n\n\nBachelorarbeit Digital Ideation 2026, Hochschule Luzern",
       {
-        fontSize: `${Math.max(22, height * 0.02)}px`,
+        fontSize: `${Math.max(28, height * 0.035)}px`,
         fill: "#ffffff",
-        fontFamily: '"Roboto"'
+        fontFamily: '"Quantico"',
+        align: "center"
       }
     ).setOrigin(0.5);
 
-    const leftColumn = this.add.text(
-      -width * 0.15,
-      -height * 0.13,
-      "Game Developer\nLisa Landolt",
-      {
-        fontSize: `${Math.max(20, height * 0.025)}px`,
-        fill: "#ffffff",
-        fontFamily: '"Roboto"',
-        align: "center",
-        lineSpacing: 8
-      }
-    ).setOrigin(0.5);
+    creditObjects.push(endText);
 
-    const rightColumn = this.add.text(
-      width * 0.15,
-      -height * 0.13,
-      "Game Art Designer\nJennifer Beeler",
-      {
-        fontSize: `${Math.max(20, height * 0.025)}px`,
-        fill: "#ffffff",
-        fontFamily: '"Roboto"',
-        align: "center",
-        lineSpacing: 8
-      }
-    ).setOrigin(0.5);
-
-    const bottomCredits = this.add.text(
-      0,
-      height * 0.22,
-      `Synchronsprecherinnen
-Sara Noaman als Narratorin
-Saskia Helg als Klara, Mona und Fisch
-
-Game Soundtrack
-Till Bierich
-
-Mentor*innen
-Léa Coquoz  Art, Story und Game Design
-Ruth Bosch  Art, Story und Game Design
-Benji Oser Technische Betreuung`,
-      {
-        fontSize: `${Math.max(22, height * 0.02)}px`,
-        fill: "#ffffff",
-        fontFamily: '"Roboto"',
-        align: "center",
-        lineSpacing: 12
-      }
-    ).setOrigin(0.5);
+    this.creditsContainer.add(creditObjects);
 
     const closeButton = this.add.text(
-      width * 0.43,
-      -height * 0.4,
+      width * 0.94,
+      height * 0.08,
       "✕",
       {
         fontSize: `${Math.max(34, height * 0.055)}px`,
@@ -619,6 +647,7 @@ Benji Oser Technische Betreuung`,
       }
     )
       .setOrigin(0.5)
+      .setDepth(202)
       .setInteractive({
         useHandCursor: false,
         cursor: "url(assets/Fish05/cursorhover.png), pointer"
@@ -626,7 +655,7 @@ Benji Oser Technische Betreuung`,
 
     closeButton.on("pointerover", () => {
       closeButton.setStyle({
-        fill: "rgb(0, 4, 255)"
+        fill: "rgb(210, 242, 245)"
       });
     });
 
@@ -636,41 +665,37 @@ Benji Oser Technische Betreuung`,
       });
     });
 
-    closeButton.on("pointerdown", () => {
-
+    const closeCredits = () => {
       this.sound.play("menu_button", { volume: 0.1 });
 
-      this.tweens.add({
-        targets: this.creditsContainer,
-        alpha: 0,
-        duration: 180,
-        onComplete: () => {
+      this.tweens.killTweensOf(this.creditsContainer);
 
+      this.tweens.add({
+        targets: [this.creditsContainer, closeButton],
+        alpha: 0,
+        duration: 250,
+        ease: "Power2",
+        onComplete: () => {
           this.creditsContainer.destroy();
           this.creditsOverlay.destroy();
+          closeButton.destroy();
 
           this.creditsContainer = null;
           this.creditsOverlay = null;
         }
       });
-    });
+    };
 
-    this.creditsContainer.add([
-      title,
-      subtitle,
-      leftColumn,
-      rightColumn,
-      bottomCredits,
-      closeButton
-    ]);
-
-    this.creditsContainer.setAlpha(0);
+    closeButton.on("pointerdown", closeCredits);
 
     this.tweens.add({
       targets: this.creditsContainer,
-      alpha: 1,
-      duration: 250,
-      ease: "Power2"
+      y: -height * 1.15,
+      duration: 40000,
+      ease: "Linear",
+      onComplete: () => {
+        closeCredits();
+      }
     });
   }
 

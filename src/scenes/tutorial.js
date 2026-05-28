@@ -22,9 +22,9 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
     this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
-    this.load.audio("badcut", "assets/audio/bad2.mp3");
-    this.load.audio("goodcut", "assets/audio/ok2.mp3");
-    this.load.audio("toomuchcut", "assets/audio/toomuch.mp3");
+    this.load.audio("badcut", "assets/audio/feedback/bad.mp3");
+    this.load.audio("goodcut", "assets/audio/feedback/ok.mp3");
+    this.load.audio("toomuchcut", "assets/audio/feedback/bad.mp3");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
     this.load.audio("tutorial1klara", "assets/audio/tutorial/tutorial1klara.mp3");

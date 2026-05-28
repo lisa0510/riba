@@ -33,7 +33,7 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("box1faileddisagree", "assets/audio/box1/box1faileddisagree.mp3");
     this.load.audio("box1glitchmona", "assets/audio/box1/box1glitchmona.mp3");
     this.load.audio("box1ignore", "assets/audio/box1/box1ignore.mp3");
-    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.wav");
+    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.mp3");
     this.load.audio("box2disagree", "assets/audio/box2/box2disagree.mp3");
     this.load.audio("box2failedresponse", "assets/audio/box2/box2failedresponse.mp3");
     this.load.audio("box2glitchmona", "assets/audio/box2/box2glitchmona.mp3");
@@ -55,9 +55,9 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("ending4mona", "assets/audio/ending/ending4mona.mp3");
     this.load.audio("ending5unglaublich", "assets/audio/ending/ending5unglaublich.mp3");
     this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
-    this.load.audio("badcut", "assets/audio/bad2.mp3");
-    this.load.audio("goodcut", "assets/audio/ok2.mp3");
-    this.load.audio("toomuchcut", "assets/audio/toomuch.mp3");
+    this.load.audio("badcut", "assets/audio/feedback/bad.mp3");
+    this.load.audio("goodcut", "assets/audio/feedback/ok.mp3");
+    this.load.audio("toomuchcut", "assets/audio/feedback/bad.mp3");
 
     this.load.audio("backgroundmusic", "assets/audio/riba.wav");
 
