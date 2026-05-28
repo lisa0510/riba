@@ -23,7 +23,7 @@ export default class Intro extends Phaser.Scene {
 
     this.add.rectangle(width / 2, height / 2, width, height, 0x111816);
     this.introVoice = this.sound.add("intro", {
-        volume: 3
+        volume: 2.5
       });
 
     this.introVoice.play();

@@ -15,7 +15,7 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
-
+    
     this.input.setDefaultCursor(
       "url(assets/Fish05/cursor.png), auto"
     );
@@ -184,7 +184,7 @@ export default class Menu extends Phaser.Scene {
     });
 
     startButtonBg.on("pointerdown", () => {
-      this.sound.play("menu_button", { volume: 0.5 });
+      this.sound.play("menu_button", { volume: 0.1 });
       if (this.bgMusic) {
         this.bgMusic.stop();
         this.bgMusic.destroy();
@@ -337,7 +337,7 @@ export default class Menu extends Phaser.Scene {
 
       this.sound.play(
         "menu_button",
-        { volume: 0.5 }
+        { volume: 0.1 }
       );
 
       this.tweens.add({
@@ -638,7 +638,7 @@ Benji Oser Technische Betreuung`,
 
     closeButton.on("pointerdown", () => {
 
-      this.sound.play("menu_button");
+      this.sound.play("menu_button", { volume: 0.1 });
 
       this.tweens.add({
         targets: this.creditsContainer,

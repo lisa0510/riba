@@ -33,7 +33,7 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("box1faileddisagree", "assets/audio/box1/box1faileddisagree.mp3");
     this.load.audio("box1glitchmona", "assets/audio/box1/box1glitchmona.mp3");
     this.load.audio("box1ignore", "assets/audio/box1/box1ignore.mp3");
-    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.mp3");
+    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.wav");
     this.load.audio("box2disagree", "assets/audio/box2/box2disagree.mp3");
     this.load.audio("box2failedresponse", "assets/audio/box2/box2failedresponse.mp3");
     this.load.audio("box2glitchmona", "assets/audio/box2/box2glitchmona.mp3");
@@ -72,7 +72,7 @@ export default class Shop extends Phaser.Scene {
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("backgroundmusic", {
         loop: true,
-        volume: 0.7
+        volume: 0.5
       });
 
       this.bgMusic.play();
@@ -258,7 +258,7 @@ export default class Shop extends Phaser.Scene {
       if (!this.canStopLine) return;
       if (!this.cutInputReady) return;
       this.laser = this.sound.add("laser", {
-        volume: 0.2
+        volume: 0.1
       });
       this.laser.play();
 
@@ -447,33 +447,33 @@ export default class Shop extends Phaser.Scene {
 
     let feedbackSound;
 
-// UNDERCUT
-if (percent < this.targetPercent) {
-  feedbackTexture = "bad";
-  feedbackColor = "#ff4444";
-  feedbackSound = "badcut";
-}
+    // UNDERCUT
+    if (percent < this.targetPercent) {
+      feedbackTexture = "bad";
+      feedbackColor = "#ff4444";
+      feedbackSound = "badcut";
+    }
 
-// PERFECT
-else if (
-  percent >= this.targetPercent &&
-  percent <= this.targetPercent + gameState.cutThreshold
-) {
-  feedbackTexture = "good";
-  feedbackColor = "#2ecc71";
-  feedbackSound = "goodcut";
-}
+    // PERFECT
+    else if (
+      percent >= this.targetPercent &&
+      percent <= this.targetPercent + gameState.cutThreshold
+    ) {
+      feedbackTexture = "good";
+      feedbackColor = "#2ecc71";
+      feedbackSound = "goodcut";
+    }
 
-// OVERCUT
-else {
-  feedbackTexture = "toomuch";
-  feedbackColor = "#ffd166";
-  feedbackSound = "toomuchcut";
-}
+    // OVERCUT
+    else {
+      feedbackTexture = "toomuch";
+      feedbackColor = "#ffd166";
+      feedbackSound = "toomuchcut";
+    }
 
-this.sound.play(feedbackSound, {
-  volume: 0.6
-});
+    this.sound.play(feedbackSound, {
+      volume: 0.6
+    });
 
     const percentText = this.add.text(
       this.scale.width * 0.09,
@@ -820,19 +820,28 @@ this.sound.play(feedbackSound, {
       duration: 250,
       ease: "Power2",
       onComplete: () => {
-        this.cameras.main.shake(250, 0.0025);
+        this.cameras.main.shake(700, 0.003);
 
-        const flash = this.add.rectangle(
+        // subtle red UI flicker
+        const redFlicker = this.add.rectangle(
           width / 2,
           height / 2,
           width,
           height,
-          0xffffff,
-          0.35
+          0xff0000,
+          0.08
         ).setDepth(999);
 
-        this.time.delayedCall(60, () => {
-          flash.destroy();
+        this.tweens.add({
+          targets: redFlicker,
+          alpha: 0.0,
+          duration: 80,
+          yoyo: true,
+          repeat: 7,
+          ease: "Sine.easeInOut",
+          onComplete: () => {
+            redFlicker.destroy();
+          }
         });
 
         this.tweens.add({
@@ -981,7 +990,7 @@ this.sound.play(feedbackSound, {
       this.ending4CutActive = false;
 
       this.sound.play("laser", {
-        volume: 0.4
+        volume: 0.1
       });
 
       if (this.cutLine) {

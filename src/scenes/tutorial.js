@@ -38,7 +38,7 @@ export default class Tutorial extends Phaser.Scene {
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("bg_music", {
-        volume: 0.7
+        volume: 0.5
       });
 
       this.bgMusic.play();
@@ -246,7 +246,7 @@ export default class Tutorial extends Phaser.Scene {
       if (!this.canStopLine) return;
 
       this.laser = this.sound.add("laser", {
-        volume: 0.2
+        volume: 0.1
       });
       this.laser.play();
 
