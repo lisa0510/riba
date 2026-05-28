@@ -25,6 +25,7 @@ export default class Shop extends Phaser.Scene {
     this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klaratest.png");
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
+    this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
     this.load.audio("box1_fehlerresponse", "assets/audio/box1/box1_fehlerresponse.mp3");
@@ -32,7 +33,7 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("box1faileddisagree", "assets/audio/box1/box1faileddisagree.mp3");
     this.load.audio("box1glitchmona", "assets/audio/box1/box1glitchmona.mp3");
     this.load.audio("box1ignore", "assets/audio/box1/box1ignore.mp3");
-    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.mp3");
+    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.wav");
     this.load.audio("box2disagree", "assets/audio/box2/box2disagree.mp3");
     this.load.audio("box2failedresponse", "assets/audio/box2/box2failedresponse.mp3");
     this.load.audio("box2glitchmona", "assets/audio/box2/box2glitchmona.mp3");
@@ -54,6 +55,11 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("ending4mona", "assets/audio/ending/ending4mona.mp3");
     this.load.audio("ending5unglaublich", "assets/audio/ending/ending5unglaublich.mp3");
     this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
+    this.load.audio("badcut", "assets/audio/bad2.mp3");
+    this.load.audio("goodcut", "assets/audio/ok2.mp3");
+    this.load.audio("toomuchcut", "assets/audio/toomuch.mp3");
+
+    this.load.audio("backgroundmusic", "assets/audio/riba.wav");
 
   }
 
@@ -62,6 +68,15 @@ export default class Shop extends Phaser.Scene {
       "url(assets/Fish05/cursor.png), auto"
     );
     const { width, height } = this.scale;
+
+    if (!this.bgMusic || !this.bgMusic.isPlaying) {
+      this.bgMusic = this.sound.add("backgroundmusic", {
+        loop: true,
+        volume: 0.5
+      });
+
+      this.bgMusic.play();
+    }
 
     this.shopBg = this.add.image(
       width / 2,
@@ -243,7 +258,7 @@ export default class Shop extends Phaser.Scene {
       if (!this.canStopLine) return;
       if (!this.cutInputReady) return;
       this.laser = this.sound.add("laser", {
-        volume: 0.3
+        volume: 0.1
       });
       this.laser.play();
 
@@ -427,13 +442,38 @@ export default class Shop extends Phaser.Scene {
 
     this.fish.destroy();
 
-    const diff = Math.abs(percent - this.targetPercent);
-    const isOk =
-      percent >= this.targetPercent &&
-      percent <= this.targetPercent + gameState.cutThreshold;
+    let feedbackTexture;
+    let feedbackColor;
 
-    const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
-    const feedbackTexture = isOk ? "good" : "bad";
+    let feedbackSound;
+
+    // UNDERCUT
+    if (percent < this.targetPercent) {
+      feedbackTexture = "bad";
+      feedbackColor = "#ff4444";
+      feedbackSound = "badcut";
+    }
+
+    // PERFECT
+    else if (
+      percent >= this.targetPercent &&
+      percent <= this.targetPercent + gameState.cutThreshold
+    ) {
+      feedbackTexture = "good";
+      feedbackColor = "#2ecc71";
+      feedbackSound = "goodcut";
+    }
+
+    // OVERCUT
+    else {
+      feedbackTexture = "toomuch";
+      feedbackColor = "#ffd166";
+      feedbackSound = "toomuchcut";
+    }
+
+    this.sound.play(feedbackSound, {
+      volume: 0.6
+    });
 
     const percentText = this.add.text(
       this.scale.width * 0.09,
@@ -520,19 +560,19 @@ export default class Shop extends Phaser.Scene {
 
     // BOX 2: gebogener Fisch
     if (this.currentBoxId === "box2") {
-  const startX = bounds.left + bounds.width * 0.17;
-  const startY = bounds.top + bounds.height * 0.37;
+      const startX = bounds.left + bounds.width * 0.17;
+      const startY = bounds.top + bounds.height * 0.37;
 
-  this.fishPath = new Phaser.Curves.Path(startX, startY);
+      this.fishPath = new Phaser.Curves.Path(startX, startY);
       //Kontrollpunkte x,y
-  this.fishPath.splineTo([
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.22, bounds.top + bounds.height * 0.46),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.36, bounds.top + bounds.height * 0.60),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.54, bounds.top + bounds.height * 0.56),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.68, bounds.top + bounds.height * 0.24),
-    new Phaser.Math.Vector2(bounds.left + bounds.width * 0.89, bounds.top + bounds.height * 0.42)
-  ]);
-}
+      this.fishPath.splineTo([
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.22, bounds.top + bounds.height * 0.46),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.36, bounds.top + bounds.height * 0.60),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.54, bounds.top + bounds.height * 0.56),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.68, bounds.top + bounds.height * 0.24),
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.89, bounds.top + bounds.height * 0.42)
+      ]);
+    }
 
   }
 
@@ -780,19 +820,28 @@ export default class Shop extends Phaser.Scene {
       duration: 250,
       ease: "Power2",
       onComplete: () => {
-        this.cameras.main.shake(250, 0.0025);
+        this.cameras.main.shake(700, 0.003);
 
-        const flash = this.add.rectangle(
+        // subtle red UI flicker
+        const redFlicker = this.add.rectangle(
           width / 2,
           height / 2,
           width,
           height,
-          0xffffff,
-          0.35
+          0xff0000,
+          0.08
         ).setDepth(999);
 
-        this.time.delayedCall(60, () => {
-          flash.destroy();
+        this.tweens.add({
+          targets: redFlicker,
+          alpha: 0.0,
+          duration: 80,
+          yoyo: true,
+          repeat: 7,
+          ease: "Sine.easeInOut",
+          onComplete: () => {
+            redFlicker.destroy();
+          }
         });
 
         this.tweens.add({
@@ -878,7 +927,7 @@ export default class Shop extends Phaser.Scene {
       this.coworker = null;
     }
 
-    this.coworker = this.add.image(-600,this.scale.height / 1.7,"customer").setScale(1).setDepth(-11);
+    this.coworker = this.add.image(-600, this.scale.height / 1.7, "customer").setScale(1).setDepth(-11);
 
     this.tweens.add({
       targets: this.coworker,
@@ -941,7 +990,7 @@ export default class Shop extends Phaser.Scene {
       this.ending4CutActive = false;
 
       this.sound.play("laser", {
-        volume: 0.4
+        volume: 0.1
       });
 
       if (this.cutLine) {

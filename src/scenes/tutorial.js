@@ -17,8 +17,14 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
     this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
 
+    this.load.audio("bg_music", "assets/audio/riba.wav");
+
     this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
     this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
+    this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
+    this.load.audio("badcut", "assets/audio/bad2.mp3");
+    this.load.audio("goodcut", "assets/audio/ok2.mp3");
+    this.load.audio("toomuchcut", "assets/audio/toomuch.mp3");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
     this.load.audio("tutorial1klara", "assets/audio/tutorial/tutorial1klara.mp3");
@@ -29,6 +35,14 @@ export default class Tutorial extends Phaser.Scene {
     this.input.setDefaultCursor(
       "url(assets/Fish05/cursor.png), auto"
     );
+
+    if (!this.bgMusic || !this.bgMusic.isPlaying) {
+      this.bgMusic = this.sound.add("bg_music", {
+        volume: 0.5
+      });
+
+      this.bgMusic.play();
+    }
 
     const { width, height } = this.scale;
 
@@ -84,15 +98,11 @@ export default class Tutorial extends Phaser.Scene {
       {
         fontSize: "25px",
         fontFamily: "Roboto",
-        color: "#d8f7ff",
-        backgroundColor: "#04141bcc",
-        padding: {x: 40,y: 25 },
+        color: "#ffffff",
+        backgroundColor: "#000000d3",
+        padding: { x: 40, y: 25 },
         align: "left",
-        wordWrap: {
-          width: width * 0.2
-        },
-        stroke: "#00e5ff55",
-        strokeThickness: 1
+        wordWrap: { width: width * 0.2 },
       }
     )
       .setOrigin(0, 0.5)
@@ -236,7 +246,7 @@ export default class Tutorial extends Phaser.Scene {
       if (!this.canStopLine) return;
 
       this.laser = this.sound.add("laser", {
-        volume: 0.3
+        volume: 0.1
       });
       this.laser.play();
 
@@ -255,7 +265,7 @@ export default class Tutorial extends Phaser.Scene {
     this.infoText = this.add.text(
       width / 2,
       height * 0.15,
-      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneide doch diese 30% ab. Dazu kannst du einfach auf den roten Knopf betätigen!",
+      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneid nur das Unbrauchbare weg. Jeder Millimeter gesundes Fleisch zählt. Dazu kannst du einfach auf den Knopf betätigen!",
       {
         fontSize: "28px",
         fontFamily: "Roboto",
@@ -486,11 +496,35 @@ export default class Tutorial extends Phaser.Scene {
 
     this.fish.destroy();
 
-    const diff = Math.abs(percent - 30);
-    const isOk = diff <= 2;
+    let feedbackTexture;
+    let feedbackColor;
+    let feedbackSound;
 
-    const feedbackColor = isOk ? "#2ecc71" : "#ff4444";
-    const feedbackTexture = isOk ? "good" : "bad";
+    if (percent < 30) {
+
+      feedbackTexture = "bad";
+      feedbackColor = "#ff4444";
+      feedbackSound = "badcut";
+
+    }
+
+    else if (percent >= 30 && percent <= 35) {
+
+      feedbackTexture = "good";
+      feedbackColor = "#2ecc71";
+      feedbackSound = "goodcut";
+
+    }
+    else {
+
+      feedbackTexture = "toomuch";
+      feedbackColor = "#ffd166";
+      feedbackSound = "toomuchcut";
+
+    }
+    this.sound.play(feedbackSound, {
+      volume: 0.6
+    });
 
     const percentText = this.add.text(
       this.scale.width * 0.09,
@@ -594,7 +628,20 @@ export default class Tutorial extends Phaser.Scene {
       onComplete: () => {
         this.time.delayedCall(1000, () => {
           this.cameras.main.fade(1000, 0, 0, 0);
+          if (this.bgMusic) {
+            this.tweens.add({
+              targets: this.bgMusic,
+              volume: 0,
+              duration: 800,
+              ease: "Sine.easeOut",
+              onComplete: () => {
+                this.bgMusic.stop();
+                this.bgMusic.destroy();
+                this.bgMusic = null;
+              }
+            });
 
+          }
           this.time.delayedCall(1000, () => {
             this.scene.start("Shop");
           });
