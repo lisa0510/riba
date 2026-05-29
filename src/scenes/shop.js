@@ -216,9 +216,17 @@ export default class Shop extends Phaser.Scene {
       .setDepth(101)
       .setScale(0.4);
 
+    const buttonX =
+      this.cuttingView.x +
+      this.cuttingView.displayWidth * 0.42;
+
+    const buttonY =
+      this.cuttingView.y +
+      this.cuttingView.displayHeight * 0.31;
+
     this.cutButton = this.add.image(
-      width * 0.93,
-      height * 0.81,
+      buttonX,
+      buttonY,
       "button"
     )
       .setDepth(160)

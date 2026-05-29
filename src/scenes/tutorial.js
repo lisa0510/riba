@@ -183,9 +183,21 @@ export default class Tutorial extends Phaser.Scene {
       .setDepth(101)
       .setScale(0.4);
 
-    this.cutButton = this.add.image(width * 0.93, height * 0.81, "button")
+    const buttonX =
+      this.cuttingView.x +
+      this.cuttingView.displayWidth * 0.42;
+
+    const buttonY =
+      this.cuttingView.y +
+      this.cuttingView.displayHeight * 0.31;
+
+    this.cutButton = this.add.image(
+      buttonX,
+      buttonY,
+      "button"
+    )
       .setDepth(160)
-      .setScale(1.2)
+      .setScale(1.3)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
 
@@ -605,7 +617,7 @@ export default class Tutorial extends Phaser.Scene {
     const endHintText = this.add.text(
       width / 2,
       height * 0.15,
-      "Klara: Ich sehe du hast es geschafft den Laser zu bedienen. Schneide nun die anderen Fische von der ersten Box auch noch.",
+      "Ich sehe du hast es geschafft den Laser zu bedienen. Schneide nun die anderen Fische von der ersten Box auch noch.",
       {
         fontSize: "28px",
         fontFamily: "Roboto",

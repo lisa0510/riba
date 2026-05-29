@@ -96,7 +96,7 @@ export default class Menu extends Phaser.Scene {
     this.add.text(menuX, titleY, "RIBA", {
       fontSize: `${titleFontSize}px`,
       fill: "#fff",
-      fontFamily: '"Quantico"',
+      fontFamily: '"Roboto"',
       fontWeight: "900"
     }).setOrigin(0.5);
 
@@ -137,7 +137,7 @@ export default class Menu extends Phaser.Scene {
       {
         fontSize: `${Math.max(24, width * 0.022)}px`,
         fill: "#ffffff",
-        fontFamily: '"Quantico"',
+        fontFamily: '"Roboto"',
         letterSpacing: 2
       }
     )
@@ -247,7 +247,7 @@ export default class Menu extends Phaser.Scene {
       {
         fontSize: `${Math.max(24, width * 0.022)}px`,
         fill: "#ffffff",
-        fontFamily: '"Quantico"',
+        fontFamily: '"Roboto"',
         letterSpacing: 2
       }
     )
@@ -542,7 +542,7 @@ export default class Menu extends Phaser.Scene {
       {
         fontSize: `${Math.max(42, height * 0.065)}px`,
         fill: "#ffffff",
-        fontFamily: '"Quantico"',
+        fontFamily: '"Roboto"',
         fontWeight: "900",
         align: "center"
       }
@@ -559,7 +559,7 @@ export default class Menu extends Phaser.Scene {
 
 
       ["SOUNDTRACK", ""],
-      ["Till Bierich", "Game Soundtrack Komponist"],
+      ["Till Bierich", "Soundtrack Komponist"],
 
 
       ["MENTOR*INNEN", ""],
@@ -584,7 +584,7 @@ export default class Menu extends Phaser.Scene {
           {
             fontSize: `${Math.max(24, height * 0.025)}px`,
             fill: "#ffffff",
-            fontFamily: '"Quantico"',
+            fontFamily: '"Roboto"',
             align: "center"
           }
         ).setOrigin(0.5);
@@ -623,11 +623,11 @@ export default class Menu extends Phaser.Scene {
     const endText = this.add.text(
       0,
       rowStartY + credits.length * rowGap + height * 0.2,
-      "Danke an all unseren Playtestern, Unterstützern und Freunde!\n\n\n\n\n\n\n\nBachelorarbeit Digital Ideation 2026, Hochschule Luzern",
+      "\n\nDanke an all unseren Playtestern, Unterstützern und Freunde!\n\n\n\n\n\n\n\nBachelorarbeit Digital Ideation 2026, Hochschule Luzern",
       {
         fontSize: `${Math.max(28, height * 0.035)}px`,
         fill: "#ffffff",
-        fontFamily: '"Quantico"',
+        fontFamily: '"Roboto"',
         align: "center"
       }
     ).setOrigin(0.5);
