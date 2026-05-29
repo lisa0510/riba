@@ -13,19 +13,20 @@ export default class Shop extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish05/Backround_Greyscale.png");
-    this.load.image("shop_laser", "assets/Fish05/Fordergrund_Grey.png");
-    this.load.image("customer", "assets/Fish05/Klara1.png");
-    this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
-    this.load.image("fish2", "assets/Fish05/Fish02_Grey.png");
-    this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
-    this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
-    this.load.image("note2", "assets/Fish04/SecondBox_CuttingBoard.png");
-    this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
-    this.load.image("parasite", "assets/Fish04/Small_BadThoughts_Klaratest.png");
-    this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
-    this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
-    this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
+    this.load.image("shop_bg", "assets/Fish06/Backround_GoodThought.png");
+    this.load.image("shop_laser", "assets/Fish06/Front_GreyScale.png");
+    this.load.image("customer", "assets/Fish06/Klara_GreyScale.png");
+    this.load.image("fish", "assets/Fish06/GreyScaleFisch.png");
+    this.load.image("fish2", "assets/Fish06/GreyScaleFisch02.png");
+    this.load.image("cuttingview", "assets/Fish06/GreyScaleChop.png");
+    this.load.image("note1", "assets/Fish06/Fish01_Icon.png");
+    this.load.image("note2", "assets/Fish06/Sign_Fisch_02.png");
+    this.load.image("cup", "assets/Fish06/coffee.png");
+    this.load.image("button", "assets/Fish06/Button_Chopping.png");
+    this.load.image("parasite", "assets/Fish06/TalkViewDoneOrangeEverything.png");
+    this.load.image("bad", "assets/Fish06/BadFisch_01.png");
+    this.load.image("good", "assets/Fish06/GoodFisch_01.png");
+    this.load.image("toomuch", "assets/Fish06/SmallPortionFisch1.png");
 
     this.load.audio("laser", "assets/audio/laser1.mp3");
     this.load.audio("box1_fehlerresponse", "assets/audio/box1/box1_fehlerresponse.mp3");
@@ -91,28 +92,11 @@ export default class Shop extends Phaser.Scene {
 
     this.shopBg.setScale(bgScale);
 
-    this.shopLaser = this.add.image(
-      width / 2,
-      height / 2,
-      "shop_laser"
-    ).setDepth(-10);
-
-    const laserScale = Math.min(
-      width / this.shopLaser.width,
-      height / this.shopLaser.height
-    );
-
-    this.shopLaser.setScale(laserScale);
-
-    this.coworkerScale = Phaser.Math.Clamp(
-      height * 0.0011,
-      0.6,
-      0.7
-    );
+    this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser").setDepth(-10).setScale(1.1);
 
     this.coworker = this.add.image(
       width / 2,
-      height / 1.7,
+      height / 1.9,
       "customer"
     )
       .setScale(1)
@@ -208,14 +192,6 @@ export default class Shop extends Phaser.Scene {
 
     this.cuttingView.setScale(cuttingScale);
 
-    this.note1 = this.add.image(
-      width / 5,
-      height / 3,
-      this.currentBox.noteTexture || "note1"
-    )
-      .setDepth(101)
-      .setScale(0.4);
-
     const buttonX =
       this.cuttingView.x +
       this.cuttingView.displayWidth * 0.42;
@@ -223,6 +199,18 @@ export default class Shop extends Phaser.Scene {
     const buttonY =
       this.cuttingView.y +
       this.cuttingView.displayHeight * 0.31;
+
+    this.cup = this.add.image(buttonX * 0.5, buttonY * 1.1, "cup")
+      .setScale(1)
+      .setDepth(101);
+
+    this.note1 = this.add.image(
+      width / 8.6,
+      height / 4,
+      this.currentBox.noteTexture || "note1"
+    )
+      .setDepth(101)
+      .setScale(0.9);
 
     this.cutButton = this.add.image(
       buttonX,
@@ -452,7 +440,7 @@ export default class Shop extends Phaser.Scene {
 
     let feedbackTexture;
     let feedbackColor;
-
+    let feedbackScale;
     let feedbackSound;
 
     // UNDERCUT
@@ -460,6 +448,7 @@ export default class Shop extends Phaser.Scene {
       feedbackTexture = "bad";
       feedbackColor = "#ff4444";
       feedbackSound = "badcut";
+      feedbackScale = 0.12;
     }
 
     // PERFECT
@@ -470,6 +459,7 @@ export default class Shop extends Phaser.Scene {
       feedbackTexture = "good";
       feedbackColor = "#2ecc71";
       feedbackSound = "goodcut";
+      feedbackScale = 0.12;
     }
 
     // OVERCUT
@@ -477,6 +467,7 @@ export default class Shop extends Phaser.Scene {
       feedbackTexture = "toomuch";
       feedbackColor = "#ffd166";
       feedbackSound = "toomuchcut";
+      feedbackScale = 0.18;
     }
 
     this.sound.play(feedbackSound, {
@@ -506,7 +497,7 @@ export default class Shop extends Phaser.Scene {
     )
       .setOrigin(0, 0.5)
       .setDepth(300)
-      .setScale(0.25);
+      .setScale(feedbackScale);
 
 
     this.tweens.add({
@@ -629,6 +620,7 @@ export default class Shop extends Phaser.Scene {
     if (this.blackBg) this.blackBg.destroy();
     if (this.cuttingView) this.cuttingView.destroy();
     if (this.note1) this.note1.destroy();
+    if (this.cup) this.cup.destroy();
     if (this.cutLine) this.cutLine.destroy();
     if (this.cutButton) this.cutButton.destroy();
 
@@ -804,14 +796,17 @@ export default class Shop extends Phaser.Scene {
     }
 
     gameState.setParasiteInteraction(this.currentBoxId, true);
-
+    const KlaraScale = Math.min(
+      width / this.shopBg.width,
+      height / this.shopBg.height
+    );
     this.parasite = this.add.image(
       width / 2,
       height / 2,
       "parasite"
     )
       .setDepth(-11)
-      .setScale(this.coworkerScale)
+      .setScale(KlaraScale)
       .setAlpha(0);
 
     const parasiteNode = this.currentBox.parasiteDialogue[0];
@@ -836,8 +831,8 @@ export default class Shop extends Phaser.Scene {
           height / 2,
           width,
           height,
-          0xff0000,
-          0.08
+          0xf17d32,
+          0.18
         ).setDepth(999);
 
         this.tweens.add({
@@ -935,7 +930,7 @@ export default class Shop extends Phaser.Scene {
       this.coworker = null;
     }
 
-    this.coworker = this.add.image(-600, this.scale.height / 1.7, "customer").setScale(1).setDepth(-11);
+    this.coworker = this.add.image(-600, this.scale.height / 1.9, "customer").setScale(1).setDepth(-11);
 
     this.tweens.add({
       targets: this.coworker,
@@ -1011,7 +1006,7 @@ export default class Shop extends Phaser.Scene {
       this.tweens.add({
         targets: this.parasite,
         alpha: 0,
-        scale: this.coworkerScale * 1.25,
+        scale: 1,
         angle: 8,
         duration: 500,
         ease: "Power2",
@@ -1040,13 +1035,16 @@ export default class Shop extends Phaser.Scene {
             this.coworker.destroy();
             this.coworker = null;
           }
-
+          const BadKScale = Math.min(
+            width / this.shopBg.width,
+            height / this.shopBg.height
+          );
           this.parasite = this.add.image(
             this.scale.width / 2,
             this.scale.height / 2,
             "parasite"
           )
-            .setScale(this.coworkerScale)
+            .setScale(BadKScale)
             .setDepth(-11);
 
           this.dialogueManager.startDialogue(
@@ -1062,7 +1060,7 @@ export default class Shop extends Phaser.Scene {
 
                 this.coworker = this.add.image(
                   this.scale.width / 2,
-                  this.scale.height / 1.7,
+                  this.scale.height / 1.9,
                   "customer"
                 )
                   .setScale(1)

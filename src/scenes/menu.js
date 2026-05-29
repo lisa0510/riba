@@ -620,8 +620,7 @@ export default class Menu extends Phaser.Scene {
       creditObjects.push(nameText, jobText);
     });
 
-    const endText = this.add.text(
-      0,
+    const endText = this.add.text(0,
       rowStartY + credits.length * rowGap + height * 0.2,
       "\n\nDanke an all unseren Playtestern, Unterstützern und Freunde!\n\n\n\n\n\n\n\nBachelorarbeit Digital Ideation 2026, Hochschule Luzern",
       {
@@ -631,7 +630,7 @@ export default class Menu extends Phaser.Scene {
         align: "center"
       }
     ).setOrigin(0.5);
-
+    
     creditObjects.push(endText);
 
     this.creditsContainer.add(creditObjects);

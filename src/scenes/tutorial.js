@@ -7,21 +7,18 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish05/Backround_Greyscale.png");
-    this.load.image("shop_laser", "assets/Fish05/Fordergrund_Grey.png");
-    this.load.image("customer", "assets/Fish05/Klara1.png");
-
-    this.load.image("fish", "assets/Fish05/Fish01_Grey.png");
-    this.load.image("cuttingview", "assets/Fish05/ScreenChop_Grey.png");
-
-    this.load.image("note1", "assets/Fish04/FirstBox_CuttingBoard.png");
-    this.load.image("button", "assets/Fish05/Button_ScreenChop_Grey.png");
-
+    this.load.image("shop_bg", "assets/Fish06/Backround_GoodThought.png");
+    this.load.image("shop_laser", "assets/Fish06/Front_GreyScale.png");
+    this.load.image("customer", "assets/Fish06/Klara_GreyScale.png");
+    this.load.image("fish", "assets/Fish06/GreyScaleFisch.png");
+    this.load.image("cuttingview", "assets/Fish06/GreyScaleChop.png");
+    this.load.image("cup", "assets/Fish06/coffee.png");
+    this.load.image("note1", "assets/Fish06/Fish01_Icon.png");
+    this.load.image("button", "assets/Fish06/Button_Chopping.png");
     this.load.audio("bg_music", "assets/audio/riba.wav");
-
-    this.load.image("bad", "assets/Fish05/FishBad_Feedback.png");
-    this.load.image("good", "assets/Fish05/FishGood_Feedback.png");
-    this.load.image("toomuch", "assets/Fish05/FishMedium_Feedback.png");
+    this.load.image("bad", "assets/Fish06/BadFisch_01.png");
+    this.load.image("good", "assets/Fish06/GoodFisch_01.png");
+    this.load.image("toomuch", "assets/Fish06/SmallPortionFisch1.png");
     this.load.audio("badcut", "assets/audio/feedback/bad.mp3");
     this.load.audio("goodcut", "assets/audio/feedback/ok.mp3");
     this.load.audio("toomuchcut", "assets/audio/feedback/bad.mp3");
@@ -58,16 +55,10 @@ export default class Tutorial extends Phaser.Scene {
 
     this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser")
       .setDepth(-10);
+   this.shopLaser.setScale(1.1);
 
-    const laserScale = Math.min(
-      width / this.shopLaser.width,
-      height / this.shopLaser.height
-    );
-
-    this.shopLaser.setScale(laserScale);
-
-    this.coworker = this.add.image(width / 2, height / 1.7, "customer")
-      .setScale(1.1)
+    this.coworker = this.add.image(width / 2, height / 1.9, "customer")
+      .setScale(1)
       .setDepth(-11);
 
     this.dialogueIndex = 0;
@@ -99,7 +90,7 @@ export default class Tutorial extends Phaser.Scene {
         fontSize: "25px",
         fontFamily: "Roboto",
         color: "#ffffff",
-        backgroundColor: "#000000d3",
+        backgroundColor: "#0000008d",
         padding: { x: 40, y: 25 },
         align: "left",
         wordWrap: { width: width * 0.2 },
@@ -178,25 +169,30 @@ export default class Tutorial extends Phaser.Scene {
     );
 
     this.cuttingView.setScale(cuttingScale);
-
-    this.note1 = this.add.image(width / 5, height / 3, "note1")
-      .setDepth(101)
-      .setScale(0.4);
-
+    
     const buttonX =
       this.cuttingView.x +
-      this.cuttingView.displayWidth * 0.42;
+      this.cuttingView.displayWidth * 0.43;
 
     const buttonY =
       this.cuttingView.y +
       this.cuttingView.displayHeight * 0.31;
+
+    this.cup = this.add.image(buttonX * 0.5, buttonY * 1.1, "cup")
+      .setScale(1)
+      .setDepth(101);
+
+    this.note1 = this.add.image(width / 6.8, height / 4, "note1")
+      .setDepth(101)
+      .setScale(0.9);
+
 
     this.cutButton = this.add.image(
       buttonX,
       buttonY,
       "button"
     )
-      .setDepth(160)
+      .setDepth(102)
       .setScale(1.3)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
@@ -206,17 +202,17 @@ export default class Tutorial extends Phaser.Scene {
       this.cutButton.y,
       "button"
     )
-      .setDepth(159)
-      .setScale(1.4)
+      .setDepth(101)
+      .setScale(1.2)
       .setAlpha(0.25)
-      .setTint(0x1d22a5)
-      .setBlendMode(Phaser.BlendModes.ADD);
+      .setTint(0xF0E1D2)
+      .setBlendMode(Phaser.BlendModes.SCREEN);
 
     this.tweens.add({
       targets: this.buttonGlow,
-      alpha: 0.55,
+      alpha: 0.35,
       scale: 1.6,
-      duration: 900,
+      duration: 700,
       yoyo: true,
       repeat: -1,
       ease: "Sine.easeInOut"
@@ -511,12 +507,14 @@ export default class Tutorial extends Phaser.Scene {
     let feedbackTexture;
     let feedbackColor;
     let feedbackSound;
+    let feedbackScale;
 
     if (percent < 30) {
 
       feedbackTexture = "bad";
       feedbackColor = "#ff4444";
       feedbackSound = "badcut";
+      feedbackScale = 0.12;
 
     }
 
@@ -525,6 +523,7 @@ export default class Tutorial extends Phaser.Scene {
       feedbackTexture = "good";
       feedbackColor = "#2ecc71";
       feedbackSound = "goodcut";
+      feedbackScale = 0.12;
 
     }
     else {
@@ -532,6 +531,7 @@ export default class Tutorial extends Phaser.Scene {
       feedbackTexture = "toomuch";
       feedbackColor = "#ffd166";
       feedbackSound = "toomuchcut";
+      feedbackScale = 0.18;
 
     }
     this.sound.play(feedbackSound, {
@@ -561,7 +561,7 @@ export default class Tutorial extends Phaser.Scene {
     )
       .setOrigin(0, 0.5)
       .setDepth(300)
-      .setScale(0.25);
+      .setScale(feedbackScale);
 
     this.tweens.add({
       targets: feedbackImg,
