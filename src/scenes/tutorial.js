@@ -30,7 +30,7 @@ export default class Tutorial extends Phaser.Scene {
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Fish05/cursor.png), auto"
+      "url(assets/Fish06/Cursor_black.png), auto"
     );
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
@@ -55,7 +55,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser")
       .setDepth(-10);
-   this.shopLaser.setScale(1.1);
+    this.shopLaser.setScale(1.1);
 
     this.coworker = this.add.image(width / 2, height / 1.9, "customer")
       .setScale(1)
@@ -169,7 +169,7 @@ export default class Tutorial extends Phaser.Scene {
     );
 
     this.cuttingView.setScale(cuttingScale);
-    
+
     const buttonX =
       this.cuttingView.x +
       this.cuttingView.displayWidth * 0.43;
@@ -178,7 +178,7 @@ export default class Tutorial extends Phaser.Scene {
       this.cuttingView.y +
       this.cuttingView.displayHeight * 0.31;
 
-    this.cup = this.add.image(buttonX * 0.5, buttonY * 1.1, "cup")
+    this.cup = this.add.image(buttonX * 0.55, buttonY * 1.1, "cup")
       .setScale(1)
       .setDepth(101);
 
@@ -234,12 +234,12 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), auto"
+        "url(assets/Fish06/Cursor_black.png), auto"
       );
 
       this.tweens.add({
         targets: this.cutButton,
-        scale: 1.2,
+        scale: 1.3,
         alpha: 1,
         duration: 100,
         ease: "Power2"
@@ -248,7 +248,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), pointer"
+        "url(assets/Fish06/Cursor_black.png), pointer"
       );
 
       if (!this.canStopLine) return;
@@ -297,14 +297,14 @@ export default class Tutorial extends Phaser.Scene {
 
     this.infoText.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), auto"
+        "url(assets/Fish06/Cursor_black.png), auto"
       );
     });
 
     this.closeInfoText = () => {
 
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), pointer"
+        "url(assets/Fish06/Cursor_black.png), pointer"
       );
 
       this.input.off(

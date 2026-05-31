@@ -22,6 +22,7 @@ export default class Shop extends Phaser.Scene {
     this.load.image("note1", "assets/Fish06/Fish01_Icon.png");
     this.load.image("note2", "assets/Fish06/Sign_Fisch_02.png");
     this.load.image("cup", "assets/Fish06/coffee.png");
+    this.load.image("emptyCup", "assets/Fish06/coffeeempty.png");
     this.load.image("button", "assets/Fish06/Button_Chopping.png");
     this.load.image("parasite", "assets/Fish06/TalkViewDoneOrangeEverything.png");
     this.load.image("bad", "assets/Fish06/BadFisch_01.png");
@@ -59,6 +60,7 @@ export default class Shop extends Phaser.Scene {
     this.load.audio("badcut", "assets/audio/feedback/bad.mp3");
     this.load.audio("goodcut", "assets/audio/feedback/ok.mp3");
     this.load.audio("toomuchcut", "assets/audio/feedback/bad.mp3");
+    this.load.audio("schluck", "assets/audio/schluck.mp3");
 
     this.load.audio("backgroundmusic", "assets/audio/riba.wav");
 
@@ -66,7 +68,7 @@ export default class Shop extends Phaser.Scene {
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Fish05/cursor.png), auto"
+      "url(assets/Fish06/Cursor_black.png), auto"
     );
     const { width, height } = this.scale;
 
@@ -115,6 +117,7 @@ export default class Shop extends Phaser.Scene {
     this.cutLineSpeed = 5;
     this.canStopLine = false;
     this.cutInputReady = false;
+    this.hasDrunkCoffee = false;
 
     gameState.reset();
 
@@ -200,9 +203,61 @@ export default class Shop extends Phaser.Scene {
       this.cuttingView.y +
       this.cuttingView.displayHeight * 0.31;
 
-    this.cup = this.add.image(buttonX * 0.5, buttonY * 1.1, "cup")
+    this.cupIsEmpty = false;
+
+    this.cup = this.add.image(
+      buttonX * 0.5,
+      buttonY * 1.1,
+      this.hasDrunkCoffee ? "emptyCup" : "cup"
+    )
       .setScale(1)
       .setDepth(101);
+
+    if (!this.hasDrunkCoffee) {
+
+      this.cup.setInteractive({ useHandCursor: false });
+
+      this.cup.on("pointerover", () => {
+        this.input.setDefaultCursor(
+          "url(assets/Fish05/cursorhover.png), pointer"
+        );
+
+        this.tweens.add({
+          targets: this.cup,
+          scale: 1.08,
+          duration: 100
+        });
+      });
+
+      this.cup.on("pointerout", () => {
+        this.input.setDefaultCursor(
+          "url(assets/Fish06/Cursor_black.png), auto"
+        );
+
+        this.tweens.add({
+          targets: this.cup,
+          scale: 1,
+          duration: 100
+        });
+      });
+
+      this.cup.on("pointerdown", () => {
+
+        this.hasDrunkCoffee = true;
+
+        this.sound.play("schluck", {
+          volume: 5
+        });
+
+        this.cup.setTexture("emptyCup");
+
+        this.cup.disableInteractive();
+
+        this.input.setDefaultCursor(
+          "url(assets/Fish06/Cursor_black.png), auto"
+        );
+      });
+    }
 
     this.note1 = this.add.image(
       width / 8.6,
@@ -236,7 +291,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), auto"
+        "url(assets/Fish06/Cursor_black.png), auto"
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -248,7 +303,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), pointer"
+        "url(assets/Fish06/Cursor_black.png), pointer"
       );
 
       if (!this.canStopLine) return;
@@ -306,7 +361,7 @@ export default class Shop extends Phaser.Scene {
         }
 
         this.input.setDefaultCursor(
-          "url(assets/Fish05/cursor.png), pointer"
+          "url(assets/Fish06/Cursor_black.png), pointer"
         );
 
         this.tweens.add({
@@ -623,6 +678,7 @@ export default class Shop extends Phaser.Scene {
     if (this.cup) this.cup.destroy();
     if (this.cutLine) this.cutLine.destroy();
     if (this.cutButton) this.cutButton.destroy();
+    if (this.buttonGlow) this.buttonGlow.destroy();
 
     this.canStopLine = false;
     this.cutInputReady = false;
@@ -760,10 +816,10 @@ export default class Shop extends Phaser.Scene {
         this.input.setDefaultCursor("url(assets/Fish05/cursorhover.png), auto");
       });
       btn.on("pointerout", () => {
-        this.input.setDefaultCursor("url(assets/Fish05/cursor.png), auto");
+        this.input.setDefaultCursor("url(assets/Fish06/Cursor_black.png), auto");
       });
       btn.on("pointerdown", () => {
-        this.input.setDefaultCursor("url(assets/Fish05/cursor.png), auto");
+        this.input.setDefaultCursor("url(assets/Fish06/Cursor_black.png), auto");
         if (choiceMade) return;
 
         choiceMade = true;
@@ -1035,6 +1091,7 @@ export default class Shop extends Phaser.Scene {
             this.coworker.destroy();
             this.coworker = null;
           }
+          const { width, height } = this.scale;
           const BadKScale = Math.min(
             width / this.shopBg.width,
             height / this.shopBg.height

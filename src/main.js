@@ -10,7 +10,7 @@ import Ending from "./scenes/ending.js";
 const config = {
   type: Phaser.AUTO,
   parent: "app",
-  scene: [Tutorial, Shop,Ending],
+  scene: [Menu, Intro,Tutorial, Shop,Ending],
   scale: {
     mode: Phaser.Scale.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH,

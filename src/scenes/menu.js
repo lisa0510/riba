@@ -17,7 +17,7 @@ export default class Menu extends Phaser.Scene {
   create() {
 
     this.input.setDefaultCursor(
-      "url(assets/Fish05/cursor.png), auto"
+      "url(assets/Fish06/Cursor_black.png), auto"
     );
 
     const { width, height } = this.scale;
