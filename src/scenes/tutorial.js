@@ -30,7 +30,7 @@ export default class Tutorial extends Phaser.Scene {
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Fish06/Cursor_black.png), auto"
+      "url(assets/Fish05/cursor.png), auto"
     );
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
@@ -55,7 +55,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser")
       .setDepth(-10);
-    this.shopLaser.setScale(1.1);
+   this.shopLaser.setScale(1.1);
 
     this.coworker = this.add.image(width / 2, height / 1.9, "customer")
       .setScale(1)
@@ -169,7 +169,7 @@ export default class Tutorial extends Phaser.Scene {
     );
 
     this.cuttingView.setScale(cuttingScale);
-
+    
     const buttonX =
       this.cuttingView.x +
       this.cuttingView.displayWidth * 0.43;
@@ -178,7 +178,7 @@ export default class Tutorial extends Phaser.Scene {
       this.cuttingView.y +
       this.cuttingView.displayHeight * 0.31;
 
-    this.cup = this.add.image(buttonX * 0.55, buttonY * 1.1, "cup")
+    this.cup = this.add.image(buttonX * 0.5, buttonY * 1.1, "cup")
       .setScale(1)
       .setDepth(101);
 
@@ -193,7 +193,7 @@ export default class Tutorial extends Phaser.Scene {
       "button"
     )
       .setDepth(102)
-      .setScale(1.3)
+      .setScale(1.2)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
 
@@ -211,8 +211,8 @@ export default class Tutorial extends Phaser.Scene {
     this.tweens.add({
       targets: this.buttonGlow,
       alpha: 0.35,
-      scale: 1.6,
-      duration: 700,
+      scale: 1.4,
+      duration: 1000,
       yoyo: true,
       repeat: -1,
       ease: "Sine.easeInOut"
@@ -234,12 +234,12 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish06/Cursor_black.png), auto"
+        "url(assets/Fish05/cursor.png), auto"
       );
 
       this.tweens.add({
         targets: this.cutButton,
-        scale: 1.3,
+        scale: 1.2,
         alpha: 1,
         duration: 100,
         ease: "Power2"
@@ -248,16 +248,8 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish06/Cursor_black.png), pointer"
+        "url(assets/Fish05/cursor.png), pointer"
       );
-
-      if (!this.canStopLine) return;
-
-      this.laser = this.sound.add("laser", {
-        volume: 0.1
-      });
-      this.laser.play();
-
       this.tweens.add({
         targets: this.cutButton,
         scale: 1.2,
@@ -267,7 +259,15 @@ export default class Tutorial extends Phaser.Scene {
         ease: "Power2"
       });
 
-      this.stopLineAndCut();
+      if (!this.canStopLine) return;
+
+      this.laser = this.sound.add("laser", {
+        volume: 0.1
+      });
+      this.laser.play();
+      this.time.delayedCall(140, () => {
+        this.stopLineAndCut();
+      });
     });
 
     this.infoText = this.add.text(
@@ -297,14 +297,14 @@ export default class Tutorial extends Phaser.Scene {
 
     this.infoText.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish06/Cursor_black.png), auto"
+        "url(assets/Fish05/cursor.png), auto"
       );
     });
 
     this.closeInfoText = () => {
 
       this.input.setDefaultCursor(
-        "url(assets/Fish06/Cursor_black.png), pointer"
+        "url(assets/Fish05/cursor.png), pointer"
       );
 
       this.input.off(

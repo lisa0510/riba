@@ -260,7 +260,7 @@ export default class Shop extends Phaser.Scene {
     }
 
     this.note1 = this.add.image(
-      width / 8.6,
+      width / 6.8,
       height / 4,
       this.currentBox.noteTexture || "note1"
     )
@@ -273,9 +273,31 @@ export default class Shop extends Phaser.Scene {
       "button"
     )
       .setDepth(160)
-      .setScale(1.3)
+      .setScale(1.2)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
+
+     this.buttonGlow = this.add.image(
+          this.cutButton.x,
+          this.cutButton.y,
+          "button"
+        )
+          .setDepth(101)
+          .setScale(1.2)
+          .setAlpha(0.25)
+          .setTint(0xF0E1D2)
+          .setBlendMode(Phaser.BlendModes.SCREEN);
+    
+        this.tweens.add({
+          targets: this.buttonGlow,
+          alpha: 0.35,
+          scale: 1.4,
+          duration: 1000,
+          yoyo: true,
+          repeat: -1,
+          ease: "Sine.easeInOut"
+        });
+
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
@@ -295,7 +317,7 @@ export default class Shop extends Phaser.Scene {
       );
       this.tweens.add({
         targets: this.cutButton,
-        scale: 1.3,
+        scale: 1.2,
         duration: 100,
         ease: "Power2"
       });
@@ -315,13 +337,15 @@ export default class Shop extends Phaser.Scene {
 
       this.tweens.add({
         targets: this.cutButton,
-        scale: 1.4,
+        scale: 1.2,
         duration: 70,
         yoyo: true,
         ease: "Power2"
       });
 
-      this.stopLineAndCut();
+      this.time.delayedCall(140, () => {
+        this.stopLineAndCut();
+      });
     });
 
     this.spawnFish(true);
