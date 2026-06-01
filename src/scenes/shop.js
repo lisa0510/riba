@@ -13,16 +13,16 @@ export default class Shop extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish06/Backround_GoodThought.png");
-    this.load.image("shop_laser", "assets/Fish06/Front_GreyScale.png");
-    this.load.image("customer", "assets/Fish06/Klara_GreyScale.png");
-    this.load.image("fish", "assets/Fish06/GreyScaleFisch.png");
-    this.load.image("fish2", "assets/Fish06/GreyScaleFisch02.png");
+    this.load.image("shop_bg", "assets/Fish07/Backround_TalkView.png");
+    this.load.image("shop_laser", "assets/Fish07/Front_TalkView.png");
+    this.load.image("customer", "assets/Fish07/Klara_TalkView_Start.png");
+    this.load.image("fish", "assets/Fish07/Fish01.png");
+    this.load.image("fish2", "assets/Fish07/GreyScaleFisch02.png");
     this.load.image("cuttingview", "assets/Fish06/GreyScaleChop.png");
     this.load.image("note1", "assets/Fish06/Fish01_Icon.png");
     this.load.image("note2", "assets/Fish06/Sign_Fisch_02.png");
-    this.load.image("cup", "assets/Fish06/coffee.png");
-    this.load.image("emptyCup", "assets/Fish06/coffeeempty.png");
+    this.load.image("cup", "assets/Fish07/CupIsFull.png");
+    this.load.image("emptyCup", "assets/Fish07/CupIsEmpty.png");
     this.load.image("button", "assets/Fish06/Button_Chopping.png");
     this.load.image("parasite", "assets/Fish06/TalkViewDoneOrangeEverything.png");
     this.load.image("bad", "assets/Fish06/BadFisch_01.png");
@@ -68,7 +68,7 @@ export default class Shop extends Phaser.Scene {
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Fish06/Cursor_black.png), auto"
+      "url(assets/Fish07/Cursor_black.png), auto"
     );
     const { width, height } = this.scale;
 
@@ -94,7 +94,7 @@ export default class Shop extends Phaser.Scene {
 
     this.shopBg.setScale(bgScale);
 
-    this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser").setDepth(-10).setScale(1.1);
+    this.shopLaser = this.add.image(width / 2, height / 1.7, "shop_laser").setDepth(-10).setScale(1.1);
 
     this.coworker = this.add.image(
       width / 2,
@@ -219,7 +219,7 @@ export default class Shop extends Phaser.Scene {
 
       this.cup.on("pointerover", () => {
         this.input.setDefaultCursor(
-          "url(assets/Fish05/cursorhover.png), pointer"
+          "url(assets/Fish07/cursorhover.png), pointer"
         );
 
         this.tweens.add({
@@ -231,7 +231,7 @@ export default class Shop extends Phaser.Scene {
 
       this.cup.on("pointerout", () => {
         this.input.setDefaultCursor(
-          "url(assets/Fish06/Cursor_black.png), auto"
+          "url(assets/Fish07/Cursor_black.png), auto"
         );
 
         this.tweens.add({
@@ -254,7 +254,7 @@ export default class Shop extends Phaser.Scene {
         this.cup.disableInteractive();
 
         this.input.setDefaultCursor(
-          "url(assets/Fish06/Cursor_black.png), auto"
+          "url(assets/Fish07/Cursor_black.png), auto"
         );
       });
     }
@@ -277,31 +277,31 @@ export default class Shop extends Phaser.Scene {
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
 
-     this.buttonGlow = this.add.image(
-          this.cutButton.x,
-          this.cutButton.y,
-          "button"
-        )
-          .setDepth(101)
-          .setScale(1.2)
-          .setAlpha(0.25)
-          .setTint(0xF0E1D2)
-          .setBlendMode(Phaser.BlendModes.SCREEN);
-    
-        this.tweens.add({
-          targets: this.buttonGlow,
-          alpha: 0.35,
-          scale: 1.4,
-          duration: 1000,
-          yoyo: true,
-          repeat: -1,
-          ease: "Sine.easeInOut"
-        });
+    this.buttonGlow = this.add.image(
+      this.cutButton.x,
+      this.cutButton.y,
+      "button"
+    )
+      .setDepth(101)
+      .setScale(1.2)
+      .setAlpha(0.25)
+      .setTint(0xF0E1D2)
+      .setBlendMode(Phaser.BlendModes.SCREEN);
+
+    this.tweens.add({
+      targets: this.buttonGlow,
+      alpha: 0.35,
+      scale: 1.4,
+      duration: 1000,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut"
+    });
 
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursorhover.png), pointer"
+        "url(assets/Fish07/cursorhover.png), pointer"
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -313,7 +313,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish06/Cursor_black.png), auto"
+        "url(assets/Fish07/Cursor_black.png), auto"
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -325,7 +325,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish06/Cursor_black.png), pointer"
+        "url(assets/Fish07/Cursor_black.png), pointer"
       );
 
       if (!this.canStopLine) return;
@@ -385,7 +385,7 @@ export default class Shop extends Phaser.Scene {
         }
 
         this.input.setDefaultCursor(
-          "url(assets/Fish06/Cursor_black.png), pointer"
+          "url(assets/Fish07/Cursor_black.png), pointer"
         );
 
         this.tweens.add({
@@ -593,7 +593,7 @@ export default class Shop extends Phaser.Scene {
       duration: 350
     });
 
-    this.time.delayedCall(800, () => {
+    this.time.delayedCall(1500, () => {
       leftHalf.destroy();
       rightHalf.destroy();
       percentText.destroy();
@@ -837,13 +837,13 @@ export default class Shop extends Phaser.Scene {
         .setDepth(600);
 
       btn.on("pointerover", () => {
-        this.input.setDefaultCursor("url(assets/Fish05/cursorhover.png), auto");
+        this.input.setDefaultCursor("url(assets/Fish07/cursorhover.png), auto");
       });
       btn.on("pointerout", () => {
-        this.input.setDefaultCursor("url(assets/Fish06/Cursor_black.png), auto");
+        this.input.setDefaultCursor("url(assets/Fish07/Cursor_black.png), auto");
       });
       btn.on("pointerdown", () => {
-        this.input.setDefaultCursor("url(assets/Fish06/Cursor_black.png), auto");
+        this.input.setDefaultCursor("url(assets/Fish07/Cursor_black.png), auto");
         if (choiceMade) return;
 
         choiceMade = true;
@@ -873,6 +873,9 @@ export default class Shop extends Phaser.Scene {
 
     if (this.coworker) {
       this.coworker.setVisible(false);
+    }
+    if (this.shopLaser) {
+      this.shopLaser.setVisible(false);
     }
 
     gameState.setParasiteInteraction(this.currentBoxId, true);
@@ -1009,6 +1012,10 @@ export default class Shop extends Phaser.Scene {
       this.coworker.destroy();
       this.coworker = null;
     }
+    if (this.shopLaser) {
+      this.shopLaser.setVisible(true);
+    }
+
 
     this.coworker = this.add.image(-600, this.scale.height / 1.9, "customer").setScale(1).setDepth(-11);
 
@@ -1076,6 +1083,8 @@ export default class Shop extends Phaser.Scene {
         volume: 0.1
       });
 
+      const cutX = this.cutLine.x;
+
       if (this.cutLine) {
         this.cutLine.destroy();
         this.cutLine = null;
@@ -1083,21 +1092,103 @@ export default class Shop extends Phaser.Scene {
 
       this.cameras.main.shake(300, 0.006);
 
+      const parasiteBounds = this.parasite.getBounds();
+
+      const localX = Phaser.Math.Clamp(
+        cutX - parasiteBounds.left,
+        0,
+        parasiteBounds.width
+      );
+
+      const leftHalf = this.add.image(
+        this.parasite.x,
+        this.parasite.y,
+        "parasite"
+      )
+        .setDisplaySize(
+          parasiteBounds.width,
+          parasiteBounds.height
+        )
+        .setCrop(
+          0,
+          0,
+          localX,
+          parasiteBounds.height
+        )
+        .setDepth(-11);
+
+      const rightHalf = this.add.image(
+        this.parasite.x,
+        this.parasite.y,
+        "parasite"
+      )
+        .setDisplaySize(
+          parasiteBounds.width,
+          parasiteBounds.height
+        )
+        .setCrop(
+          localX,
+          0,
+          parasiteBounds.width - localX,
+          parasiteBounds.height
+        )
+        .setDepth(-11);
+
+      this.parasite.destroy();
+      this.parasite = null;
+
       this.tweens.add({
-        targets: this.parasite,
+        targets: leftHalf,
+        x: leftHalf.x - 250,
         alpha: 0,
-        scale: 1,
-        angle: 8,
-        duration: 500,
+        duration: 200,
+        ease: "Power2"
+      });
+
+      this.tweens.add({
+        targets: rightHalf,
+        x: rightHalf.x + 250,
+        alpha: 0,
+        duration: 200,
         ease: "Power2",
         onComplete: () => {
-          if (onComplete) onComplete();
+
+          leftHalf.destroy();
+          rightHalf.destroy();
+          this.time.delayedCall(300, () => {
+            this.cameras.main.fade(
+              800,
+              0,
+              0,
+              0
+            );
+
+            this.time.delayedCall(800, () => {
+
+              if (onComplete) {
+                onComplete();
+              }
+
+              this.cameras.main.fadeIn(
+                800,
+                0,
+                0,
+                0
+              );
+
+            });
+
+          });
+
         }
       });
     };
 
     this.time.delayedCall(200, () => {
-      this.input.once("pointerdown", this.ending4CutHandler);
+      this.input.once(
+        "pointerdown",
+        this.ending4CutHandler
+      );
     });
   }
 
@@ -1127,7 +1218,7 @@ export default class Shop extends Phaser.Scene {
           )
             .setScale(BadKScale)
             .setDepth(-11);
-
+          this.shopLaser.setVisible(false);
           this.dialogueManager.startDialogue(
             [preEndingDialogue[1]],
             () => {
@@ -1138,7 +1229,7 @@ export default class Shop extends Phaser.Scene {
                   this.parasite.destroy();
                   this.parasite = null;
                 }
-
+                this.shopLaser.setVisible(true);
                 this.coworker = this.add.image(
                   this.scale.width / 2,
                   this.scale.height / 1.9,

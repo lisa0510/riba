@@ -7,14 +7,14 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish06/Backround_GoodThought.png");
-    this.load.image("shop_laser", "assets/Fish06/Front_GreyScale.png");
-    this.load.image("customer", "assets/Fish06/Klara_GreyScale.png");
-    this.load.image("fish", "assets/Fish06/GreyScaleFisch.png");
-    this.load.image("cuttingview", "assets/Fish06/GreyScaleChop.png");
-    this.load.image("cup", "assets/Fish06/coffee.png");
+    this.load.image("shop_bg", "assets/Fish07/Backround_TalkView.png");
+    this.load.image("shop_laser", "assets/Fish07/Front_TalkView.png");
+    this.load.image("customer", "assets/Fish07/Klara_TalkView_Start.png");
+    this.load.image("fish", "assets/Fish07/Fish01.png");
+    this.load.image("cuttingview", "assets/Fish07/GreyScaleChop.png");
+    this.load.image("cup", "assets/Fish07/CupIsFull.png");
     this.load.image("note1", "assets/Fish06/Fish01_Icon.png");
-    this.load.image("button", "assets/Fish06/Button_Chopping.png");
+    this.load.image("button", "assets/Fish07/ButtonOfController.png");
     this.load.audio("bg_music", "assets/audio/riba.wav");
     this.load.image("bad", "assets/Fish06/BadFisch_01.png");
     this.load.image("good", "assets/Fish06/GoodFisch_01.png");
@@ -30,7 +30,7 @@ export default class Tutorial extends Phaser.Scene {
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Fish05/cursor.png), auto"
+      "url(assets/Fish07/Cursor_black.png), auto"
     );
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
@@ -53,7 +53,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.shopBg.setScale(bgScale);
 
-    this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser")
+    this.shopLaser = this.add.image(width / 2, height / 1.7, "shop_laser")
       .setDepth(-10);
     this.shopLaser.setScale(1.1);
 
@@ -228,7 +228,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursorhover.png), pointer"
+        "url(assets/Fish07/cursorhover.png), pointer"
       );
 
       this.tweens.add({
@@ -242,7 +242,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), auto"
+        "url(assets/Fish07/Cursor_black.png), auto"
       );
 
       this.tweens.add({
@@ -256,7 +256,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), pointer"
+        "url(assets/Fish07/Cursor_black.png), auto"
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -286,7 +286,7 @@ export default class Tutorial extends Phaser.Scene {
         fontSize: "28px",
         fontFamily: "Roboto",
         color: "#ffffff",
-        backgroundColor: "#1d22a5c0",
+        backgroundColor: "#171718e0",
         padding: { x: 40, y: 25 },
         align: "center",
         wordWrap: { width: width * 0.6 }
@@ -299,20 +299,20 @@ export default class Tutorial extends Phaser.Scene {
 
     this.infoText.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursorhover.png), pointer"
+        "url(assets/Fish07/cursorhover.png), pointer"
       );
     });
 
     this.infoText.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), auto"
+        "url(assets/Fish07/Cursor_black.png), auto"
       );
     });
 
     this.closeInfoText = () => {
 
       this.input.setDefaultCursor(
-        "url(assets/Fish05/cursor.png), pointer"
+        "url(assets/Fish07/Cursor_black.png), auto"
       );
 
       this.input.off(
@@ -630,7 +630,7 @@ export default class Tutorial extends Phaser.Scene {
         fontSize: "28px",
         fontFamily: "Roboto",
         color: "#ffffff",
-        backgroundColor: "#1d22a5c0",
+        backgroundColor: "#171718e0",
         padding: { x: 40, y: 25 },
         align: "center",
         wordWrap: { width: width * 0.6 }

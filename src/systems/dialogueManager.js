@@ -26,7 +26,7 @@ export default class DialogueManager {
     const isMona =
       this.dialogues[0] &&
       this.dialogues[0].text &&
-      this.dialogues[0].text.includes("Mona:");
+      this.dialogues[0].text.includes("???:");
 
     const boxX = width * 0.08;
     const boxY = height * 0.45;
