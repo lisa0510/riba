@@ -5,6 +5,19 @@ import Shop from "./scenes/shop.js";
 import Tutorial from "./scenes/tutorial.js";
 import Intro from "./scenes/introtext.js";
 import Ending from "./scenes/ending.js";
+import FontFaceObserver from "fontfaceobserver";
+
+const roboto = new FontFaceObserver("Roboto");
+const quantico = new FontFaceObserver("Quantico");
+const crimson = new FontFaceObserver("Crimson Text");
+
+Promise.all([
+  roboto.load(),
+  quantico.load(),
+  crimson.load()
+]).then(() => {
+  new Phaser.Game(config);
+});
 
 
 const config = {

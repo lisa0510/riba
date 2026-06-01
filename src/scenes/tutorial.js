@@ -55,7 +55,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.shopLaser = this.add.image(width / 2, height / 2, "shop_laser")
       .setDepth(-10);
-   this.shopLaser.setScale(1.1);
+    this.shopLaser.setScale(1.1);
 
     this.coworker = this.add.image(width / 2, height / 1.9, "customer")
       .setScale(1)
@@ -73,8 +73,10 @@ export default class Tutorial extends Phaser.Scene {
 
     this.fishPath = null;
     this.fishPathDebug = null;
+    document.fonts.ready.then(() => {
+      this.setupMainDialogue();
+    });
 
-    this.setupMainDialogue();
   }
 
   setupMainDialogue() {
@@ -88,7 +90,7 @@ export default class Tutorial extends Phaser.Scene {
       "",
       {
         fontSize: "25px",
-        fontFamily: "Domine",
+        fontFamily: '"Domine"',
         color: "#ffffff",
         backgroundColor: "#0000008d",
         padding: { x: 40, y: 25 },
@@ -102,7 +104,13 @@ export default class Tutorial extends Phaser.Scene {
 
 
     this.input.on("pointerdown", this.handleProgressDialogue, this);
-    this.displayNextLine();
+
+    this.dialogueText.setText(".");
+
+    this.time.delayedCall(80, () => {
+      this.dialogueText.setText("");
+      this.displayNextLine();
+    });
   }
 
 
@@ -169,7 +177,7 @@ export default class Tutorial extends Phaser.Scene {
     );
 
     this.cuttingView.setScale(cuttingScale);
-    
+
     const buttonX =
       this.cuttingView.x +
       this.cuttingView.displayWidth * 0.43;
