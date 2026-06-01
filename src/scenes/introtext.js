@@ -21,7 +21,7 @@ export default class Intro extends Phaser.Scene {
     const panelX = width / 2;
     const panelY = height * 0.5;
 
-    this.add.rectangle(width / 2, height / 2, width, height, 0x111816);
+    this.add.rectangle(width / 2, height / 2, width, height, 0x000000);
     this.introVoice = this.sound.add("intro", {
         volume: 2.5
       });
@@ -74,9 +74,6 @@ export default class Intro extends Phaser.Scene {
       }
     );
 
-    for (let y = 0; y < height; y += 8) {
-      this.add.rectangle(width / 2, y, width, 1, 0x3cff9b, 0.035);
-    }
 
     const introText = `Als die Sonne begann, die Erdoberfläche zu verbrennen, befand sich eine Gruppe von Sättigungstaucherinnen in ihrer Arbeitsstation in der Adria.
 

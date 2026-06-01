@@ -12,11 +12,10 @@ const config = {
   parent: "app",
   scene: [Menu, Intro,Tutorial, Shop,Ending],
   scale: {
-    mode: Phaser.Scale.RESIZE,
+    mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: window.innerWidth,
-    height: window.innerHeight
-    
+    width: 1920,
+    height: 1080
   }
 };
 

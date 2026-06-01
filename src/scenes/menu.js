@@ -19,9 +19,8 @@ export default class Menu extends Phaser.Scene {
     this.input.setDefaultCursor(
       "url(assets/Fish06/Cursor_black.png), auto"
     );
-
     const { width, height } = this.scale;
-    const aspectRatio = width / height;
+    const aspectRatio = window.innerWidth / window.innerHeight;
 
     this.is16by9 =
       aspectRatio >= 1.7 &&
@@ -42,12 +41,8 @@ export default class Menu extends Phaser.Scene {
       "background"
     );
 
-    const bgScale = Math.max(
-      width / bg.width,
-      height / bg.height
-    );
 
-    bg.setScale(bgScale * 1.8).setAngle(10).setDepth(10);
+    bg.setScale(2).setAngle(10).setDepth(10);
     this.bubbles = this.add.group();
 
     this.time.addEvent({
@@ -59,8 +54,8 @@ export default class Menu extends Phaser.Scene {
     });
 
     // EYE
-    this.eyeCenterX = width / 2;
-    this.eyeCenterY = height * 0.38;
+    this.eyeCenterX = width / 2 - 50;
+    this.eyeCenterY = height / 2 - 100;
 
     this.eye = this.add.image(
       this.eyeCenterX,
@@ -91,16 +86,6 @@ export default class Menu extends Phaser.Scene {
       width * 0.035
     );
 
-    const buttonPaddingX = Math.max(
-      12,
-      width * 0.012
-    );
-
-    const buttonPaddingY = Math.max(
-      8,
-      height * 0.01
-    );
-
     const titleLeftPadding = 0;
     const titleTopPadding = height * 0.01;
 
@@ -129,23 +114,12 @@ export default class Menu extends Phaser.Scene {
       0.12
     )
       .setOrigin(0.5)
-      .setStrokeStyle(2, 0xffffff, 0.35)
       .setDepth(5)
       .setInteractive({
         useHandCursor: false,
-        cursor: "url(assets/Fish05/cursorhover.png), pointer"
+        cursor: "url(assets/Fish07/cursorhover.png), pointer"
       });
 
-    const startButtonGlow = this.add.rectangle(
-      menuX,
-      startY,
-      buttonW + 10,
-      buttonH + 10,
-      0x9be7ff,
-      0.08
-    )
-      .setOrigin(0.5)
-      .setDepth(4);
 
     const startButtonText = this.add.text(
       menuX,
@@ -161,24 +135,13 @@ export default class Menu extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(6);
 
-    this.tweens.add({
-      targets: startButtonGlow,
-      alpha: 0.18,
-      scaleX: 1.04,
-      scaleY: 1.12,
-      duration: 1200,
-      yoyo: true,
-      repeat: -1,
-      ease: "Sine.easeInOut"
-    });
 
     startButtonBg.on("pointerover", () => {
       startButtonBg.setFillStyle(0xffffff, 0.15);
-      startButtonBg.setStrokeStyle(2, 0xffffff, 0.75);
-      startButtonText.setStyle({ fill: "rgb(210, 242, 245)" });
+      startButtonText.setStyle({ fill: "#f17d32" });
 
       this.tweens.add({
-        targets: [startButtonBg, startButtonGlow, startButtonText],
+        targets: [startButtonBg, startButtonText],
         scaleX: 1.06,
         scaleY: 1.06,
         duration: 120,
@@ -188,11 +151,10 @@ export default class Menu extends Phaser.Scene {
 
     startButtonBg.on("pointerout", () => {
       startButtonBg.setFillStyle(0xffffff, 0.12);
-      startButtonBg.setStrokeStyle(2, 0xffffff, 0.35);
       startButtonText.setStyle({ fill: "#ffffff" });
 
       this.tweens.add({
-        targets: [startButtonBg, startButtonGlow, startButtonText],
+        targets: [startButtonBg, startButtonText],
         scaleX: 1,
         scaleY: 1,
         duration: 120,
@@ -209,7 +171,7 @@ export default class Menu extends Phaser.Scene {
       }
 
       this.tweens.add({
-        targets: [startButtonBg, startButtonGlow, startButtonText],
+        targets: [startButtonBg, startButtonText],
         alpha: 0,
         duration: 180,
         ease: "Power2",
@@ -223,38 +185,18 @@ export default class Menu extends Phaser.Scene {
     const creditsButtonBg = this.add.rectangle(
       menuX,
       creditsY,
-
       buttonW,
       buttonH,
-
       0xffffff,
       0.12
     )
-      .setOrigin(0.5)
-      .setStrokeStyle(
-        2,
-        0xffffff,
-        0.35
-      )
       .setDepth(5)
       .setInteractive({
         useHandCursor: false,
         cursor:
-          "url(assets/Fish05/cursorhover.png), pointer"
+          "url(assets/Fish07/cursorhover.png), pointer"
       });
 
-    const creditsButtonGlow = this.add.rectangle(
-      menuX,
-      creditsY,
-
-      buttonW + 10,
-      buttonH + 10,
-
-      0x9be7ff,
-      0.08
-    )
-      .setOrigin(0.5)
-      .setDepth(4);
 
     const creditsButtonText = this.add.text(
       menuX,
@@ -271,17 +213,6 @@ export default class Menu extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(6);
 
-    // AMBIENT PULSE
-    this.tweens.add({
-      targets: creditsButtonGlow,
-      alpha: 0.18,
-      scaleX: 1.04,
-      scaleY: 1.12,
-      duration: 1200,
-      yoyo: true,
-      repeat: -1,
-      ease: "Sine.easeInOut"
-    });
 
     // HOVER
     creditsButtonBg.on("pointerover", () => {
@@ -291,20 +222,13 @@ export default class Menu extends Phaser.Scene {
         0.15
       );
 
-      creditsButtonBg.setStrokeStyle(
-        2,
-        0xffffff,
-        0.75
-      );
-
       creditsButtonText.setStyle({
-        fill: "rgb(210, 242, 245)"
+        fill: "#f17d32"
       });
 
       this.tweens.add({
         targets: [
           creditsButtonBg,
-          creditsButtonGlow,
           creditsButtonText
         ],
 
@@ -324,12 +248,6 @@ export default class Menu extends Phaser.Scene {
         0.12
       );
 
-      creditsButtonBg.setStrokeStyle(
-        2,
-        0xffffff,
-        0.35
-      );
-
       creditsButtonText.setStyle({
         fill: "#ffffff"
       });
@@ -337,7 +255,6 @@ export default class Menu extends Phaser.Scene {
       this.tweens.add({
         targets: [
           creditsButtonBg,
-          creditsButtonGlow,
           creditsButtonText
         ],
 
@@ -360,7 +277,6 @@ export default class Menu extends Phaser.Scene {
       this.tweens.add({
         targets: [
           creditsButtonBg,
-          creditsButtonGlow,
           creditsButtonText
         ],
 
@@ -381,22 +297,21 @@ export default class Menu extends Phaser.Scene {
   createBubble() {
     const { width, height } = this.scale;
 
-    const bubbleSize = Phaser.Math.Between(6, 20);
-    const startX = Phaser.Math.Between(0, width);
+    const bubbleSize = Phaser.Math.Between(15, 50);
+    const startX = Phaser.Math.Between(10, width - 10);
     const startY = height + bubbleSize + 20;
 
     const bubble = this.add.circle(
       startX,
       startY,
       bubbleSize,
-      0xffffff,
-      0.12
+      0xA7C7E7,
+      0.15
     )
-      .setStrokeStyle(2, 0xffffff, 0.16)
-      .setDepth(1);
+      .setDepth(11);
 
     const drift = Phaser.Math.Between(-80, 80);
-    const duration = Phaser.Math.Between(5000, 9000);
+    const duration = Phaser.Math.Between(6000, 9000);
 
     this.tweens.add({
       targets: bubble,
@@ -414,7 +329,7 @@ export default class Menu extends Phaser.Scene {
       targets: bubble,
       scaleX: 1.25,
       scaleY: 0.95,
-      duration: 1200,
+      duration: 1500,
       yoyo: true,
       repeat: -1,
       ease: "Sine.easeInOut"
@@ -681,12 +596,12 @@ export default class Menu extends Phaser.Scene {
       .setDepth(202)
       .setInteractive({
         useHandCursor: false,
-        cursor: "url(assets/Fish05/cursorhover.png), pointer"
+        cursor: "url(assets/Fish07/cursorhover.png), pointer"
       });
 
     closeButton.on("pointerover", () => {
       closeButton.setStyle({
-        fill: "rgb(210, 242, 245)"
+        fill: "#f17d32"
       });
     });
 
