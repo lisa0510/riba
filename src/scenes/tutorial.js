@@ -88,7 +88,7 @@ export default class Tutorial extends Phaser.Scene {
       "",
       {
         fontSize: "25px",
-        fontFamily: "Roboto",
+        fontFamily: "Domine",
         color: "#ffffff",
         backgroundColor: "#0000008d",
         padding: { x: 40, y: 25 },

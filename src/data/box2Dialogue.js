@@ -27,25 +27,25 @@ noteTexture: "note2",
 ],
   parasiteDialogue: [
      {
-      text: "Mona: Nur so wenige sind essbar? \nBald gehen uns die letzten Dosen aus und dann müssen wir uns komplett von saurem Fisch ernähren. Was machen wir dann wenn du genauso wenig leistest?",
+      text: "???: \nNur so wenige sind essbar? \nBald gehen uns die letzten Dosen aus und dann müssen wir uns komplett von saurem Fisch ernähren. Was machen wir dann wenn du genauso wenig leistest?",
       voice: "box2glitchmona",
       choices: [
         {
           id: "disagree2",
           text: "Klara redet so nicht",
-          nextText: "Mona: Du schreist ja auch nicht jeden Gedanken den du hast in die Welt hinaus. Vertrau mir, dieser Gedanke ist noch der mildeste den ich über dich äussern kann.",
+          nextText: "???: \nDu schreist ja auch nicht jeden Gedanken den du hast in die Welt hinaus. Vertrau mir, dieser Gedanke ist noch der mildeste den ich über dich äussern kann.",
           voice: "box2disagree"
         },
         {
           id: "negative2",
           text: "Was soll ich denn machen?",
-          nextText: "Mona: Mühe! Meinst du ich bin froh täglich in der Säure schwimmen zu müssen? Trotz allem gebe ich mein bestes, aber das ist dir wohl ein Fremdwort.",
+          nextText: "???: \nMühe! Meinst du ich bin froh täglich in der Säure schwimmen zu müssen? Trotz allem gebe ich mein bestes, aber das ist dir wohl ein Fremdwort.",
           voice: "box2monaagree"
         }
       ],
       ignoreDialogue: [
         {
-          text: "Mona: Mich zu ignorieren löst nicht deine Probleme!",
+          text: "???: \nMich zu ignorieren löst nicht deine Probleme!",
           voice: "box2ignore"
         }
       ]
@@ -100,7 +100,7 @@ preEndingDialogue: {
       voice: "endingklaraoverall"
     },
     {
-      text: "Mona: Nicht nur der Anzug erdrückt mich, auch deine Präsenz tut es.",
+      text: "???: \nNicht nur der Anzug erdrückt mich, auch deine Präsenz tut es.",
       voice: "ending4mona"
     },
       {

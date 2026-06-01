@@ -37,7 +37,7 @@ export default class DialogueManager {
       "",
       {
         fontSize: "25px",
-        fontFamily: "Roboto",
+        fontFamily: "Domine",
         color: isMona ? "#f17d32" : "#ffffff",
         backgroundColor: "#000000cc",
         padding: {

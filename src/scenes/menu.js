@@ -6,11 +6,11 @@ export default class Menu extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "assets/Fish02/UI/Fisch_Menü_UI.png");
-    this.load.image("eye", "assets/Fish02/UI/FischAuge_Menü_UI.png");
-    this.load.image("headphones", "assets/Fish02/UI/Kopfhörer_Symbol_UI.png");
+    this.load.image("background", "assets/Fish07/FischForMenu.png");
+    this.load.image("eye", "assets/Fish07/Fish01_Auge_UI.png");
+    this.load.image("headphones", "assets/Fish07/Kopfhörer_Symbol_UI.png");
 
-    this.load.audio("background_music", "assets/audio/soundtrack.wav");
+    this.load.audio("background_music", "assets/audio/MenuSoundRiba.wav");
     this.load.audio("menu_button", "assets/audio/menubutton.mp3");
   }
 
@@ -21,6 +21,11 @@ export default class Menu extends Phaser.Scene {
     );
 
     const { width, height } = this.scale;
+    const aspectRatio = width / height;
+
+    this.is16by9 =
+      aspectRatio >= 1.7 &&
+      aspectRatio <= 1.85;
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("background_music", {
@@ -32,12 +37,17 @@ export default class Menu extends Phaser.Scene {
     }
 
     const bg = this.add.image(
-      width / 2,
-      height / 2,
+      width / 0.82,
+      height / 1.3,
       "background"
     );
 
-    bg.setDisplaySize(width, height);
+    const bgScale = Math.max(
+      width / bg.width,
+      height / bg.height
+    );
+
+    bg.setScale(bgScale * 1.8).setAngle(10).setDepth(10);
     this.bubbles = this.add.group();
 
     this.time.addEvent({
@@ -50,7 +60,7 @@ export default class Menu extends Phaser.Scene {
 
     // EYE
     this.eyeCenterX = width / 2;
-    this.eyeCenterY = height * 0.35;
+    this.eyeCenterY = height * 0.38;
 
     this.eye = this.add.image(
       this.eyeCenterX,
@@ -58,24 +68,22 @@ export default class Menu extends Phaser.Scene {
       "eye"
     );
 
-    this.eye.setScale(width < 1200 ? 0.23 : 0.3);
+    this.eye.setScale(2.2).setDepth(11);
 
-    this.maxEyeDistance = width < 1200 ? 28 : 40;
+    this.maxEyeDistance = width < 1200 ? 12 : 18;
 
     const menuX = width < 1200
       ? width * 0.16
       : width * 0.12;
 
-    const titleY = height < 750
-      ? height * 0.14
-      : height * 0.1;
+    const titleY = height * 0.05;
 
     const startY = height * 0.5;
     const creditsY = height * 0.62;
 
-    const titleFontSize = Math.max(
-      70,
-      width * 0.09
+    const titleFontSize = Math.min(
+      420,
+      width * 0.25
     );
 
     const buttonFontSize = Math.max(
@@ -93,15 +101,24 @@ export default class Menu extends Phaser.Scene {
       height * 0.01
     );
 
-    this.add.text(menuX, titleY, "RIBA", {
-      fontSize: `${titleFontSize}px`,
-      fill: "#fff",
-      fontFamily: '"Roboto"',
-      fontWeight: "900"
-    }).setOrigin(0.5);
+    const titleLeftPadding = 0;
+    const titleTopPadding = height * 0.01;
 
-    const buttonW = Math.max(230, width * 0.16);
-    const buttonH = Math.max(58, height * 0.07);
+    this.add.text(
+      titleLeftPadding,
+      titleTopPadding,
+      "RIBA",
+      {
+        fontSize: `${titleFontSize}px`,
+        fill: "#4b4949",
+        fontFamily: '"Roboto"',
+        fontWeight: "900"
+      }
+    )
+      .setOrigin(0, 0)
+      .setDepth(9);
+    const buttonW = Math.max(230, width * 0.22);
+    const buttonH = Math.max(58, height * 0.09);
 
     const startButtonBg = this.add.rectangle(
       menuX,
@@ -133,7 +150,7 @@ export default class Menu extends Phaser.Scene {
     const startButtonText = this.add.text(
       menuX,
       startY,
-      "START GAME",
+      "SPIEL STARTEN",
       {
         fontSize: `${Math.max(24, width * 0.022)}px`,
         fill: "#ffffff",
@@ -425,37 +442,39 @@ export default class Menu extends Phaser.Scene {
       0
     ).setDepth(101);
 
+    const popupMessage = this.is16by9
+      ? {
+        title: ' "Wenn das Wasser steigt, muss man versuchen darin zu überleben." ',
+        info: "Trage Kopfhörer für eine bessere Erfahrung."
+      }
+      : {
+        title: "Hinweis zur Darstellung",
+        info: "Dieses Spiel wurde für ein 16:9-Seitenverhältnis entwickelt.\n\nFür die beste Spielerfahrung empfehlen wir einen 16:9 Monitor im Vollbildmodus.\n\nAndere Seitenverhältnisse können zu Darstellungsfehlern führen."
+      };
+
     const headerText = this.add.text(
       0,
-      height * 0.2,
-      ' "Wenn das Wasser steigt, muss man versuchen darin zu überleben." ',
+      height * 0.22,
+      popupMessage.title,
       {
         fontSize: `${Math.max(20, height * 0.04)}px`,
         fill: "#ffffff",
         fontFamily: '"Roboto"',
         align: "center",
-        wordWrap: {
-          width: width * 0.8
-        }
+        wordWrap: { width: width * 0.8 }
       }
     ).setOrigin(0.5);
 
-    const popupImg = this.add.image(
-      0,
-      height / 2,
-      "headphones"
-    )
-      .setScale(width < 1200 ? 0.14 : 0.2);
-
     const infoText = this.add.text(
       0,
-      popupImg.y + height * 0.2,
-      "Trage Kopfhörer für eine bessere Erfahrung.",
+      this.is16by9 ? height * 0.7 : height * 0.5,
+      popupMessage.info,
       {
         fontSize: `${Math.max(18, height * 0.03)}px`,
         fill: "#bbbbbb",
         align: "center",
-        fontFamily: '"Roboto"'
+        fontFamily: '"Roboto"',
+        wordWrap: { width: width * 0.65 }
       }
     ).setOrigin(0.5);
 
@@ -472,12 +491,25 @@ export default class Menu extends Phaser.Scene {
       .setOrigin(0.5)
       .setName("waveText");
 
-    this.popupContainer.add([
+    const popupObjects = [
       headerText,
-      popupImg,
       infoText,
       hintText
-    ]);
+    ];
+
+    if (this.is16by9) {
+
+      const popupImg = this.add.image(
+        0,
+        height / 2,
+        "headphones"
+      )
+        .setScale(width < 1200 ? 0.14 : 0.2);
+
+      popupObjects.splice(1, 0, popupImg);
+    }
+
+    this.popupContainer.add(popupObjects);
 
     const closePopup = () => {
 
@@ -630,7 +662,7 @@ export default class Menu extends Phaser.Scene {
         align: "center"
       }
     ).setOrigin(0.5);
-    
+
     creditObjects.push(endText);
 
     this.creditsContainer.add(creditObjects);
@@ -743,7 +775,7 @@ export default class Menu extends Phaser.Scene {
     );
 
     const constrainedDist = Math.min(
-      dist * 2,
+      dist * 0.5,
       this.maxEyeDistance
     );
 
