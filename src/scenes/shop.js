@@ -16,6 +16,7 @@ export default class Shop extends Phaser.Scene {
     this.load.image("shop_bg", "assets/Fish07/Backround_TalkView.png");
     this.load.image("shop_laser", "assets/Fish07/Front_TalkView.png");
     this.load.image("customer", "assets/Fish07/Klara_TalkView_Start.png");
+    this.load.image("klara_done", "assets/Fish07/Klara_TalkView_End.png");
     this.load.image("fish", "assets/Fish07/Fish01.png");
     this.load.image("fish2", "assets/Fish07/GreyScaleFisch02.png");
     this.load.image("cuttingview", "assets/Fish06/GreyScaleChop.png");
@@ -709,6 +710,10 @@ export default class Shop extends Phaser.Scene {
 
     const perfect = gameState.isPerfectBox(this.currentBoxId);
 
+    if (this.coworker) {
+  this.coworker.setTexture("klara_done");
+}
+
     if (perfect) {
       this.dialogueManager.startDialogue(
         this.currentBox.successDialogue,
@@ -1199,6 +1204,9 @@ export default class Shop extends Phaser.Scene {
       box2Data.preEndingDialogue[ending];
 
     if (ending === "ending4") {
+      if (this.coworker) {
+  this.coworker.setTexture("klara_done");
+}
       this.dialogueManager.startDialogue(
         [preEndingDialogue[0]],
         () => {
@@ -1233,7 +1241,7 @@ export default class Shop extends Phaser.Scene {
                 this.coworker = this.add.image(
                   this.scale.width / 2,
                   this.scale.height / 1.9,
-                  "customer"
+                  "klara_done"
                 )
                   .setScale(1)
                   .setDepth(-11);

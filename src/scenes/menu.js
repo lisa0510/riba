@@ -363,8 +363,8 @@ export default class Menu extends Phaser.Scene {
         info: "Trage Kopfhörer für eine bessere Erfahrung."
       }
       : {
-        title: "Hinweis zur Darstellung",
-        info: "Dieses Spiel wurde für ein 16:9-Seitenverhältnis entwickelt.\n\nFür die beste Spielerfahrung empfehlen wir einen 16:9 Monitor im Vollbildmodus.\n\nAndere Seitenverhältnisse können zu Darstellungsfehlern führen."
+        title: "Wichtiger Hinweis",
+        info: "Für die beste Spielerfahrung empfehlen wir einen 16:9 Monitor im Vollbildmodus.\n\nAndere Seitenverhältnisse können zu Darstellungsfehlern führen."
       };
 
     const headerText = this.add.text(
