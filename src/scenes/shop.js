@@ -13,63 +13,62 @@ export default class Shop extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish07/Backround_TalkView.png");
-    this.load.image("shop_laser", "assets/Fish07/Front_TalkView.png");
+    this.load.image("shop_bg", "assets/Riba_Version_07/Backround_TalkView.png");
+    this.load.image("shop_laser", "assets/Riba_Version_07/Front_TalkView.png");
     this.load.image("customer", "assets/Fish07/Klara_TalkView_Start.png");
     this.load.image("klara_done", "assets/Fish07/Klara_TalkView_End.png");
     this.load.image("fish", "assets/Fish07/Fish01.png");
     this.load.image("fish2", "assets/Fish07/GreyScaleFisch02.png");
-    this.load.image("cuttingview", "assets/Fish06/GreyScaleChop.png");
-    this.load.image("note1", "assets/Fish06/Fish01_Icon.png");
-    this.load.image("note2", "assets/Fish06/Sign_Fisch_02.png");
-    this.load.image("cup", "assets/Fish07/CupIsFull.png");
-    this.load.image("emptyCup", "assets/Fish07/CupIsEmpty.png");
-    this.load.image("button", "assets/Fish06/Button_Chopping.png");
-    this.load.image("parasite", "assets/Fish06/TalkViewDoneOrangeEverything.png");
-    this.load.image("bad", "assets/Fish06/BadFisch_01.png");
-    this.load.image("good", "assets/Fish06/GoodFisch_01.png");
-    this.load.image("toomuch", "assets/Fish06/SmallPortionFisch1.png");
+    this.load.image("cuttingview", "assets/Riba_Version_07/GreyScaleChop.png");
+    this.load.image("note1", "assets/Riba_Version_07/Fish01_Icon.png");
+    this.load.image("note2", "assets/Riba_Version_07/Fish02_Icon.png");
+    this.load.image("cup", "assets/Riba_Version_07/CupIsFull.png");
+    this.load.image("emptyCup", "assets/Riba_Version_07/CupIsEmpty.png");
+    this.load.image("button", "assets/Riba_Version_07/ButtonOfController.png");
+    this.load.image("parasite", "assets/Riba_Version_07/TalkViewBadThoughts.png");
+    this.load.image("bad", "assets/Riba_Version_07/BadFisch.png");
+    this.load.image("good", "assets/Riba_Version_07/GoodFisch.png");
+    this.load.image("toomuch", "assets/Riba_Version_07/SmallPortionFisch.png");
 
-    this.load.audio("laser", "assets/audio/laser1.mp3");
-    this.load.audio("box1_fehlerresponse", "assets/audio/box1/box1_fehlerresponse.mp3");
-    this.load.audio("box1failedagree", "assets/audio/box1/box1failedagree.mp3");
-    this.load.audio("box1faileddisagree", "assets/audio/box1/box1faileddisagree.mp3");
-    this.load.audio("box1glitchmona", "assets/audio/box1/box1glitchmona.mp3");
-    this.load.audio("box1ignore", "assets/audio/box1/box1ignore.mp3");
-    this.load.audio("box1perfect", "assets/audio/box1/box1perfect.mp3");
-    this.load.audio("box2disagree", "assets/audio/box2/box2disagree.mp3");
-    this.load.audio("box2failedresponse", "assets/audio/box2/box2failedresponse.mp3");
-    this.load.audio("box2glitchmona", "assets/audio/box2/box2glitchmona.mp3");
-    this.load.audio("box2ignore", "assets/audio/box2/box2ignore.mp3");
-    this.load.audio("box2keinfehler", "assets/audio/box2/box2keinfehler.mp3");
-    this.load.audio("box2monaagree", "assets/audio/box2/box2monaagree.mp3");
-    this.load.audio("binwiederda", "assets/audio/box2/binwiederda.mp3");
-    this.load.audio("fishaudio", "assets/audio/box2/fish.mp3");
-    this.load.audio("endingklaraoverall", "assets/audio/ending/endingklaraoverall.mp3");
-    this.load.audio("ending2satt", "assets/audio/ending/ending2satt.mp3");
-    this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
-    this.load.audio("ending1hey", "assets/audio/ending/ending1hey.mp3");
-    this.load.audio("ending1verzehr", "assets/audio/ending/ending1verzehr.mp3");
-    this.load.audio("ending2satt", "assets/audio/ending/ending2satt.mp3");
-    this.load.audio("ending3unglaublich", "assets/audio/ending/ending3unglaublich.mp3");
-    this.load.audio("ending3Zeit", "assets/audio/ending/ending3Zeit.mp3");
-    this.load.audio("ending4haha", "assets/audio/ending/ending4haha.mp3");
-    this.load.audio("ending4huh", "assets/audio/ending/ending4huh.mp3");
-    this.load.audio("ending4mona", "assets/audio/ending/ending4mona.mp3");
-    this.load.audio("ending5unglaublich", "assets/audio/ending/ending5unglaublich.mp3");
-    this.load.audio("ending5unheimlich", "assets/audio/ending/ending5unheimlich.mp3");
-    this.load.audio("badcut", "assets/audio/feedback/bad.mp3");
-    this.load.audio("goodcut", "assets/audio/feedback/ok.mp3");
-    this.load.audio("toomuchcut", "assets/audio/feedback/bad.mp3");
-    this.load.audio("schluck", "assets/audio/schluck.mp3");
-
-    this.load.audio("backgroundmusic", "assets/audio/riba.wav");
+    this.load.audio("laser", "assets/Riba_Version_07_Audio/lasercut.mp3");
+    this.load.audio("box1_fehlerresponse", "assets/Riba_Version_07_Audio/box1/box1_fehlerresponse.mp3");
+    this.load.audio("box1failedagree", "assets/Riba_Version_07_Audio/box1/box1failedagree.mp3");
+    this.load.audio("box1faileddisagree", "assets/Riba_Version_07_Audio/box1/box1faileddisagree.mp3");
+    this.load.audio("box1glitchmona", "assets/Riba_Version_07_Audio/box1/box1glitchmona.mp3");
+    this.load.audio("box1ignore", "assets/Riba_Version_07_Audio/box1/box1ignore.mp3");
+    this.load.audio("box1perfect", "assets/Riba_Version_07_Audio/box1/box1perfect.mp3");
+    this.load.audio("box2disagree", "assets/Riba_Version_07_Audio/box2/box2disagree.mp3");
+    this.load.audio("box2failedresponse", "assets/Riba_Version_07_Audio/box2/box2failedresponse.mp3");
+    this.load.audio("box2glitchmona", "assets/Riba_Version_07_Audio/box2/box2glitchmona.mp3");
+    this.load.audio("box2ignore", "assets/Riba_Version_07_Audio/box2/box2ignore.mp3");
+    this.load.audio("box2keinfehler", "assets/Riba_Version_07_Audio/box2/box2keinfehler.mp3");
+    this.load.audio("box2monaagree", "assets/Riba_Version_07_Audio/box2/box2monaagree.mp3");
+    this.load.audio("binwiederda", "assets/Riba_Version_07_Audio/box2/binwiederda.mp3");
+    this.load.audio("fishaudio", "assets/Riba_Version_07_Audio/box2/fish.mp3");
+    this.load.audio("endingklaraoverall", "assets/Riba_Version_07_Audio/ending/endingklaraoverall.mp3");
+    this.load.audio("ending2satt", "assets/Riba_Version_07_Audio/ending/ending2satt.mp3");
+    this.load.audio("ending5unheimlich", "assets/Riba_Version_07_Audio/ending/ending5unheimlich.mp3");
+    this.load.audio("ending1hey", "assets/Riba_Version_07_Audio/ending/ending1hey.mp3");
+    this.load.audio("ending1verzehr", "assets/Riba_Version_07_Audio/ending/ending1verzehr.mp3");
+    this.load.audio("ending2satt", "assets/Riba_Version_07_Audio/ending/ending2satt.mp3");
+    this.load.audio("ending3unglaublich", "assets/Riba_Version_07_Audio/ending/ending3unglaublich.mp3");
+    this.load.audio("ending3Zeit", "assets/Riba_Version_07_Audio/ending/ending3Zeit.mp3");
+    this.load.audio("ending4haha", "assets/Riba_Version_07_Audio/ending/ending4haha.mp3");
+    this.load.audio("ending4huh", "assets/Riba_Version_07_Audio/ending/ending4huh.mp3");
+    this.load.audio("ending4mona", "assets/Riba_Version_07_Audio/ending/ending4mona.mp3");
+    this.load.audio("ending5unglaublich", "assets/Riba_Version_07_Audio/ending/ending5unglaublich.mp3");
+    this.load.audio("ending5unheimlich", "assets/Riba_Version_07_Audio/ending/ending5unheimlich.mp3");
+    this.load.audio("badcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
+    this.load.audio("goodcut", "assets/Riba_Version_07_Audio/feedback/ok.mp3");
+    this.load.audio("toomuchcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
+    this.load.audio("schluck", "assets/Riba_Version_07_Audio/schluck.mp3");
+    this.load.audio("backgroundmusic", "assets/Riba_Version_07_Audio/riba.wav");
 
   }
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Fish07/Cursor_black.png), auto"
+      "url(assets/Riba_Version_07/cursor_black.png), auto"
     );
     const { width, height } = this.scale;
 
@@ -220,7 +219,7 @@ export default class Shop extends Phaser.Scene {
 
       this.cup.on("pointerover", () => {
         this.input.setDefaultCursor(
-          "url(assets/Fish07/cursorhover.png), pointer"
+          "url(assets/Riba_Version_07/cursorhover.png), pointer"
         );
 
         this.tweens.add({
@@ -232,7 +231,7 @@ export default class Shop extends Phaser.Scene {
 
       this.cup.on("pointerout", () => {
         this.input.setDefaultCursor(
-          "url(assets/Fish07/Cursor_black.png), auto"
+          "url(assets/Riba_Version_07/cursor_black.png), auto"
         );
 
         this.tweens.add({
@@ -251,12 +250,11 @@ export default class Shop extends Phaser.Scene {
         });
 
         this.cup.setTexture("emptyCup");
-
-        this.cup.disableInteractive();
-
         this.input.setDefaultCursor(
-          "url(assets/Fish07/Cursor_black.png), auto"
+          "url(assets/Riba_Version_07/cursor_black.png), auto"
         );
+        
+        this.cup.disableInteractive();
       });
     }
 
@@ -302,7 +300,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/cursorhover.png), pointer"
+        "url(assets/Riba_Version_07/cursorhover.png), pointer"
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -314,7 +312,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/Cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto"
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -326,7 +324,7 @@ export default class Shop extends Phaser.Scene {
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/Cursor_black.png), pointer"
+        "url(assets/Riba_Version_07/cursor_black.png), pointer"
       );
 
       if (!this.canStopLine) return;
@@ -386,7 +384,7 @@ export default class Shop extends Phaser.Scene {
         }
 
         this.input.setDefaultCursor(
-          "url(assets/Fish07/Cursor_black.png), pointer"
+          "url(assets/Riba_Version_07/cursor_black.png), pointer"
         );
 
         this.tweens.add({
@@ -842,13 +840,13 @@ export default class Shop extends Phaser.Scene {
         .setDepth(600);
 
       btn.on("pointerover", () => {
-        this.input.setDefaultCursor("url(assets/Fish07/cursorhover.png), auto");
+        this.input.setDefaultCursor("url(assets/Riba_Version_07/cursorhover.png), auto");
       });
       btn.on("pointerout", () => {
-        this.input.setDefaultCursor("url(assets/Fish07/Cursor_black.png), auto");
+        this.input.setDefaultCursor("url(assets/Riba_Version_07/cursor_black.png), auto");
       });
       btn.on("pointerdown", () => {
-        this.input.setDefaultCursor("url(assets/Fish07/Cursor_black.png), auto");
+        this.input.setDefaultCursor("url(assets/Riba_Version_07/cursor_black.png), auto");
         if (choiceMade) return;
 
         choiceMade = true;
@@ -995,7 +993,7 @@ export default class Shop extends Phaser.Scene {
                   }
                 },
                 //timer
-                10000
+                12000
               );
             },
             true
@@ -1146,7 +1144,7 @@ export default class Shop extends Phaser.Scene {
         targets: leftHalf,
         x: leftHalf.x - 250,
         alpha: 0,
-        duration: 200,
+        duration: 400,
         ease: "Power2"
       });
 
@@ -1154,7 +1152,7 @@ export default class Shop extends Phaser.Scene {
         targets: rightHalf,
         x: rightHalf.x + 250,
         alpha: 0,
-        duration: 200,
+        duration: 400,
         ease: "Power2",
         onComplete: () => {
 

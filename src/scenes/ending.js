@@ -7,11 +7,11 @@ export default class Ending extends Phaser.Scene {
   }
 
   preload() {
-    this.load.audio("ending1", "assets/audio/narration/ending1.wav");
-    this.load.audio("ending2", "assets/audio/narration/ending2.wav");
-    this.load.audio("ending3", "assets/audio/narration/ending3.wav");
-    this.load.audio("ending4", "assets/audio/narration/ending4.wav");
-    this.load.audio("ending5", "assets/audio/narration/ending5.wav");
+    this.load.audio("ending1", "assets/Riba_Version_07_Audio/narration/ending1.wav");
+    this.load.audio("ending2", "assets/Riba_Version_07_Audio/narration/ending2.wav");
+    this.load.audio("ending3", "assets/Riba_Version_07_Audio/narration/ending3.wav");
+    this.load.audio("ending4", "assets/Riba_Version_07_Audio/narration/ending4.wav");
+    this.load.audio("ending5", "assets/Riba_Version_07_Audio/narration/ending5.wav");
     
   }
 

@@ -6,18 +6,18 @@ export default class Menu extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "assets/Fish07/FischForMenu.png");
-    this.load.image("eye", "assets/Fish07/Fish01_Auge_UI.png");
-    this.load.image("headphones", "assets/Fish07/Kopfhörer_Symbol_UI.png");
+    this.load.image("background", "assets/Riba_Version_07/FishCutMenu.png");
+    this.load.image("eye", "assets/Riba_Version_07/Fish01_Auge_UI.png");
+    this.load.image("headphones", "assets/Riba_Version_07/Kopfhörer_Symbol_UI.png");
 
-    this.load.audio("background_music", "assets/audio/MenuSoundRiba.wav");
-    this.load.audio("menu_button", "assets/audio/menubutton.mp3");
+    this.load.audio("background_music", "assets/Riba_Version_07_Audio/MenuSoundRiba.wav");
+    this.load.audio("menu_button", "assets/Riba_Version_07_Audio/menubutton.mp3");
   }
 
   create() {
 
     this.input.setDefaultCursor(
-      "url(assets/Fish07/Cursor_black.png), auto"
+      "url(assets/Riba_Version_07/cursor_black.png), auto"
     );
     const { width, height } = this.scale;
     const aspectRatio = window.innerWidth / window.innerHeight;
@@ -36,8 +36,8 @@ export default class Menu extends Phaser.Scene {
     }
 
     const bg = this.add.image(
-      width / 0.82,
-      height / 1.3,
+      width / 1.2,
+      height / 1.5,
       "background"
     );
 
@@ -55,7 +55,7 @@ export default class Menu extends Phaser.Scene {
 
     // EYE
     this.eyeCenterX = width / 2 - 50;
-    this.eyeCenterY = height / 2 - 100;
+    this.eyeCenterY = height / 2 - 80;
 
     this.eye = this.add.image(
       this.eyeCenterX,
@@ -117,7 +117,7 @@ export default class Menu extends Phaser.Scene {
       .setDepth(5)
       .setInteractive({
         useHandCursor: false,
-        cursor: "url(assets/Fish07/cursorhover.png), pointer"
+        cursor: "url(assets/Riba_Version_07/cursorhover.png), pointer"
       });
 
 
@@ -194,7 +194,7 @@ export default class Menu extends Phaser.Scene {
       .setInteractive({
         useHandCursor: false,
         cursor:
-          "url(assets/Fish07/cursorhover.png), pointer"
+          "url(assets/Riba_Version_07/cursorhover.png), pointer"
       });
 
 
@@ -596,7 +596,7 @@ export default class Menu extends Phaser.Scene {
       .setDepth(202)
       .setInteractive({
         useHandCursor: false,
-        cursor: "url(assets/Fish07/cursorhover.png), pointer"
+        cursor: "url(assets/Riba_Version_07/cursorhover.png), pointer"
       });
 
     closeButton.on("pointerover", () => {

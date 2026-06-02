@@ -7,35 +7,36 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("shop_bg", "assets/Fish07/Backround_TalkView.png");
-    this.load.image("shop_laser", "assets/Fish07/Front_TalkView.png");
+    this.load.image("shop_bg", "assets/Riba_Version_07/Backround_TalkView.png");
+    this.load.image("shop_laser", "assets/Riba_Version_07/Front_TalkView.png");
     this.load.image("customer", "assets/Fish07/Klara_TalkView_Start.png");
     this.load.image("fish", "assets/Fish07/Fish01.png");
-    this.load.image("cuttingview", "assets/Fish07/GreyScaleChop.png");
-    this.load.image("cup", "assets/Fish07/CupIsFull.png");
-    this.load.image("note1", "assets/Fish06/Fish01_Icon.png");
-    this.load.image("button", "assets/Fish07/ButtonOfController.png");
-    this.load.audio("bg_music", "assets/audio/riba.wav");
-    this.load.image("bad", "assets/Fish06/BadFisch_01.png");
-    this.load.image("good", "assets/Fish06/GoodFisch_01.png");
-    this.load.image("toomuch", "assets/Fish06/SmallPortionFisch1.png");
-    this.load.audio("badcut", "assets/audio/feedback/bad.mp3");
-    this.load.audio("goodcut", "assets/audio/feedback/ok.mp3");
-    this.load.audio("toomuchcut", "assets/audio/feedback/bad.mp3");
+    this.load.image("cuttingview", "assets/Riba_Version_07/GreyScaleChop.png");
+    this.load.image("cup", "assets/Riba_Version_07/CupIsFull.png");
+    this.load.image("note1", "assets/Riba_Version_07/Fish01_Icon.png");
+    this.load.image("button", "assets/Riba_Version_07/ButtonOfController.png");
+    this.load.image("bad", "assets/Riba_Version_07/BadFisch.png");
+    this.load.image("good", "assets/Riba_Version_07/GoodFisch.png");
+    this.load.image("toomuch", "assets/Riba_Version_07/SmallPortionFisch.png");
+    
+    this.load.audio("bg_music", "assets/Riba_Version_07_Audio/riba.wav");
+    this.load.audio("badcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
+    this.load.audio("goodcut", "assets/Riba_Version_07_Audio/feedback/ok.mp3");
+    this.load.audio("toomuchcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
 
-    this.load.audio("laser", "assets/audio/laser1.mp3");
-    this.load.audio("tutorial1klara", "assets/audio/tutorial/tutorial1klara.mp3");
-    this.load.audio("tutorial2klara", "assets/audio/tutorial/tutorial2klara.mp3");
+    this.load.audio("laser", "assets/Riba_Version_07_Audio/lasercut.mp3");
+    this.load.audio("tutorial1klara", "assets/Riba_Version_07_Audio/tutorial/tutorial1klara.mp3");
+    this.load.audio("tutorial2klara", "assets/Riba_Version_07_Audio/tutorial/tutorial2klara.mp3");
   }
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Fish07/Cursor_black.png), auto"
+      "url(assets/Riba_Version_07/cursor_black.png), auto"
     );
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("bg_music", {
-        volume: 0.5
+        volume: 0.3
       });
 
       this.bgMusic.play();
@@ -228,7 +229,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/cursorhover.png), pointer"
+        "url(assets/Riba_Version_07/cursorhover.png), pointer"
       );
 
       this.tweens.add({
@@ -242,7 +243,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/Cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto"
       );
 
       this.tweens.add({
@@ -256,7 +257,7 @@ export default class Tutorial extends Phaser.Scene {
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/Cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto"
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -299,20 +300,20 @@ export default class Tutorial extends Phaser.Scene {
 
     this.infoText.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/cursorhover.png), pointer"
+        "url(assets/Riba_Version_07/cursorhover.png), pointer"
       );
     });
 
     this.infoText.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Fish07/Cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto"
       );
     });
 
     this.closeInfoText = () => {
 
       this.input.setDefaultCursor(
-        "url(assets/Fish07/Cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto"
       );
 
       this.input.off(
