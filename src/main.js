@@ -23,7 +23,7 @@ Promise.all([
 const config = {
   type: Phaser.AUTO,
   parent: "app",
-  scene: [Menu, Intro,Tutorial, Shop,Ending],
+  scene: [Shop,Ending],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

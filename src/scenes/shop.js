@@ -637,8 +637,8 @@ export default class Shop extends Phaser.Scene {
 
     // BOX 2: gebogener Fisch
     if (this.currentBoxId === "box2") {
-      const startX = bounds.left + bounds.width * 0.17;
-      const startY = bounds.top + bounds.height * 0.37;
+      const startX = bounds.left + bounds.width * 0.20;
+      const startY = bounds.top + bounds.height * 0.42;
 
       this.fishPath = new Phaser.Curves.Path(startX, startY);
       //Kontrollpunkte x,y
@@ -647,10 +647,9 @@ export default class Shop extends Phaser.Scene {
         new Phaser.Math.Vector2(bounds.left + bounds.width * 0.36, bounds.top + bounds.height * 0.60),
         new Phaser.Math.Vector2(bounds.left + bounds.width * 0.54, bounds.top + bounds.height * 0.56),
         new Phaser.Math.Vector2(bounds.left + bounds.width * 0.68, bounds.top + bounds.height * 0.24),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.89, bounds.top + bounds.height * 0.42)
+        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.95, bounds.top + bounds.height * 0.42)
       ]);
     }
-
   }
 
   //line für developer, zeigt den Pfad des Fisches an, ist ingame aktuell nicht sichtbar
