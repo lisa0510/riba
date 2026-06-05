@@ -282,7 +282,7 @@ export default class Tutorial extends Phaser.Scene {
     this.infoText = this.add.text(
       width / 2,
       height * 0.15,
-      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet hat.\nSchneid nur das Unbrauchbare weg. Jeder Millimeter gesundes Fleisch zählt. Dazu kannst du einfach auf den Knopf betätigen!",
+      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet haben.\nSchneide nur das Unbrauchbare weg. Jeder Millimeter gesundes Fleisch zählt. Dazu kannst du einfach auf den Knopf betätigen!",
       {
         fontSize: "28px",
         fontFamily: "Roboto",
