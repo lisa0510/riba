@@ -1,9 +1,9 @@
 import Phaser from "phaser";
 import "./style.css";
 import Menu from "./scenes/menu.js";
-import Shop from "./scenes/shop.js";
+import Game from "./scenes/game.js";
 import Tutorial from "./scenes/tutorial.js";
-import Intro from "./scenes/introtext.js";
+import Intro from "./scenes/intro.js";
 import Ending from "./scenes/ending.js";
 import FontFaceObserver from "fontfaceobserver";
 
@@ -23,7 +23,7 @@ Promise.all([
 const config = {
   type: Phaser.AUTO,
   parent: "app",
-  scene: [Menu, Intro, Tutorial, Shop, Ending],
+  scene: [Menu, Intro, Tutorial, Game, Ending],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

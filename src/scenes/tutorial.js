@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import dialogues from "../data/dialogues_tutorial.js";
+import dialogues from "../data/tutorialDialogue.js";
 
 export default class Tutorial extends Phaser.Scene {
   constructor() {
@@ -664,7 +664,7 @@ export default class Tutorial extends Phaser.Scene {
 
           }
           this.time.delayedCall(1000, () => {
-            this.scene.start("Shop");
+            this.scene.start("Game");
           });
         });
       }

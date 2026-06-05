@@ -7,9 +7,9 @@ import gameState from "../systems/gamestate.js";
 import { box1Data } from "../data/box1Dialogue.js";
 import { box2Data } from "../data/box2Dialogue.js";
 
-export default class Shop extends Phaser.Scene {
+export default class Game extends Phaser.Scene {
   constructor() {
-    super("Shop");
+    super("Game");
   }
 
   preload() {
