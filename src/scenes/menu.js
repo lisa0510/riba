@@ -8,133 +8,108 @@ export default class Menu extends Phaser.Scene {
   preload() {
     this.load.image("background", "assets/Riba_Version_07/FishCutMenu.png");
     this.load.image("eye", "assets/Riba_Version_07/Fish01_Auge_UI.png");
-    this.load.image("headphones", "assets/Riba_Version_07/Kopfhörer_Symbol_UI.png");
+    this.load.image(
+      "headphones",
+      "assets/Riba_Version_07/Kopfhörer_Symbol_UI.png",
+    );
 
-    this.load.audio("background_music", "assets/Riba_Version_07_Audio/MenuSoundRiba.wav");
-    this.load.audio("menu_button", "assets/Riba_Version_07_Audio/menubutton.mp3");
+    this.load.audio(
+      "background_music",
+      "assets/Riba_Version_07_Audio/MenuSoundRiba.wav",
+    );
+    this.load.audio(
+      "menu_button",
+      "assets/Riba_Version_07_Audio/menubutton.mp3",
+    );
   }
 
   create() {
-
     this.input.setDefaultCursor(
-      "url(assets/Riba_Version_07/cursor_black.png), auto"
+      "url(assets/Riba_Version_07/cursor_black.png), auto",
     );
     const { width, height } = this.scale;
     const aspectRatio = window.innerWidth / window.innerHeight;
 
-    this.is16by9 =
-      aspectRatio >= 1.7 &&
-      aspectRatio <= 1.85;
+    this.is16by9 = aspectRatio >= 1.7 && aspectRatio <= 1.85;
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("background_music", {
         loop: true,
-        volume: 2
+        volume: 2,
       });
 
       this.bgMusic.play();
     }
 
-    const bg = this.add.image(
-      width / 1.2,
-      height / 1.5,
-      "background"
-    );
-
+    const bg = this.add.image(width / 1.2, height / 1.5, "background");
 
     bg.setScale(2).setAngle(10).setDepth(10);
     this.bubbles = this.add.group();
-
+    // Erzeugt regelmässig neue Luftblasen im Hintergrund.
+    // Die Blasen werden anschliessend per Tween nach oben animiert.
     this.time.addEvent({
       delay: 500,
       loop: true,
       callback: () => {
         this.createBubble();
-      }
+      },
     });
 
     // EYE
     this.eyeCenterX = width / 2 - 50;
     this.eyeCenterY = height / 2 - 80;
 
-    this.eye = this.add.image(
-      this.eyeCenterX,
-      this.eyeCenterY,
-      "eye"
-    );
+    this.eye = this.add.image(this.eyeCenterX, this.eyeCenterY, "eye");
 
     this.eye.setScale(2.2).setDepth(11);
-
+    // Das Auge folgt der Maus leicht, damit das Menü lebendiger wirkt.
+    // Die Bewegung wird absichtlich begrenzt, damit das Auge nicht zu weit wandert.
     this.maxEyeDistance = width < 1200 ? 12 : 18;
 
-    const menuX = width < 1200
-      ? width * 0.16
-      : width * 0.12;
+    const menuX = width < 1200 ? width * 0.16 : width * 0.12;
 
     const titleY = height * 0.05;
 
     const startY = height * 0.5;
     const creditsY = height * 0.62;
 
-    const titleFontSize = Math.min(
-      420,
-      width * 0.25
-    );
+    const titleFontSize = Math.min(420, width * 0.25);
 
-    const buttonFontSize = Math.max(
-      28,
-      width * 0.035
-    );
+    const buttonFontSize = Math.max(28, width * 0.035);
 
     const titleLeftPadding = 0;
     const titleTopPadding = height * 0.01;
 
-    this.add.text(
-      titleLeftPadding,
-      titleTopPadding,
-      "RIBA",
-      {
+    this.add
+      .text(titleLeftPadding, titleTopPadding, "RIBA", {
         fontSize: `${titleFontSize}px`,
         fill: "#4b4949",
         fontFamily: '"Roboto"',
-        fontWeight: "900"
-      }
-    )
+        fontWeight: "900",
+      })
       .setOrigin(0, 0)
       .setDepth(9);
     const buttonW = Math.max(230, width * 0.22);
     const buttonH = Math.max(58, height * 0.09);
 
-    const startButtonBg = this.add.rectangle(
-      menuX,
-      startY,
-      buttonW,
-      buttonH,
-      0xffffff,
-      0.12
-    )
+    const startButtonBg = this.add
+      .rectangle(menuX, startY, buttonW, buttonH, 0xffffff, 0.12)
       .setOrigin(0.5)
       .setDepth(5)
       .setInteractive({
         useHandCursor: false,
-        cursor: "url(assets/Riba_Version_07/cursorhover.png), pointer"
+        cursor: "url(assets/Riba_Version_07/cursorhover.png), pointer",
       });
 
-
-    const startButtonText = this.add.text(
-      menuX,
-      startY,
-      "SPIEL STARTEN",
-      {
+    const startButtonText = this.add
+      .text(menuX, startY, "SPIEL STARTEN", {
         fontSize: `${Math.max(24, width * 0.022)}px`,
         fill: "#ffffff",
         fontFamily: '"Roboto"',
-        letterSpacing: 2
-      }
-    )
+        letterSpacing: 2,
+      })
       .setOrigin(0.5)
       .setDepth(6);
-
 
     startButtonBg.on("pointerover", () => {
       startButtonBg.setFillStyle(0xffffff, 0.15);
@@ -145,7 +120,7 @@ export default class Menu extends Phaser.Scene {
         scaleX: 1.06,
         scaleY: 1.06,
         duration: 120,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
@@ -158,7 +133,7 @@ export default class Menu extends Phaser.Scene {
         scaleX: 1,
         scaleY: 1,
         duration: 120,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
@@ -177,115 +152,85 @@ export default class Menu extends Phaser.Scene {
         ease: "Power2",
         onComplete: () => {
           this.scene.start("Intro");
-        }
+        },
       });
     });
 
-
-    const creditsButtonBg = this.add.rectangle(
-      menuX,
-      creditsY,
-      buttonW,
-      buttonH,
-      0xffffff,
-      0.12
-    )
+    const creditsButtonBg = this.add
+      .rectangle(menuX, creditsY, buttonW, buttonH, 0xffffff, 0.12)
       .setDepth(5)
       .setInteractive({
         useHandCursor: false,
-        cursor:
-          "url(assets/Riba_Version_07/cursorhover.png), pointer"
+        cursor: "url(assets/Riba_Version_07/cursorhover.png), pointer",
       });
 
+    const creditsButtonText = this.add
+      .text(
+        menuX,
+        creditsY,
 
-    const creditsButtonText = this.add.text(
-      menuX,
-      creditsY,
-
-      "CREDITS",
-      {
-        fontSize: `${Math.max(24, width * 0.022)}px`,
-        fill: "#ffffff",
-        fontFamily: '"Roboto"',
-        letterSpacing: 2
-      }
-    )
+        "CREDITS",
+        {
+          fontSize: `${Math.max(24, width * 0.022)}px`,
+          fill: "#ffffff",
+          fontFamily: '"Roboto"',
+          letterSpacing: 2,
+        },
+      )
       .setOrigin(0.5)
       .setDepth(6);
 
-
     // HOVER
     creditsButtonBg.on("pointerover", () => {
-
-      creditsButtonBg.setFillStyle(
-        0xffffff,
-        0.15
-      );
+      creditsButtonBg.setFillStyle(0xffffff, 0.15);
 
       creditsButtonText.setStyle({
-        fill: "#f17d32"
+        fill: "#f17d32",
       });
 
       this.tweens.add({
-        targets: [
-          creditsButtonBg,
-          creditsButtonText
-        ],
+        targets: [creditsButtonBg, creditsButtonText],
 
         scaleX: 1.06,
         scaleY: 1.06,
 
         duration: 120,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
     // OUT
     creditsButtonBg.on("pointerout", () => {
-
-      creditsButtonBg.setFillStyle(
-        0xffffff,
-        0.12
-      );
+      creditsButtonBg.setFillStyle(0xffffff, 0.12);
 
       creditsButtonText.setStyle({
-        fill: "#ffffff"
+        fill: "#ffffff",
       });
 
       this.tweens.add({
-        targets: [
-          creditsButtonBg,
-          creditsButtonText
-        ],
+        targets: [creditsButtonBg, creditsButtonText],
 
         scaleX: 1,
         scaleY: 1,
 
         duration: 120,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
     // CLICK
     creditsButtonBg.on("pointerdown", () => {
-
-      this.sound.play(
-        "menu_button",
-        { volume: 0.1 }
-      );
+      this.sound.play("menu_button", { volume: 0.1 });
 
       this.tweens.add({
-        targets: [
-          creditsButtonBg,
-          creditsButtonText
-        ],
+        targets: [creditsButtonBg, creditsButtonText],
 
         scaleX: 0.96,
         scaleY: 0.96,
 
         duration: 70,
         yoyo: true,
-        ease: "Power2"
+        ease: "Power2",
       });
 
       this.createCreditsPopup();
@@ -301,13 +246,8 @@ export default class Menu extends Phaser.Scene {
     const startX = Phaser.Math.Between(10, width - 10);
     const startY = height + bubbleSize + 20;
 
-    const bubble = this.add.circle(
-      startX,
-      startY,
-      bubbleSize,
-      0xA7C7E7,
-      0.15
-    )
+    const bubble = this.add
+      .circle(startX, startY, bubbleSize, 0xa7c7e7, 0.15)
       .setDepth(11);
 
     const drift = Phaser.Math.Between(-80, 80);
@@ -322,7 +262,7 @@ export default class Menu extends Phaser.Scene {
       ease: "Sine.easeInOut",
       onComplete: () => {
         bubble.destroy();
-      }
+      },
     });
 
     this.tweens.add({
@@ -332,93 +272,66 @@ export default class Menu extends Phaser.Scene {
       duration: 1500,
       yoyo: true,
       repeat: -1,
-      ease: "Sine.easeInOut"
+      ease: "Sine.easeInOut",
     });
   }
 
   createPopup() {
-
     const { width, height } = this.scale;
 
-    this.popupOverlay = this.add.rectangle(
-      0,
-      0,
-      width,
-      height,
-      0x000000,
-      1
-    )
+    this.popupOverlay = this.add
+      .rectangle(0, 0, width, height, 0x000000, 1)
       .setOrigin(0)
       .setInteractive()
       .setDepth(100);
 
-    this.popupContainer = this.add.container(
-      width / 2,
-      0
-    ).setDepth(101);
+    this.popupContainer = this.add.container(width / 2, 0).setDepth(101);
 
     const popupMessage = this.is16by9
       ? {
-        title: ' "Wenn das Wasser steigt, muss man versuchen darin zu überleben." ',
-        info: "Trage Kopfhörer für eine bessere Erfahrung."
-      }
+          title:
+            ' "Wenn das Wasser steigt, muss man versuchen darin zu überleben." ',
+          info: "Trage Kopfhörer für eine bessere Erfahrung.",
+        }
       : {
-        title: "Wichtiger Hinweis",
-        info: "Für die beste Spielerfahrung empfehlen wir einen 16:9 Monitor im Vollbildmodus.\n\nAndere Seitenverhältnisse können zu Darstellungsfehlern führen."
-      };
+          title: "Wichtiger Hinweis",
+          info: "Für die beste Spielerfahrung empfehlen wir einen 16:9 Monitor im Vollbildmodus.\n\nAndere Seitenverhältnisse können zu Darstellungsfehlern führen.",
+        };
 
-    const headerText = this.add.text(
-      0,
-      height * 0.22,
-      popupMessage.title,
-      {
+    const headerText = this.add
+      .text(0, height * 0.22, popupMessage.title, {
         fontSize: `${Math.max(20, height * 0.04)}px`,
         fill: "#ffffff",
         fontFamily: '"Roboto"',
         align: "center",
-        wordWrap: { width: width * 0.8 }
-      }
-    ).setOrigin(0.5);
+        wordWrap: { width: width * 0.8 },
+      })
+      .setOrigin(0.5);
 
-    const infoText = this.add.text(
-      0,
-      this.is16by9 ? height * 0.7 : height * 0.5,
-      popupMessage.info,
-      {
+    const infoText = this.add
+      .text(0, this.is16by9 ? height * 0.7 : height * 0.5, popupMessage.info, {
         fontSize: `${Math.max(18, height * 0.03)}px`,
         fill: "#bbbbbb",
         align: "center",
         fontFamily: '"Roboto"',
-        wordWrap: { width: width * 0.65 }
-      }
-    ).setOrigin(0.5);
+        wordWrap: { width: width * 0.65 },
+      })
+      .setOrigin(0.5);
 
-    const hintText = this.add.text(
-      0,
-      height * 0.9,
-      "[ MAUSTASTE KLICKEN ZUM FORTFAHREN ]",
-      {
+    const hintText = this.add
+      .text(0, height * 0.9, "[ MAUSTASTE KLICKEN ZUM FORTFAHREN ]", {
         fontSize: `${Math.max(16, height * 0.02)}px`,
         fill: "#666666",
-        fontFamily: '"Roboto"'
-      }
-    )
+        fontFamily: '"Roboto"',
+      })
       .setOrigin(0.5)
       .setName("waveText");
 
-    const popupObjects = [
-      headerText,
-      infoText,
-      hintText
-    ];
+    const popupObjects = [headerText, infoText, hintText];
 
     if (this.is16by9) {
-
-      const popupImg = this.add.image(
-        0,
-        height / 2,
-        "headphones"
-      )
+      const popupImg = this.add
+        .image(0, height / 2, "headphones")
         .setScale(width < 1200 ? 0.14 : 0.2);
 
       popupObjects.splice(1, 0, popupImg);
@@ -427,7 +340,6 @@ export default class Menu extends Phaser.Scene {
     this.popupContainer.add(popupObjects);
 
     const closePopup = () => {
-
       if (this.popupContainer) {
         this.popupContainer.destroy();
       }
@@ -436,28 +348,15 @@ export default class Menu extends Phaser.Scene {
         this.popupOverlay.destroy();
       }
 
-      this.input.keyboard.off(
-        "keydown",
-        closePopup
-      );
+      this.input.keyboard.off("keydown", closePopup);
 
-      this.input.off(
-        "pointerdown",
-        closePopup
-      );
+      this.input.off("pointerdown", closePopup);
     };
 
     this.time.delayedCall(200, () => {
+      this.input.keyboard.on("keydown", closePopup);
 
-      this.input.keyboard.on(
-        "keydown",
-        closePopup
-      );
-
-      this.input.on(
-        "pointerdown",
-        closePopup
-      );
+      this.input.on("pointerdown", closePopup);
     });
   }
 
@@ -466,34 +365,24 @@ export default class Menu extends Phaser.Scene {
 
     if (this.creditsOverlay) return;
 
-    this.creditsOverlay = this.add.rectangle(
-      0,
-      0,
-      width,
-      height,
-      0x000000,
-      0.94
-    )
+    this.creditsOverlay = this.add
+      .rectangle(0, 0, width, height, 0x000000, 0.94)
       .setOrigin(0)
       .setDepth(200);
 
-    this.creditsContainer = this.add.container(
-      width / 2,
-      height * 0.87
-    ).setDepth(201);
+    this.creditsContainer = this.add
+      .container(width / 2, height * 0.87)
+      .setDepth(201);
 
-    const title = this.add.text(
-      0,
-      0,
-      "CREDITS",
-      {
+    const title = this.add
+      .text(0, 0, "CREDITS", {
         fontSize: `${Math.max(42, height * 0.065)}px`,
         fill: "#ffffff",
         fontFamily: '"Roboto"',
         fontWeight: "900",
-        align: "center"
-      }
-    ).setOrigin(0.5);
+        align: "center",
+      })
+      .setOrigin(0.5);
 
     const credits = [
       ["Lisa Landolt", "Game Entwicklerin"],
@@ -504,15 +393,13 @@ export default class Menu extends Phaser.Scene {
       ["Sara Noaman", "Narratorin"],
       ["Saskia Helg", "Klara, Mona und Fisch"],
 
-
       ["SOUNDTRACK", ""],
       ["Till Bierich", "Soundtrack Komponist"],
-
 
       ["MENTOR*INNEN", ""],
       ["Léa Coquoz", "Mentorin Art, Story und Game Design"],
       ["Ruth Bosch", "Mentorin Art, Story und Game Design"],
-      ["Benji Oser", "Technische Betreuung"]
+      ["Benji Oser", "Technische Betreuung"],
     ];
 
     const rowStartY = height * 0.18;
@@ -524,90 +411,80 @@ export default class Menu extends Phaser.Scene {
       const y = rowStartY + index * rowGap;
 
       if (credit[1] === "") {
-        const sectionText = this.add.text(
-          0,
-          y,
-          credit[0],
-          {
+        const sectionText = this.add
+          .text(0, y, credit[0], {
             fontSize: `${Math.max(24, height * 0.025)}px`,
             fill: "#ffffff",
             fontFamily: '"Roboto"',
-            align: "center"
-          }
-        ).setOrigin(0.5);
+            align: "center",
+          })
+          .setOrigin(0.5);
 
         creditObjects.push(sectionText);
         return;
       }
 
-      const nameText = this.add.text(
-        -width * 0.08,
-        y,
-        credit[0],
-        {
+      const nameText = this.add
+        .text(-width * 0.08, y, credit[0], {
           fontSize: `${Math.max(22, height * 0.03)}px`,
           fill: "#ffffff",
           fontFamily: '"Roboto"',
-          align: "right"
-        }
-      ).setOrigin(1, 0.5);
+          align: "right",
+        })
+        .setOrigin(1, 0.5);
 
-      const jobText = this.add.text(
-        width * 0.08,
-        y,
-        credit[1],
-        {
+      const jobText = this.add
+        .text(width * 0.08, y, credit[1], {
           fontSize: `${Math.max(22, height * 0.03)}px`,
           fill: "#bbbbbb",
           fontFamily: '"Roboto"',
-          align: "left"
-        }
-      ).setOrigin(0, 0.5);
+          align: "left",
+        })
+        .setOrigin(0, 0.5);
 
       creditObjects.push(nameText, jobText);
     });
 
-    const endText = this.add.text(0,
-      rowStartY + credits.length * rowGap + height * 0.2,
-      "\n\nDanke an all unseren Playtestern, Unterstützern und Freunde!\n\n\n\n\n\n\n\nBachelorarbeit Digital Ideation 2026, Hochschule Luzern",
-      {
-        fontSize: `${Math.max(28, height * 0.035)}px`,
-        fill: "#ffffff",
-        fontFamily: '"Roboto"',
-        align: "center"
-      }
-    ).setOrigin(0.5);
+    const endText = this.add
+      .text(
+        0,
+        rowStartY + credits.length * rowGap + height * 0.2,
+        "\n\nDanke an all unseren Playtestern, Unterstützern und Freunde!\n\n\n\n\n\n\n\nBachelorarbeit Digital Ideation 2026, Hochschule Luzern",
+        {
+          fontSize: `${Math.max(28, height * 0.035)}px`,
+          fill: "#ffffff",
+          fontFamily: '"Roboto"',
+          align: "center",
+        },
+      )
+      .setOrigin(0.5);
 
     creditObjects.push(endText);
 
     this.creditsContainer.add(creditObjects);
 
-    const closeButton = this.add.text(
-      width * 0.94,
-      height * 0.08,
-      "✕",
-      {
+    const closeButton = this.add
+      .text(width * 0.94, height * 0.08, "✕", {
         fontSize: `${Math.max(34, height * 0.055)}px`,
         fill: "#ffffff",
-        fontFamily: '"Roboto"'
-      }
-    )
+        fontFamily: '"Roboto"',
+      })
       .setOrigin(0.5)
       .setDepth(202)
       .setInteractive({
         useHandCursor: false,
-        cursor: "url(assets/Riba_Version_07/cursorhover.png), pointer"
+        cursor: "url(assets/Riba_Version_07/cursorhover.png), pointer",
       });
 
     closeButton.on("pointerover", () => {
       closeButton.setStyle({
-        fill: "#f17d32"
+        fill: "#f17d32",
       });
     });
 
     closeButton.on("pointerout", () => {
       closeButton.setStyle({
-        fill: "#ffffff"
+        fill: "#ffffff",
       });
     });
 
@@ -628,7 +505,7 @@ export default class Menu extends Phaser.Scene {
 
           this.creditsContainer = null;
           this.creditsOverlay = null;
-        }
+        },
       });
     };
 
@@ -641,65 +518,48 @@ export default class Menu extends Phaser.Scene {
       ease: "Linear",
       onComplete: () => {
         closeCredits();
-      }
+      },
     });
   }
 
   update(time) {
-
-    if (
-      this.popupContainer &&
-      this.popupContainer.active
-    ) {
-
+    if (this.popupContainer && this.popupContainer.active) {
       this.popupContainer.iterate((child) => {
-
         if (child.name === "waveText") {
+          child.y += Math.sin(time * 0.002) * 0.25;
 
-          child.y +=
-            Math.sin(time * 0.002) * 0.25;
-
-          child.angle =
-            Math.sin(time * 0.001) * 0.5;
+          child.angle = Math.sin(time * 0.001) * 0.5;
         }
       });
     }
 
     if (
-      (this.popupOverlay &&
-        this.popupOverlay.active) ||
-
-      (this.creditsOverlay &&
-        this.creditsOverlay.active)
-    ) return;
+      (this.popupOverlay && this.popupOverlay.active) ||
+      (this.creditsOverlay && this.creditsOverlay.active)
+    )
+      return;
 
     const pointer = this.input.activePointer;
-
+    // Berechnet den Winkel zwischen Auge und Mauszeiger
+    // und verschiebt das Auge leicht in diese Richtung.
     const angle = Phaser.Math.Angle.Between(
       this.eyeCenterX,
       this.eyeCenterY,
       pointer.x,
-      pointer.y
+      pointer.y,
     );
 
     const dist = Phaser.Math.Distance.Between(
       this.eyeCenterX,
       this.eyeCenterY,
       pointer.x,
-      pointer.y
+      pointer.y,
     );
 
-    const constrainedDist = Math.min(
-      dist * 0.5,
-      this.maxEyeDistance
-    );
+    const constrainedDist = Math.min(dist * 0.5, this.maxEyeDistance);
 
-    this.eye.x =
-      this.eyeCenterX +
-      Math.cos(angle) * constrainedDist;
+    this.eye.x = this.eyeCenterX + Math.cos(angle) * constrainedDist;
 
-    this.eye.y =
-      this.eyeCenterY +
-      Math.sin(angle) * constrainedDist;
+    this.eye.y = this.eyeCenterY + Math.sin(angle) * constrainedDist;
   }
 }

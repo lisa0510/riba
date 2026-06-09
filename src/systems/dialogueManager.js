@@ -1,3 +1,5 @@
+// Verwaltet sämtliche Dialoge im Spiel.
+// Zuständig für Textanzeige, Sprachwiedergabe und den Wechsel zwischen Dialogzeilen.
 export default class DialogueManager {
   constructor(scene) {
     this.scene = scene;
@@ -12,6 +14,8 @@ export default class DialogueManager {
     this.canClickNext = false;
   }
 
+  // Startet einen neuen Dialogverlauf.
+  // Optional kann nach Abschluss eine Callback-Funktion ausgeführt werden.
   startDialogue(dialogues, onComplete = null, keepOpen = false) {
     this.clearDialogue();
 
@@ -23,6 +27,8 @@ export default class DialogueManager {
 
     const { width, height } = this.scene.scale;
 
+    // Prüft, ob es sich um einen inneren Gedanken / Parasiten-Dialog handelt.
+    // Diese werden visuell anders dargestellt.
     const isMona =
       this.dialogues[0] &&
       this.dialogues[0].text &&
@@ -31,6 +37,7 @@ export default class DialogueManager {
     const boxX = width * 0.08;
     const boxY = height * 0.45;
 
+    // Erstellt das Textfeld für die Dialoganzeige.
     this.dialogueText = this.scene.add.text(
       boxX,
       boxY,
@@ -52,11 +59,12 @@ export default class DialogueManager {
         strokeThickness: isMona ? 2 : 0
       }
     )
-      .setOrigin(0, 0.5) //.setOrigin(0, 0.5) // x/y ist links mittig
+      .setOrigin(0, 0.5)
       .setDepth(502);
 
     this.showCurrentDialogue();
 
+    // Kurze Verzögerung verhindert versehentliche Doppelklicks beim Start eines neuen Dialogs.
     this.scene.time.delayedCall(150, () => {
       this.canClickNext = true;
 
@@ -68,6 +76,7 @@ export default class DialogueManager {
     });
   }
 
+  // Zeigt die aktuelle Dialogzeile an und spielt falls vorhanden die passende Sprachaufnahme ab.
   showCurrentDialogue() {
     if (!this.dialogueText) return;
     if (!this.dialogues[this.currentIndex]) return;
@@ -77,6 +86,8 @@ export default class DialogueManager {
     this.dialogueText.setText(currentDialogue.text);
 
     if (currentDialogue.voice) {
+
+      // Vorherige Sprachaufnahme stoppen, damit nie mehrere Stimmen gleichzeitig abgespielt werden.
       if (this.currentVoice) {
         this.currentVoice.stop();
         this.currentVoice.destroy();
@@ -93,6 +104,8 @@ export default class DialogueManager {
     this.currentIndex++;
   }
 
+  // Wechselt zur nächsten Dialogzeile.
+  // Ist keine weitere Zeile vorhanden,wird der Dialog beendet.
   nextDialogue() {
     if (!this.dialogueText) return;
     if (!this.canClickNext) return;
@@ -108,16 +121,21 @@ export default class DialogueManager {
       this
     );
 
+    // Dialogfenster nur schliessen,
+    // wenn keepOpen nicht aktiviert wurde.
     if (!this.keepOpen) {
       this.clearDialogue();
     }
 
+    // Führt nach Abschluss des Dialogs die übergebene Callback-Funktion aus.
     if (this.onComplete) {
       this.onComplete();
     }
   }
 
+  // Entfernt Dialogtext und laufende Sprachaufnahmen.
   clearDialogue() {
+
     if (this.currentVoice) {
       this.currentVoice.stop();
       this.currentVoice.destroy();

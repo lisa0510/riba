@@ -25,88 +25,171 @@ export default class Game extends Phaser.Scene {
     this.load.image("cup", "assets/Riba_Version_07/CupIsFull.png");
     this.load.image("emptyCup", "assets/Riba_Version_07/CupIsEmpty.png");
     this.load.image("button", "assets/Riba_Version_07/ButtonOfController.png");
-    this.load.image("parasite", "assets/Riba_Version_07/TalkViewBadThoughts.png");
+    this.load.image(
+      "parasite",
+      "assets/Riba_Version_07/TalkViewBadThoughts.png",
+    );
     this.load.image("bad", "assets/Riba_Version_07/BadFisch.png");
     this.load.image("good", "assets/Riba_Version_07/GoodFisch.png");
     this.load.image("toomuch", "assets/Riba_Version_07/SmallPortionFisch.png");
 
     this.load.audio("laser", "assets/Riba_Version_07_Audio/lasercut.mp3");
-    this.load.audio("box1_fehlerresponse", "assets/Riba_Version_07_Audio/box1/box1_fehlerresponse.mp3");
-    this.load.audio("box1failedagree", "assets/Riba_Version_07_Audio/box1/box1failedagree.mp3");
-    this.load.audio("box1faileddisagree", "assets/Riba_Version_07_Audio/box1/box1faileddisagree.mp3");
-    this.load.audio("box1glitchmona", "assets/Riba_Version_07_Audio/box1/box1glitchmona.mp3");
-    this.load.audio("box1ignore", "assets/Riba_Version_07_Audio/box1/box1ignore.mp3");
-    this.load.audio("box1perfect", "assets/Riba_Version_07_Audio/box1/box1perfect.mp3");
-    this.load.audio("box2disagree", "assets/Riba_Version_07_Audio/box2/box2disagree.mp3");
-    this.load.audio("box2failedresponse", "assets/Riba_Version_07_Audio/box2/box2failedresponse.mp3");
-    this.load.audio("box2glitchmona", "assets/Riba_Version_07_Audio/box2/box2glitchmona.mp3");
-    this.load.audio("box2ignore", "assets/Riba_Version_07_Audio/box2/box2ignore.mp3");
-    this.load.audio("box2keinfehler", "assets/Riba_Version_07_Audio/box2/box2keinfehler.mp3");
-    this.load.audio("box2monaagree", "assets/Riba_Version_07_Audio/box2/box2monaagree.mp3");
-    this.load.audio("binwiederda", "assets/Riba_Version_07_Audio/box2/binwiederda.mp3");
+    this.load.audio(
+      "box1_fehlerresponse",
+      "assets/Riba_Version_07_Audio/box1/box1_fehlerresponse.mp3",
+    );
+    this.load.audio(
+      "box1failedagree",
+      "assets/Riba_Version_07_Audio/box1/box1failedagree.mp3",
+    );
+    this.load.audio(
+      "box1faileddisagree",
+      "assets/Riba_Version_07_Audio/box1/box1faileddisagree.mp3",
+    );
+    this.load.audio(
+      "box1glitchmona",
+      "assets/Riba_Version_07_Audio/box1/box1glitchmona.mp3",
+    );
+    this.load.audio(
+      "box1ignore",
+      "assets/Riba_Version_07_Audio/box1/box1ignore.mp3",
+    );
+    this.load.audio(
+      "box1perfect",
+      "assets/Riba_Version_07_Audio/box1/box1perfect.mp3",
+    );
+    this.load.audio(
+      "box2disagree",
+      "assets/Riba_Version_07_Audio/box2/box2disagree.mp3",
+    );
+    this.load.audio(
+      "box2failedresponse",
+      "assets/Riba_Version_07_Audio/box2/box2failedresponse.mp3",
+    );
+    this.load.audio(
+      "box2glitchmona",
+      "assets/Riba_Version_07_Audio/box2/box2glitchmona.mp3",
+    );
+    this.load.audio(
+      "box2ignore",
+      "assets/Riba_Version_07_Audio/box2/box2ignore.mp3",
+    );
+    this.load.audio(
+      "box2keinfehler",
+      "assets/Riba_Version_07_Audio/box2/box2keinfehler.mp3",
+    );
+    this.load.audio(
+      "box2monaagree",
+      "assets/Riba_Version_07_Audio/box2/box2monaagree.mp3",
+    );
+    this.load.audio(
+      "binwiederda",
+      "assets/Riba_Version_07_Audio/box2/binwiederda.mp3",
+    );
     this.load.audio("fishaudio", "assets/Riba_Version_07_Audio/box2/fish.mp3");
-    this.load.audio("endingklaraoverall", "assets/Riba_Version_07_Audio/ending/endingklaraoverall.mp3");
-    this.load.audio("ending2satt", "assets/Riba_Version_07_Audio/ending/ending2satt.mp3");
-    this.load.audio("ending5unheimlich", "assets/Riba_Version_07_Audio/ending/ending5unheimlich.mp3");
-    this.load.audio("ending1hey", "assets/Riba_Version_07_Audio/ending/ending1hey.mp3");
-    this.load.audio("ending1verzehr", "assets/Riba_Version_07_Audio/ending/ending1verzehr.mp3");
-    this.load.audio("ending2satt", "assets/Riba_Version_07_Audio/ending/ending2satt.mp3");
-    this.load.audio("ending3unglaublich", "assets/Riba_Version_07_Audio/ending/ending3unglaublich.mp3");
-    this.load.audio("ending3Zeit", "assets/Riba_Version_07_Audio/ending/ending3Zeit.mp3");
-    this.load.audio("ending4haha", "assets/Riba_Version_07_Audio/ending/ending4haha.mp3");
-    this.load.audio("ending4huh", "assets/Riba_Version_07_Audio/ending/ending4huh.mp3");
-    this.load.audio("ending4mona", "assets/Riba_Version_07_Audio/ending/ending4mona.mp3");
-    this.load.audio("ending5unglaublich", "assets/Riba_Version_07_Audio/ending/ending5unglaublich.mp3");
-    this.load.audio("ending5unheimlich", "assets/Riba_Version_07_Audio/ending/ending5unheimlich.mp3");
+    this.load.audio(
+      "endingklaraoverall",
+      "assets/Riba_Version_07_Audio/ending/endingklaraoverall.mp3",
+    );
+    this.load.audio(
+      "ending2satt",
+      "assets/Riba_Version_07_Audio/ending/ending2satt.mp3",
+    );
+    this.load.audio(
+      "ending5unheimlich",
+      "assets/Riba_Version_07_Audio/ending/ending5unheimlich.mp3",
+    );
+    this.load.audio(
+      "ending1hey",
+      "assets/Riba_Version_07_Audio/ending/ending1hey.mp3",
+    );
+    this.load.audio(
+      "ending1verzehr",
+      "assets/Riba_Version_07_Audio/ending/ending1verzehr.mp3",
+    );
+    this.load.audio(
+      "ending2satt",
+      "assets/Riba_Version_07_Audio/ending/ending2satt.mp3",
+    );
+    this.load.audio(
+      "ending3unglaublich",
+      "assets/Riba_Version_07_Audio/ending/ending3unglaublich.mp3",
+    );
+    this.load.audio(
+      "ending3Zeit",
+      "assets/Riba_Version_07_Audio/ending/ending3Zeit.mp3",
+    );
+    this.load.audio(
+      "ending4haha",
+      "assets/Riba_Version_07_Audio/ending/ending4haha.mp3",
+    );
+    this.load.audio(
+      "ending4huh",
+      "assets/Riba_Version_07_Audio/ending/ending4huh.mp3",
+    );
+    this.load.audio(
+      "ending4mona",
+      "assets/Riba_Version_07_Audio/ending/ending4mona.mp3",
+    );
+    this.load.audio(
+      "ending5unglaublich",
+      "assets/Riba_Version_07_Audio/ending/ending5unglaublich.mp3",
+    );
+    this.load.audio(
+      "ending5unheimlich",
+      "assets/Riba_Version_07_Audio/ending/ending5unheimlich.mp3",
+    );
     this.load.audio("badcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
     this.load.audio("goodcut", "assets/Riba_Version_07_Audio/feedback/ok.mp3");
-    this.load.audio("toomuchcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
+    this.load.audio(
+      "toomuchcut",
+      "assets/Riba_Version_07_Audio/feedback/bad.mp3",
+    );
     this.load.audio("schluck", "assets/Riba_Version_07_Audio/schluck.mp3");
     this.load.audio("backgroundmusic", "assets/Riba_Version_07_Audio/riba.wav");
-
   }
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Riba_Version_07/cursor_black.png), auto"
+      "url(assets/Riba_Version_07/cursor_black.png), auto",
     );
     const { width, height } = this.scale;
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("backgroundmusic", {
         loop: true,
-        volume: 0.5
+        volume: 0.5,
       });
 
       this.bgMusic.play();
     }
 
-    this.shopBg = this.add.image(
-      width / 2,
-      height / 2,
-      "shop_bg"
-    ).setDepth(-12);
+    this.shopBg = this.add
+      .image(width / 2, height / 2, "shop_bg")
+      .setDepth(-12);
 
     const bgScale = Math.min(
       width / this.shopBg.width,
-      height / this.shopBg.height
+      height / this.shopBg.height,
     );
 
     this.shopBg.setScale(bgScale);
 
-    this.shopLaser = this.add.image(width / 2, height / 1.7, "shop_laser").setDepth(-10).setScale(1.1);
+    this.shopLaser = this.add
+      .image(width / 2, height / 1.7, "shop_laser")
+      .setDepth(-10)
+      .setScale(1.1);
 
-    this.coworker = this.add.image(
-      width / 2,
-      height / 1.9,
-      "customer"
-    )
+    this.coworker = this.add
+      .image(width / 2, height / 1.9, "customer")
       .setScale(1)
       .setDepth(-11);
-
+    // Erstellt die zentralen Spielsysteme.
+    // DialogueManager steuert Gespräche,
+    // BoxManager verwaltet die Fisch-Boxen.
     this.dialogueManager = new DialogueManager(this);
     this.boxManager = new BoxManager(this);
-
+    // Speichert den Fortschritt innerhalb der aktuellen Box.
     this.totalFish = 4;
     this.currentFish = 0;
     this.cutResults = [];
@@ -118,9 +201,10 @@ export default class Game extends Phaser.Scene {
     this.canStopLine = false;
     this.cutInputReady = false;
     this.hasDrunkCoffee = false;
-
+    // Setzt sämtliche Entscheidungen und Ergebnisse
+    // für einen neuen Spieldurchlauf zurück.
     gameState.reset();
-
+    // Startet die erste Fischbox des Spiels.
     this.currentBoxId = "box1";
     this.currentBox = box1Data;
     this.targetPercent = this.currentBox.targetPercent || 30;
@@ -128,13 +212,12 @@ export default class Game extends Phaser.Scene {
     this.startCuttingPhase();
   }
 
+  // Bewegt den Laser kontinuierlich zwischen den Grenzen des Fisches hin und her.
   update() {
-
-    // ENDING 4 PARASITE LASER
+    // Spezialfall für Ending 4.
+    // Hier wird derselbe Laser-Mechanismus auf den Parasiten angewendet.
     if (this.ending4CutActive && this.cutLine) {
-
-      this.cutLine.x +=
-        this.cutLineSpeed * this.cutLineDirection;
+      this.cutLine.x += this.cutLineSpeed * this.cutLineDirection;
 
       if (this.cutLine.x >= this.cutLineMaxX) {
         this.cutLine.x = this.cutLineMaxX;
@@ -154,8 +237,7 @@ export default class Game extends Phaser.Scene {
 
     const bounds = this.fish.getBounds();
 
-    this.cutLine.x +=
-      this.cutLineSpeed * this.cutLineDirection;
+    this.cutLine.x += this.cutLineSpeed * this.cutLineDirection;
 
     if (this.cutLine.x >= bounds.right) {
       this.cutLine.x = bounds.right;
@@ -167,124 +249,106 @@ export default class Game extends Phaser.Scene {
       this.cutLineDirection = 1;
     }
   }
-
+  // Initialisiert die komplette Schneideansicht.
+  // Hier wechselt das Spiel vom Dialogmodus in die eigentliche Fischzubereitung.
   startCuttingPhase() {
     const { width, height } = this.scale;
-
+    // Jeder Fischtyp besitzt einen eigenen Zielwert.
+    // Dieser Wert bestimmt später die Bewertung.
     this.targetPercent = this.currentBox.targetPercent || 30;
 
-    this.blackBg = this.add.rectangle(
-      width / 2,
-      height / 2,
-      width,
-      height,
-      0x000000,
-      1
-    ).setDepth(99);
+    this.blackBg = this.add
+      .rectangle(width / 2, height / 2, width, height, 0x000000, 1)
+      .setDepth(99);
 
-    this.cuttingView = this.add.image(
-      width / 2,
-      height / 2,
-      "cuttingview"
-    ).setDepth(100);
+    this.cuttingView = this.add
+      .image(width / 2, height / 2, "cuttingview")
+      .setDepth(100);
 
     const cuttingScale = Math.min(
       width / this.cuttingView.width,
-      height / this.cuttingView.height
+      height / this.cuttingView.height,
     );
 
     this.cuttingView.setScale(cuttingScale);
 
-    const buttonX =
-      this.cuttingView.x +
-      this.cuttingView.displayWidth * 0.42;
+    const buttonX = this.cuttingView.x + this.cuttingView.displayWidth * 0.42;
 
-    const buttonY =
-      this.cuttingView.y +
-      this.cuttingView.displayHeight * 0.31;
+    const buttonY = this.cuttingView.y + this.cuttingView.displayHeight * 0.31;
 
     this.cupIsEmpty = false;
 
-    this.cup = this.add.image(
-      buttonX * 0.5,
-      buttonY * 1.1,
-      this.hasDrunkCoffee ? "emptyCup" : "cup"
-    )
+    this.cup = this.add
+      .image(
+        buttonX * 0.5,
+        buttonY * 1.1,
+        this.hasDrunkCoffee ? "emptyCup" : "cup",
+      )
       .setScale(1)
       .setDepth(101);
-
+    // Optionales Interaktionsobjekt.
+    // Der Spieler kann den Kaffee einmal trinken,  was den Becher dauerhaft leert.
     if (!this.hasDrunkCoffee) {
-
       this.cup.setInteractive({ useHandCursor: false });
 
       this.cup.on("pointerover", () => {
         this.input.setDefaultCursor(
-          "url(assets/Riba_Version_07/cursorhover.png), pointer"
+          "url(assets/Riba_Version_07/cursorhover.png), pointer",
         );
 
         this.tweens.add({
           targets: this.cup,
           scale: 1.08,
-          duration: 100
+          duration: 100,
         });
       });
 
       this.cup.on("pointerout", () => {
         this.input.setDefaultCursor(
-          "url(assets/Riba_Version_07/cursor_black.png), auto"
+          "url(assets/Riba_Version_07/cursor_black.png), auto",
         );
 
         this.tweens.add({
           targets: this.cup,
           scale: 1,
-          duration: 100
+          duration: 100,
         });
       });
 
       this.cup.on("pointerdown", () => {
-
         this.hasDrunkCoffee = true;
 
         this.sound.play("schluck", {
-          volume: 5
+          volume: 5,
         });
 
         this.cup.setTexture("emptyCup");
         this.input.setDefaultCursor(
-          "url(assets/Riba_Version_07/cursor_black.png), auto"
+          "url(assets/Riba_Version_07/cursor_black.png), auto",
         );
-        
+
         this.cup.disableInteractive();
       });
     }
 
-    this.note1 = this.add.image(
-      width / 6.8,
-      height / 4,
-      this.currentBox.noteTexture || "note1"
-    )
+    this.note1 = this.add
+      .image(width / 6.8, height / 4, this.currentBox.noteTexture || "note1")
       .setDepth(101)
       .setScale(0.9);
-
-    this.cutButton = this.add.image(
-      buttonX,
-      buttonY,
-      "button"
-    )
+    // Interaktiver Button zum Stoppen des Lasers.
+    this.cutButton = this.add
+      .image(buttonX, buttonY, "button")
       .setDepth(160)
       .setScale(1.2)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
 
-    this.buttonGlow = this.add.image(
-      this.cutButton.x,
-      this.cutButton.y,
-      "button"
-    )
+    this.buttonGlow = this.add
+      .image(this.cutButton.x, this.cutButton.y, "button")
       .setDepth(101)
       .setScale(1.2)
       .setAlpha(0.25)
-      .setTint(0xF0E1D2)
+      .setTint(0xf0e1d2)
       .setBlendMode(Phaser.BlendModes.SCREEN);
 
     this.tweens.add({
@@ -294,43 +358,42 @@ export default class Game extends Phaser.Scene {
       duration: 1000,
       yoyo: true,
       repeat: -1,
-      ease: "Sine.easeInOut"
+      ease: "Sine.easeInOut",
     });
-
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursorhover.png), pointer"
+        "url(assets/Riba_Version_07/cursorhover.png), pointer",
       );
       this.tweens.add({
         targets: this.cutButton,
         scale: 1.4,
         duration: 100,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto",
       );
       this.tweens.add({
         targets: this.cutButton,
         scale: 1.2,
         duration: 100,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursor_black.png), pointer"
+        "url(assets/Riba_Version_07/cursor_black.png), pointer",
       );
 
       if (!this.canStopLine) return;
       if (!this.cutInputReady) return;
       this.laser = this.sound.add("laser", {
-        volume: 0.1
+        volume: 0.1,
       });
       this.laser.play();
 
@@ -339,7 +402,7 @@ export default class Game extends Phaser.Scene {
         scale: 1.2,
         duration: 70,
         yoyo: true,
-        ease: "Power2"
+        ease: "Power2",
       });
 
       this.time.delayedCall(140, () => {
@@ -347,31 +410,32 @@ export default class Game extends Phaser.Scene {
       });
     });
 
+    // Erstellt einen neuen Fisch und bereitet den Schneidepfad vor.
     this.spawnFish(true);
     if (this.currentBoxId === "box2") {
-
       this.canStopLine = false;
       this.cutInputReady = false;
 
-      const hintText = this.add.text(
-        width / 2,
-        height * 0.8,
-        "Fisch: Vergiss nicht, auch der erfahrenste Fisch kann sich im Netz verfangen. Du gibst dir Mühe beim Schneiden und das ist alles, was zählt blub blub.",
-        {
-          fontSize: "25px",
-          fontFamily: "Roboto",
-          color: "#f4d869",
-          backgroundColor: "#000000cc",
-          padding: { x: 30, y: 18 },
-          align: "center",
-          wordWrap: { width: width * 0.6 }
-        }
-      )
+      const hintText = this.add
+        .text(
+          width / 2,
+          height * 0.8,
+          "Fisch: Vergiss nicht, auch der erfahrenste Fisch kann sich im Netz verfangen. Du gibst dir Mühe beim Schneiden und das ist alles, was zählt blub blub.",
+          {
+            fontSize: "25px",
+            fontFamily: "Roboto",
+            color: "#f4d869",
+            backgroundColor: "#000000cc",
+            padding: { x: 30, y: 18 },
+            align: "center",
+            wordWrap: { width: width * 0.6 },
+          },
+        )
         .setOrigin(0.5)
         .setDepth(500);
 
       this.fishVoice = this.sound.add("fishaudio", {
-        volume: 1
+        volume: 1,
       });
 
       this.fishVoice.play();
@@ -384,7 +448,7 @@ export default class Game extends Phaser.Scene {
         }
 
         this.input.setDefaultCursor(
-          "url(assets/Riba_Version_07/cursor_black.png), pointer"
+          "url(assets/Riba_Version_07/cursor_black.png), pointer",
         );
 
         this.tweens.add({
@@ -392,19 +456,14 @@ export default class Game extends Phaser.Scene {
           alpha: 0,
           duration: 250,
           onComplete: () => {
-
             hintText.destroy();
 
             this.enableLineClick();
-          }
+          },
         });
-
       });
-
     } else {
-
       this.enableLineClick();
-
     }
   }
 
@@ -417,11 +476,9 @@ export default class Game extends Phaser.Scene {
     this.canStopLine = false;
     this.cutInputReady = false;
 
-    this.fish = this.add.image(
-      width / 1.5,
-      height / 2.5,
-      this.currentBox.fishTexture || "fish"
-    ).setDepth(102);
+    this.fish = this.add
+      .image(width / 1.5, height / 2.5, this.currentBox.fishTexture || "fish")
+      .setDepth(102);
 
     this.createFishPath();
 
@@ -435,14 +492,16 @@ export default class Game extends Phaser.Scene {
 
     const bounds = this.fish.getBounds();
 
-    this.cutLine = this.add.rectangle(
-      bounds.left,
-      this.fish.y,
-      5,
-      this.fish.displayHeight + 90,
-      0xffffff,
-      0.95
-    ).setDepth(130);
+    this.cutLine = this.add
+      .rectangle(
+        bounds.left,
+        this.fish.y,
+        5,
+        this.fish.displayHeight + 90,
+        0xffffff,
+        0.95,
+      )
+      .setDepth(130);
 
     this.cutLineDirection = 1;
     this.cutLineSpeed = 5;
@@ -461,7 +520,7 @@ export default class Game extends Phaser.Scene {
       }
     });
   }
-
+  //Stoppt den Laser und berechnet das Ergebnis des Schnitts.
   stopLineAndCut() {
     if (!this.canStopLine) return;
     if (!this.cutInputReady) return;
@@ -480,12 +539,13 @@ export default class Game extends Phaser.Scene {
     const localX = Phaser.Math.Clamp(
       this.cutLine.x - bounds.left,
       0,
-      this.fish.displayWidth
+      this.fish.displayWidth,
     );
 
     const percent = this.getPercentOnFishPath(this.cutLine.x);
 
     this.cutResults.push(percent);
+    // Speichert das Schnittergebnis für spätere Dialoge und Endings.
     gameState.saveCut(this.currentBoxId, percent);
 
     this.cutLine.destroy();
@@ -493,29 +553,26 @@ export default class Game extends Phaser.Scene {
 
     this.animateSlice(localX, percent);
   }
-
+  // Simuliert das Zerschneiden des Fisches, indem zwei Bildhälften erzeugt werden.
   animateSlice(localX, percent) {
-    const {
-      x,
-      y,
-      displayWidth: w,
-      displayHeight: h
-    } = this.fish;
+    const { x, y, displayWidth: w, displayHeight: h } = this.fish;
 
     const fishTexture = this.currentBox.fishTexture || "fish";
 
-    const leftHalf = this.add.image(x, y, fishTexture)
+    const leftHalf = this.add
+      .image(x, y, fishTexture)
       .setDepth(103)
       .setDisplaySize(w, h)
       .setCrop(0, 0, localX, h);
 
-    const rightHalf = this.add.image(x, y, fishTexture)
+    const rightHalf = this.add
+      .image(x, y, fishTexture)
       .setDepth(103)
       .setDisplaySize(w, h)
       .setCrop(localX, 0, w - localX, h);
 
     this.fish.destroy();
-
+    //Bewertet den Schnitt anhand des Zielwerts und bestimmt das passende audiovisuelle Feedback.
     let feedbackTexture;
     let feedbackColor;
     let feedbackScale;
@@ -549,47 +606,43 @@ export default class Game extends Phaser.Scene {
     }
 
     this.sound.play(feedbackSound, {
-      volume: 0.6
+      volume: 0.6,
     });
 
-    const percentText = this.add.text(
-      this.scale.width * 0.09,
-      this.scale.height * 0.8,
-      `${percent}%`,
-      {
+    const percentText = this.add
+      .text(this.scale.width * 0.09, this.scale.height * 0.8, `${percent}%`, {
         fontSize: `${Math.max(32, this.scale.width * 0.035)}px`,
         fontFamily: "Roboto",
         color: feedbackColor,
         fontStyle: "bold",
         stroke: "#000000",
-        strokeThickness: 5
-      }
-    )
+        strokeThickness: 5,
+      })
       .setOrigin(0, 1)
       .setDepth(300);
 
-    const feedbackImg = this.add.image(
-      percentText.x + percentText.width,
-      percentText.y - percentText.height / 2,
-      feedbackTexture
-    )
+    const feedbackImg = this.add
+      .image(
+        percentText.x + percentText.width,
+        percentText.y - percentText.height / 2,
+        feedbackTexture,
+      )
       .setOrigin(0, 0.5)
       .setDepth(300)
       .setScale(feedbackScale);
-
 
     this.tweens.add({
       targets: leftHalf,
       x: x - 250,
       alpha: 0,
-      duration: 350
+      duration: 350,
     });
 
     this.tweens.add({
       targets: rightHalf,
       x: x + 250,
       alpha: 0,
-      duration: 350
+      duration: 350,
     });
 
     this.time.delayedCall(1500, () => {
@@ -602,7 +655,6 @@ export default class Game extends Phaser.Scene {
     });
   }
 
-
   nextFish() {
     this.currentFish++;
 
@@ -613,6 +665,8 @@ export default class Game extends Phaser.Scene {
       this.finishBox();
     }
   }
+  // Erstellt den Schneidepfad des aktuellen Fisches.
+  // Die spätere Prozentberechnung basiert auf diesem Pfad.
 
   createFishPath() {
     if (!this.fish) return;
@@ -623,7 +677,8 @@ export default class Game extends Phaser.Scene {
       this.fishPathDebug.destroy();
     }
 
-    // BOX 1: gerader Fisch
+    // Fisch 1 besitzt eine gerade Anatomie.
+    // Deshalb reicht ein linearer Schneidepfad.
     if (this.currentBoxId === "box1") {
       const startX = bounds.left + bounds.width * 0.04;
       const startY = this.fish.y;
@@ -635,19 +690,35 @@ export default class Game extends Phaser.Scene {
       this.fishPath.lineTo(endX, endY);
     }
 
-    // BOX 2: gebogener Fisch
+    // Fisch 2 besitzt eine deformierte Form.
+    // Deshalb wird ein gekrümmter Pfad mittels Vector2-Kontrollpunkten erstellt.
     if (this.currentBoxId === "box2") {
-      const startX = bounds.left + bounds.width * 0.20;
+      const startX = bounds.left + bounds.width * 0.2;
       const startY = bounds.top + bounds.height * 0.42;
 
       this.fishPath = new Phaser.Curves.Path(startX, startY);
-      //Kontrollpunkte x,y
+      // Die Kontrollpunkte definieren die Form der späteren Schneidekurve. X,Y
       this.fishPath.splineTo([
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.22, bounds.top + bounds.height * 0.46),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.36, bounds.top + bounds.height * 0.60),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.54, bounds.top + bounds.height * 0.56),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.68, bounds.top + bounds.height * 0.24),
-        new Phaser.Math.Vector2(bounds.left + bounds.width * 0.95, bounds.top + bounds.height * 0.42)
+        new Phaser.Math.Vector2(
+          bounds.left + bounds.width * 0.22,
+          bounds.top + bounds.height * 0.46,
+        ),
+        new Phaser.Math.Vector2(
+          bounds.left + bounds.width * 0.36,
+          bounds.top + bounds.height * 0.6,
+        ),
+        new Phaser.Math.Vector2(
+          bounds.left + bounds.width * 0.54,
+          bounds.top + bounds.height * 0.56,
+        ),
+        new Phaser.Math.Vector2(
+          bounds.left + bounds.width * 0.68,
+          bounds.top + bounds.height * 0.24,
+        ),
+        new Phaser.Math.Vector2(
+          bounds.left + bounds.width * 0.95,
+          bounds.top + bounds.height * 0.42,
+        ),
       ]);
     }
   }
@@ -665,7 +736,7 @@ export default class Game extends Phaser.Scene {
     this.fishPathDebug.lineStyle(3, 0xff0000, 1);
     this.fishPath.draw(this.fishPathDebug);
   }
-
+  //Ermittelt die aktuelle Position des Lasers auf dem definierten Schneidepfad.
   getPercentOnFishPath(cutX) {
     if (!this.fishPath) return 0;
 
@@ -673,7 +744,8 @@ export default class Game extends Phaser.Scene {
     let closestDistance = Infinity;
 
     const steps = 150;
-
+    // Der Pfad wird in 150 Abschnitte unterteilt.
+    // Anschliessend wird der Punkt gesucht, der dem Laser am nächsten liegt.
     for (let i = 0; i <= steps; i++) {
       const t = i / steps;
       const point = this.fishPath.getPoint(t);
@@ -685,7 +757,7 @@ export default class Game extends Phaser.Scene {
         closestT = t;
       }
     }
-
+    // Wandelt die gefundene Position in einen Prozentwert zwischen 0 und 100 um.
     return Math.round(closestT * 100);
   }
 
@@ -708,15 +780,15 @@ export default class Game extends Phaser.Scene {
     const perfect = gameState.isPerfectBox(this.currentBoxId);
 
     if (this.coworker) {
-  this.coworker.setTexture("klara_done");
-}
+      this.coworker.setTexture("klara_done");
+    }
 
     if (perfect) {
       this.dialogueManager.startDialogue(
         this.currentBox.successDialogue,
         () => {
           this.startNextStep();
-        }
+        },
       );
     } else {
       this.dialogueManager.startDialogue(
@@ -725,11 +797,11 @@ export default class Game extends Phaser.Scene {
           this.time.delayedCall(400, () => {
             this.startParasiteEncounter();
           });
-        }
+        },
       );
     }
   }
-
+  // Erstellt interaktive Antwortmöglichkeiten.
   showChoices(choices, callback, timeoutCallback = null, timeoutMs = null) {
     const { width, height } = this.scale;
     const isSmall = width < 1200 || height < 750;
@@ -743,7 +815,8 @@ export default class Game extends Phaser.Scene {
     const baseY = dialogueY + Phaser.Math.Clamp(height * 0.24, 150, 250);
     const spacingY = Phaser.Math.Clamp(height * 0.085, 54, 75);
 
-    const timerX = baseX + choiceWidth - Phaser.Math.Clamp(width * 0.03, 20, 20);
+    const timerX =
+      baseX + choiceWidth - Phaser.Math.Clamp(width * 0.03, 20, 20);
     const timerY = baseY;
 
     let choiceMade = false;
@@ -773,18 +846,14 @@ export default class Game extends Phaser.Scene {
     };
 
     if (timeoutCallback && timeoutMs) {
-      timerText = this.add.text(
-        timerX,
-        timerY,
-        `${remainingSeconds}`,
-        {
+      timerText = this.add
+        .text(timerX, timerY, `${remainingSeconds}`, {
           fontSize: timerFontSize,
           fontFamily: "Roboto",
           color: "#ffffff",
           backgroundColor: "#000000cc",
-          padding: { x: 18, y: 10 }
-        }
-      )
+          padding: { x: 18, y: 10 },
+        })
         .setOrigin(0, 0.5)
         .setDepth(650);
 
@@ -801,7 +870,7 @@ export default class Game extends Phaser.Scene {
           if (remainingSeconds <= 0 && timerEvent) {
             timerEvent.remove(false);
           }
-        }
+        },
       });
 
       timeoutEvent = this.time.delayedCall(timeoutMs, () => {
@@ -822,30 +891,37 @@ export default class Game extends Phaser.Scene {
       const xPos = baseX;
       const yPos = baseY + index * spacingY;
 
-      const btn = this.add.text(xPos, yPos, choice.text, {
-        fontSize: choiceFontSize,
-        fontFamily: "Roboto",
-        backgroundColor: "#000000cc",
-        color: "#ffffff",
-        padding: {
-          x: isSmall ? 14 : 18,
-          y: isSmall ? 9 : 12
-        },
-        align: "left",
-        wordWrap: { width: choiceWidth }
-      })
+      const btn = this.add
+        .text(xPos, yPos, choice.text, {
+          fontSize: choiceFontSize,
+          fontFamily: "Roboto",
+          backgroundColor: "#000000cc",
+          color: "#ffffff",
+          padding: {
+            x: isSmall ? 14 : 18,
+            y: isSmall ? 9 : 12,
+          },
+          align: "left",
+          wordWrap: { width: choiceWidth },
+        })
         .setOrigin(0, 0.5)
         .setInteractive({ useHandCursor: false })
         .setDepth(600);
 
       btn.on("pointerover", () => {
-        this.input.setDefaultCursor("url(assets/Riba_Version_07/cursorhover.png), auto");
+        this.input.setDefaultCursor(
+          "url(assets/Riba_Version_07/cursorhover.png), auto",
+        );
       });
       btn.on("pointerout", () => {
-        this.input.setDefaultCursor("url(assets/Riba_Version_07/cursor_black.png), auto");
+        this.input.setDefaultCursor(
+          "url(assets/Riba_Version_07/cursor_black.png), auto",
+        );
       });
       btn.on("pointerdown", () => {
-        this.input.setDefaultCursor("url(assets/Riba_Version_07/cursor_black.png), auto");
+        this.input.setDefaultCursor(
+          "url(assets/Riba_Version_07/cursor_black.png), auto",
+        );
         if (choiceMade) return;
 
         choiceMade = true;
@@ -865,11 +941,11 @@ export default class Game extends Phaser.Scene {
         targets: btn,
         alpha: 1,
         duration: 500,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
   }
-
+  // Startet die Halluzinations-/Parasiten-Sequenz, falls die aktuelle Fischbox nicht erfolgreich abgeschlossen wurde.
   startParasiteEncounter() {
     const { width, height } = this.scale;
 
@@ -883,13 +959,10 @@ export default class Game extends Phaser.Scene {
     gameState.setParasiteInteraction(this.currentBoxId, true);
     const KlaraScale = Math.min(
       width / this.shopBg.width,
-      height / this.shopBg.height
+      height / this.shopBg.height,
     );
-    this.parasite = this.add.image(
-      width / 2,
-      height / 2,
-      "parasite"
-    )
+    this.parasite = this.add
+      .image(width / 2, height / 2, "parasite")
       .setDepth(-11)
       .setScale(KlaraScale)
       .setAlpha(0);
@@ -911,14 +984,9 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.shake(700, 0.003);
 
         // subtle red UI flicker
-        const redFlicker = this.add.rectangle(
-          width / 2,
-          height / 2,
-          width,
-          height,
-          0xf17d32,
-          0.18
-        ).setDepth(999);
+        const redFlicker = this.add
+          .rectangle(width / 2, height / 2, width, height, 0xf17d32, 0.18)
+          .setDepth(999);
 
         this.tweens.add({
           targets: redFlicker,
@@ -929,7 +997,7 @@ export default class Game extends Phaser.Scene {
           ease: "Sine.easeInOut",
           onComplete: () => {
             redFlicker.destroy();
-          }
+          },
         });
 
         this.tweens.add({
@@ -938,7 +1006,7 @@ export default class Game extends Phaser.Scene {
           duration: 40,
           yoyo: true,
           repeat: 2,
-          ease: "Sine.easeInOut"
+          ease: "Sine.easeInOut",
         });
 
         this.time.delayedCall(300, () => {
@@ -949,21 +1017,21 @@ export default class Game extends Phaser.Scene {
                 parasiteNode.choices,
 
                 (choice) => {
-                  gameState.saveParasiteChoice(
-                    this.currentBoxId,
-                    choice.id
-                  );
+                  // Speichert die Entscheidung des Spielers, damit sie später das Ending beeinflussen kann.
+                  gameState.saveParasiteChoice(this.currentBoxId, choice.id);
 
                   if (choice.nextText) {
                     this.dialogueManager.startDialogue(
-                      [{
-                        text: choice.nextText,
-                        voice: choice.voice
-                      }],
+                      [
+                        {
+                          text: choice.nextText,
+                          voice: choice.voice,
+                        },
+                      ],
                       () => {
                         this.startNextStep();
                       },
-                      true
+                      true,
                     );
                   } else {
                     this.startNextStep();
@@ -971,10 +1039,7 @@ export default class Game extends Phaser.Scene {
                 },
 
                 () => {
-                  gameState.saveParasiteChoice(
-                    this.currentBoxId,
-                    "ignored"
-                  );
+                  gameState.saveParasiteChoice(this.currentBoxId, "ignored");
 
                   if (
                     parasiteNode.ignoreDialogue &&
@@ -985,20 +1050,20 @@ export default class Game extends Phaser.Scene {
                       () => {
                         this.startNextStep();
                       },
-                      true
+                      true,
                     );
                   } else {
                     this.startNextStep();
                   }
                 },
-                //timer
-                12000
+                //Countdown bis zur Ignorierung der Wahlmöglichkeit. Gibt dem Spieler 12 Sekunden Zeit, eine Entscheidung zu treffen, bevor automatisch ignoriert wird.
+                12000,
               );
             },
-            true
+            true,
           );
         });
-      }
+      },
     });
   }
 
@@ -1018,17 +1083,17 @@ export default class Game extends Phaser.Scene {
       this.shopLaser.setVisible(true);
     }
 
-
-    this.coworker = this.add.image(-600, this.scale.height / 1.9, "customer").setScale(1).setDepth(-11);
+    this.coworker = this.add
+      .image(-600, this.scale.height / 1.9, "customer")
+      .setScale(1)
+      .setDepth(-11);
 
     this.tweens.add({
       targets: this.coworker,
       x: this.scale.width / 2,
       duration: 500,
-      ease: "Cubic.easeOut"
+      ease: "Cubic.easeOut",
     });
-
-
 
     if (this.currentBoxId === "box1") {
       this.currentBoxId = "box2";
@@ -1044,7 +1109,7 @@ export default class Game extends Phaser.Scene {
           this.currentBox.introDialogue,
           () => {
             this.startCuttingPhase();
-          }
+          },
         );
       } else {
         this.startCuttingPhase();
@@ -1061,14 +1126,9 @@ export default class Game extends Phaser.Scene {
   startEnding4ParasiteCut(onComplete) {
     const bounds = this.parasite.getBounds();
 
-    this.cutLine = this.add.rectangle(
-      bounds.left,
-      bounds.centerY,
-      5,
-      bounds.height,
-      0xffffff,
-      0.95
-    ).setDepth(200);
+    this.cutLine = this.add
+      .rectangle(bounds.left, bounds.centerY, 5, bounds.height, 0xffffff, 0.95)
+      .setDepth(200);
 
     this.cutLineMinX = bounds.left;
     this.cutLineMaxX = bounds.right;
@@ -1082,7 +1142,7 @@ export default class Game extends Phaser.Scene {
       this.ending4CutActive = false;
 
       this.sound.play("laser", {
-        volume: 0.1
+        volume: 0.1,
       });
 
       const cutX = this.cutLine.x;
@@ -1099,40 +1159,23 @@ export default class Game extends Phaser.Scene {
       const localX = Phaser.Math.Clamp(
         cutX - parasiteBounds.left,
         0,
-        parasiteBounds.width
+        parasiteBounds.width,
       );
 
-      const leftHalf = this.add.image(
-        this.parasite.x,
-        this.parasite.y,
-        "parasite"
-      )
-        .setDisplaySize(
-          parasiteBounds.width,
-          parasiteBounds.height
-        )
-        .setCrop(
-          0,
-          0,
-          localX,
-          parasiteBounds.height
-        )
+      const leftHalf = this.add
+        .image(this.parasite.x, this.parasite.y, "parasite")
+        .setDisplaySize(parasiteBounds.width, parasiteBounds.height)
+        .setCrop(0, 0, localX, parasiteBounds.height)
         .setDepth(-11);
 
-      const rightHalf = this.add.image(
-        this.parasite.x,
-        this.parasite.y,
-        "parasite"
-      )
-        .setDisplaySize(
-          parasiteBounds.width,
-          parasiteBounds.height
-        )
+      const rightHalf = this.add
+        .image(this.parasite.x, this.parasite.y, "parasite")
+        .setDisplaySize(parasiteBounds.width, parasiteBounds.height)
         .setCrop(
           localX,
           0,
           parasiteBounds.width - localX,
-          parasiteBounds.height
+          parasiteBounds.height,
         )
         .setDepth(-11);
 
@@ -1144,7 +1187,7 @@ export default class Game extends Phaser.Scene {
         x: leftHalf.x - 250,
         alpha: 0,
         duration: 400,
-        ease: "Power2"
+        ease: "Power2",
       });
 
       this.tweens.add({
@@ -1154,137 +1197,105 @@ export default class Game extends Phaser.Scene {
         duration: 400,
         ease: "Power2",
         onComplete: () => {
-
           leftHalf.destroy();
           rightHalf.destroy();
           this.time.delayedCall(300, () => {
-            this.cameras.main.fade(
-              800,
-              0,
-              0,
-              0
-            );
+            this.cameras.main.fade(800, 0, 0, 0);
 
             this.time.delayedCall(800, () => {
-
               if (onComplete) {
                 onComplete();
               }
 
-              this.cameras.main.fadeIn(
-                800,
-                0,
-                0,
-                0
-              );
-
+              this.cameras.main.fadeIn(800, 0, 0, 0);
             });
-
           });
-
-        }
+        },
       });
     };
 
     this.time.delayedCall(200, () => {
-      this.input.once(
-        "pointerdown",
-        this.ending4CutHandler
-      );
+      this.input.once("pointerdown", this.ending4CutHandler);
     });
   }
 
+  // Berechnet den weiteren Spielverlauf basierend auf den bisherigen Entscheidungen.
   startFinalPath() {
     const ending = gameState.getEnding();
 
-    const preEndingDialogue =
-      box2Data.preEndingDialogue[ending];
+    const preEndingDialogue = box2Data.preEndingDialogue[ending];
 
     if (ending === "ending4") {
       if (this.coworker) {
-  this.coworker.setTexture("klara_done");
-}
-      this.dialogueManager.startDialogue(
-        [preEndingDialogue[0]],
-        () => {
-          if (this.coworker) {
-            this.coworker.destroy();
-            this.coworker = null;
-          }
-          const { width, height } = this.scale;
-          const BadKScale = Math.min(
-            width / this.shopBg.width,
-            height / this.shopBg.height
-          );
-          this.parasite = this.add.image(
-            this.scale.width / 2,
-            this.scale.height / 2,
-            "parasite"
-          )
-            .setScale(BadKScale)
-            .setDepth(-11);
-          this.shopLaser.setVisible(false);
-          this.dialogueManager.startDialogue(
-            [preEndingDialogue[1]],
-            () => {
-              this.dialogueManager.clearDialogue();
-
-              this.startEnding4ParasiteCut(() => {
-                if (this.parasite) {
-                  this.parasite.destroy();
-                  this.parasite = null;
-                }
-                this.shopLaser.setVisible(true);
-                this.coworker = this.add.image(
-                  this.scale.width / 2,
-                  this.scale.height / 1.9,
-                  "klara_done"
-                )
-                  .setScale(1)
-                  .setDepth(-11);
-
-                this.dialogueManager.startDialogue(
-                  [preEndingDialogue[2]],
-                  () => {
-                    this.showChoices(
-                      preEndingDialogue[2].choices,
-                      (choice) => {
-                        this.dialogueManager.clearDialogue();
-
-                        this.dialogueManager.startDialogue(
-                          [
-                            {
-                              text: choice.nextText,
-                              voice: choice.voice
-                            }
-                          ],
-                          () => {
-                            this.scene.start("Ending", {
-                              ending: ending
-                            });
-                          }
-                        );
-                      }
-                    );
-                  },
-                  true
-                );
-              });
-            }
-          );
+        this.coworker.setTexture("klara_done");
+      }
+      this.dialogueManager.startDialogue([preEndingDialogue[0]], () => {
+        if (this.coworker) {
+          this.coworker.destroy();
+          this.coworker = null;
         }
-      );
+        const { width, height } = this.scale;
+        const BadKScale = Math.min(
+          width / this.shopBg.width,
+          height / this.shopBg.height,
+        );
+        this.parasite = this.add
+          .image(this.scale.width / 2, this.scale.height / 2, "parasite")
+          .setScale(BadKScale)
+          .setDepth(-11);
+        this.shopLaser.setVisible(false);
+        this.dialogueManager.startDialogue([preEndingDialogue[1]], () => {
+          this.dialogueManager.clearDialogue();
+
+          this.startEnding4ParasiteCut(() => {
+            if (this.parasite) {
+              this.parasite.destroy();
+              this.parasite = null;
+            }
+            this.shopLaser.setVisible(true);
+            this.coworker = this.add
+              .image(
+                this.scale.width / 2,
+                this.scale.height / 1.9,
+                "klara_done",
+              )
+              .setScale(1)
+              .setDepth(-11);
+
+            this.dialogueManager.startDialogue(
+              [preEndingDialogue[2]],
+              () => {
+                this.showChoices(preEndingDialogue[2].choices, (choice) => {
+                  this.dialogueManager.clearDialogue();
+
+                  this.dialogueManager.startDialogue(
+                    [
+                      {
+                        text: choice.nextText,
+                        voice: choice.voice,
+                      },
+                    ],
+                    () => {
+                      this.scene.start("Ending", {
+                        ending: ending,
+                      });
+                    },
+                  );
+                });
+              },
+              true,
+            );
+          });
+        });
+      });
 
       return;
     }
 
-    this.dialogueManager.startDialogue(
-      preEndingDialogue,
-      () => {
-        this.scene.start("Ending", {
-          ending: ending
-        });
-      }
-    );
+    this.dialogueManager.startDialogue(preEndingDialogue, () => {
+      this.scene.start("Ending", {
+        ending: ending,
+      });
+    });
   }
 }

@@ -5,8 +5,14 @@ export default class Intro extends Phaser.Scene {
     super("Intro");
   }
   preload() {
-  this.load.audio("intro", "assets/Riba_Version_07_Audio/narration/intro.wav");
-  this.load.audio("background", "assets/Riba_Version_07_Audio/underwater.mp3");
+    this.load.audio(
+      "intro",
+      "assets/Riba_Version_07_Audio/narration/intro.wav",
+    );
+    this.load.audio(
+      "background",
+      "assets/Riba_Version_07_Audio/underwater.mp3",
+    );
   }
 
   create() {
@@ -23,32 +29,42 @@ export default class Intro extends Phaser.Scene {
 
     this.add.rectangle(width / 2, height / 2, width, height, 0x000000);
     this.introVoice = this.sound.add("intro", {
-        volume: 2.5
-      });
+      volume: 2.5,
+    });
 
     this.introVoice.play();
     this.backgroundMusic = this.sound.add("background", {
-      volume: 0.2
+      volume: 0.2,
     });
     this.backgroundMusic.play();
-
-    this.add.rectangle(panelX, panelY, panelW * 0.9, panelH * 0.75, 0x07130e, 0.95)
+    // Erstellt das visuelle Terminal-Panel im Stil eines Systemprotokolls.
+    this.add
+      .rectangle(panelX, panelY, panelW * 0.9, panelH * 0.75, 0x07130e, 0.95)
       .setStrokeStyle(2, 0x3cff9b, 0.7);
 
-    this.add.rectangle(panelX, panelY - panelH * 0.42, panelW * 0.9, 8, 0x3cff9b, 0.85);
-
-    this.add.text(
+    this.add.rectangle(
       panelX,
-      panelY - panelH * 0.52,
-      "UNTERWASSER-ARBEITSSTATION ADRIA-03 // SYSTEMPROTOKOLL",
-      {
-        fontSize: headerSize,
-        color: "#3cff9b",
-        fontFamily: "Quantico",
-        align: "center",
-        wordWrap: { width: panelW * 0.9 }
-      }
-    ).setOrigin(0.5);
+      panelY - panelH * 0.42,
+      panelW * 0.9,
+      8,
+      0x3cff9b,
+      0.85,
+    );
+
+    this.add
+      .text(
+        panelX,
+        panelY - panelH * 0.52,
+        "UNTERWASSER-ARBEITSSTATION ADRIA-03 // SYSTEMPROTOKOLL",
+        {
+          fontSize: headerSize,
+          color: "#3cff9b",
+          fontFamily: "Quantico",
+          align: "center",
+          wordWrap: { width: panelW * 0.9 },
+        },
+      )
+      .setOrigin(0.5);
 
     this.add.text(
       width * 0.14,
@@ -58,8 +74,8 @@ export default class Intro extends Phaser.Scene {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
         fontFamily: "Quantico",
-        lineSpacing: 6
-      }
+        lineSpacing: 6,
+      },
     );
 
     this.add.text(
@@ -70,10 +86,9 @@ export default class Intro extends Phaser.Scene {
         fontSize: isSmallScreen ? "12px" : "15px",
         color: "#70ffad",
         fontFamily: "Quantico",
-        lineSpacing: 6
-      }
+        lineSpacing: 6,
+      },
     );
-
 
     const introText = `Als die Sonne begann, die Erdoberfläche zu verbrennen, befand sich eine Gruppe von Sättigungstaucherinnen in ihrer Arbeitsstation in der Adria.
 
@@ -82,23 +97,20 @@ Die Versäuerung der Ozeane war ein Nebeneffekt, der das Überleben stark erschw
 Dein Name ist Mona. Du bist eines der Crewmitglieder und hast dich dazu entschlossen, die Aufgabe der Zubereitung der Fische zu übernehmen.
 Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushalten kann.`;
 
-    const mainText = this.add.text(
-      panelX,
-      panelY,
-      "",
-      {
+    const mainText = this.add
+      .text(panelX, panelY, "", {
         fontSize: bodySize,
         color: "#b7ffd8",
         fontFamily: "Quantico",
         align: "left",
         wordWrap: { width: panelW * 0.78 },
-        lineSpacing: isSmallScreen ? 6 : 10
-      }
-    ).setOrigin(0.5);
+        lineSpacing: isSmallScreen ? 6 : 10,
+      })
+      .setOrigin(0.5);
 
     let index = 0;
     let isFinished = false;
-
+    // Typewriter-Effekt: Der Text wird Zeichen für Zeichen eingeblendet.
     const typeEvent = this.time.addEvent({
       delay: isSmallScreen ? 35 : 50,
       loop: true,
@@ -111,20 +123,22 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
           isFinished = true;
           hintText.setText("[ MAUSTASTE KLICKEN ZUM FORTFAHREN ]");
         }
-      }
+      },
     });
 
-    const hintText = this.add.text(
-      width / 2,
-      height * 0.91,
-      "[ MAUSTASTE KLICKEN ZUM ÜBERSPRINGEN ]",
-      {
-        fontSize: hintSize,
-        color: "#3cff9b",
-        fontFamily: "Quantico",
-        align: "center"
-      }
-    ).setOrigin(0.5);
+    const hintText = this.add
+      .text(
+        width / 2,
+        height * 0.91,
+        "[ MAUSTASTE KLICKEN ZUM ÜBERSPRINGEN ]",
+        {
+          fontSize: hintSize,
+          color: "#3cff9b",
+          fontFamily: "Quantico",
+          align: "center",
+        },
+      )
+      .setOrigin(0.5);
 
     this.tweens.add({
       targets: hintText,
@@ -132,7 +146,7 @@ Du weisst jedoch nicht, wie lange deine Psyche diese Lebenssituation noch aushal
       duration: 1400,
       yoyo: true,
       repeat: -1,
-      ease: "Sine.InOut"
+      ease: "Sine.InOut",
     });
 
     const goNext = () => {

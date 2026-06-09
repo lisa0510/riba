@@ -18,25 +18,34 @@ export default class Tutorial extends Phaser.Scene {
     this.load.image("bad", "assets/Riba_Version_07/BadFisch.png");
     this.load.image("good", "assets/Riba_Version_07/GoodFisch.png");
     this.load.image("toomuch", "assets/Riba_Version_07/SmallPortionFisch.png");
-    
+
     this.load.audio("bg_music", "assets/Riba_Version_07_Audio/riba.wav");
     this.load.audio("badcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
     this.load.audio("goodcut", "assets/Riba_Version_07_Audio/feedback/ok.mp3");
-    this.load.audio("toomuchcut", "assets/Riba_Version_07_Audio/feedback/bad.mp3");
+    this.load.audio(
+      "toomuchcut",
+      "assets/Riba_Version_07_Audio/feedback/bad.mp3",
+    );
 
     this.load.audio("laser", "assets/Riba_Version_07_Audio/lasercut.mp3");
-    this.load.audio("tutorial1klara", "assets/Riba_Version_07_Audio/tutorial/tutorial1klara.mp3");
-    this.load.audio("tutorial2klara", "assets/Riba_Version_07_Audio/tutorial/tutorial2klara.mp3");
+    this.load.audio(
+      "tutorial1klara",
+      "assets/Riba_Version_07_Audio/tutorial/tutorial1klara.mp3",
+    );
+    this.load.audio(
+      "tutorial2klara",
+      "assets/Riba_Version_07_Audio/tutorial/tutorial2klara.mp3",
+    );
   }
 
   create() {
     this.input.setDefaultCursor(
-      "url(assets/Riba_Version_07/cursor_black.png), auto"
+      "url(assets/Riba_Version_07/cursor_black.png), auto",
     );
 
     if (!this.bgMusic || !this.bgMusic.isPlaying) {
       this.bgMusic = this.sound.add("bg_music", {
-        volume: 0.3
+        volume: 0.3,
       });
 
       this.bgMusic.play();
@@ -44,21 +53,24 @@ export default class Tutorial extends Phaser.Scene {
 
     const { width, height } = this.scale;
 
-    this.shopBg = this.add.image(width / 2, height / 2, "shop_bg")
+    this.shopBg = this.add
+      .image(width / 2, height / 2, "shop_bg")
       .setDepth(-12);
 
     const bgScale = Math.min(
       width / this.shopBg.width,
-      height / this.shopBg.height
+      height / this.shopBg.height,
     );
 
     this.shopBg.setScale(bgScale);
 
-    this.shopLaser = this.add.image(width / 2, height / 1.7, "shop_laser")
+    this.shopLaser = this.add
+      .image(width / 2, height / 1.7, "shop_laser")
       .setDepth(-10);
     this.shopLaser.setScale(1.1);
 
-    this.coworker = this.add.image(width / 2, height / 1.9, "customer")
+    this.coworker = this.add
+      .image(width / 2, height / 1.9, "customer")
       .setScale(1)
       .setDepth(-11);
 
@@ -74,22 +86,21 @@ export default class Tutorial extends Phaser.Scene {
 
     this.fishPath = null;
     this.fishPathDebug = null;
+    // Initialisiert das Dialogsystem und zeigt die erste Gesprächssequenz an.
     document.fonts.ready.then(() => {
       this.setupMainDialogue();
     });
-
   }
 
+  // Lädt die Dialogdaten aus tutorialDialogue.js
+  // und erstellt das Textfeld für die Kommunikation mit Klara.
   setupMainDialogue() {
     const { width, height } = this.scale;
 
     this.currentDialogues = dialogues.tutorial.intro;
 
-    this.dialogueText = this.add.text(
-      width * 0.08,
-      height * 0.45,
-      "",
-      {
+    this.dialogueText = this.add
+      .text(width * 0.08, height * 0.45, "", {
         fontSize: "25px",
         fontFamily: '"Domine"',
         color: "#ffffff",
@@ -97,12 +108,9 @@ export default class Tutorial extends Phaser.Scene {
         padding: { x: 40, y: 25 },
         align: "left",
         wordWrap: { width: width * 0.2 },
-      }
-    )
+      })
       .setOrigin(0, 0.5)
       .setDepth(200);
-
-
 
     this.input.on("pointerdown", this.handleProgressDialogue, this);
 
@@ -113,33 +121,26 @@ export default class Tutorial extends Phaser.Scene {
       this.displayNextLine();
     });
   }
-
-
-
+  // Wird bei jedem Mausklick ausgeführt
+  // und zeigt die nächste Dialogzeile an.
   handleProgressDialogue() {
     this.displayNextLine();
   }
-
+  // Zeigt die nächste Dialogzeile an und spielt die dazugehörige Sprachaufnahme ab.
   displayNextLine() {
     if (this.dialogueIndex < this.currentDialogues.length) {
-      const currentDialogue =
-        this.currentDialogues[this.dialogueIndex];
+      const currentDialogue = this.currentDialogues[this.dialogueIndex];
 
-      this.dialogueText.setText(
-        currentDialogue.text
-      );
+      this.dialogueText.setText(currentDialogue.text);
 
       if (currentDialogue.voice) {
         if (this.currentVoice) {
           this.currentVoice.stop();
         }
 
-        this.currentVoice = this.sound.add(
-          currentDialogue.voice,
-          {
-            volume: 1
-          }
-        );
+        this.currentVoice = this.sound.add(currentDialogue.voice, {
+          volume: 1,
+        });
 
         this.currentVoice.play();
       }
@@ -156,65 +157,52 @@ export default class Tutorial extends Phaser.Scene {
       this.startTutorialCutting();
     }
   }
-
+  // Startet den eigentlichen Tutorial-Teil, in welchem der Spieler das Schneidesystem kennenlernt.
   startTutorialCutting() {
     const { width, height } = this.scale;
 
-    this.blackBg = this.add.rectangle(
-      width / 2,
-      height / 2,
-      width,
-      height,
-      0x000000,
-      1
-    ).setDepth(99);
+    this.blackBg = this.add
+      .rectangle(width / 2, height / 2, width, height, 0x000000, 1)
+      .setDepth(99);
 
-    this.cuttingView = this.add.image(width / 2, height / 2, "cuttingview")
+    this.cuttingView = this.add
+      .image(width / 2, height / 2, "cuttingview")
       .setDepth(100);
 
     const cuttingScale = Math.min(
       width / this.cuttingView.width,
-      height / this.cuttingView.height
+      height / this.cuttingView.height,
     );
 
     this.cuttingView.setScale(cuttingScale);
 
-    const buttonX =
-      this.cuttingView.x +
-      this.cuttingView.displayWidth * 0.43;
+    const buttonX = this.cuttingView.x + this.cuttingView.displayWidth * 0.43;
 
-    const buttonY =
-      this.cuttingView.y +
-      this.cuttingView.displayHeight * 0.31;
+    const buttonY = this.cuttingView.y + this.cuttingView.displayHeight * 0.31;
 
-    this.cup = this.add.image(buttonX * 0.5, buttonY * 1.1, "cup")
+    this.cup = this.add
+      .image(buttonX * 0.5, buttonY * 1.1, "cup")
       .setScale(1)
       .setDepth(101);
 
-    this.note1 = this.add.image(width / 6.8, height / 4, "note1")
+    this.note1 = this.add
+      .image(width / 6.8, height / 4, "note1")
       .setDepth(101)
       .setScale(0.9);
 
-
-    this.cutButton = this.add.image(
-      buttonX,
-      buttonY,
-      "button"
-    )
+    this.cutButton = this.add
+      .image(buttonX, buttonY, "button")
       .setDepth(102)
       .setScale(1.2)
       .setAlpha(1)
       .setInteractive({ useHandCursor: false });
 
-    this.buttonGlow = this.add.image(
-      this.cutButton.x,
-      this.cutButton.y,
-      "button"
-    )
+    this.buttonGlow = this.add
+      .image(this.cutButton.x, this.cutButton.y, "button")
       .setDepth(101)
       .setScale(1.2)
       .setAlpha(0.25)
-      .setTint(0xF0E1D2)
+      .setTint(0xf0e1d2)
       .setBlendMode(Phaser.BlendModes.SCREEN);
 
     this.tweens.add({
@@ -224,12 +212,12 @@ export default class Tutorial extends Phaser.Scene {
       duration: 1000,
       yoyo: true,
       repeat: -1,
-      ease: "Sine.easeInOut"
+      ease: "Sine.easeInOut",
     });
 
     this.cutButton.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursorhover.png), pointer"
+        "url(assets/Riba_Version_07/cursorhover.png), pointer",
       );
 
       this.tweens.add({
@@ -237,13 +225,13 @@ export default class Tutorial extends Phaser.Scene {
         scale: 1.4,
         alpha: 1,
         duration: 100,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
     this.cutButton.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto",
       );
 
       this.tweens.add({
@@ -251,13 +239,13 @@ export default class Tutorial extends Phaser.Scene {
         scale: 1.2,
         alpha: 1,
         duration: 100,
-        ease: "Power2"
+        ease: "Power2",
       });
     });
 
     this.cutButton.on("pointerdown", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto",
       );
       this.tweens.add({
         targets: this.cutButton,
@@ -265,13 +253,13 @@ export default class Tutorial extends Phaser.Scene {
         alpha: 1,
         duration: 70,
         yoyo: true,
-        ease: "Power2"
+        ease: "Power2",
       });
 
       if (!this.canStopLine) return;
 
       this.laser = this.sound.add("laser", {
-        volume: 0.1
+        volume: 0.1,
       });
       this.laser.play();
       this.time.delayedCall(140, () => {
@@ -279,20 +267,21 @@ export default class Tutorial extends Phaser.Scene {
       });
     });
 
-    this.infoText = this.add.text(
-      width / 2,
-      height * 0.15,
-      "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet haben.\nSchneide nur das Unbrauchbare weg. Jeder Millimeter gesundes Fleisch zählt. Dazu kannst du einfach auf den Knopf betätigen!",
-      {
-        fontSize: "28px",
-        fontFamily: "Roboto",
-        color: "#ffffff",
-        backgroundColor: "#171718e0",
-        padding: { x: 40, y: 25 },
-        align: "center",
-        wordWrap: { width: width * 0.6 }
-      }
-    )
+    this.infoText = this.add
+      .text(
+        width / 2,
+        height * 0.15,
+        "Dein Auftrag: \nDie Auswertung hat ergeben, dass die Giftstoffe sich vom Kopf aus auf 30% verbreitet haben.\nSchneide nur das Unbrauchbare weg. Jeder Millimeter gesundes Fleisch zählt. Dazu kannst du einfach auf den Knopf betätigen!",
+        {
+          fontSize: "28px",
+          fontFamily: "Roboto",
+          color: "#ffffff",
+          backgroundColor: "#171718e0",
+          padding: { x: 40, y: 25 },
+          align: "center",
+          wordWrap: { width: width * 0.6 },
+        },
+      )
       .setOrigin(0.5)
       .setDepth(150)
       .setAlpha(1)
@@ -300,26 +289,22 @@ export default class Tutorial extends Phaser.Scene {
 
     this.infoText.on("pointerover", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursorhover.png), pointer"
+        "url(assets/Riba_Version_07/cursorhover.png), pointer",
       );
     });
 
     this.infoText.on("pointerout", () => {
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto",
       );
     });
 
     this.closeInfoText = () => {
-
       this.input.setDefaultCursor(
-        "url(assets/Riba_Version_07/cursor_black.png), auto"
+        "url(assets/Riba_Version_07/cursor_black.png), auto",
       );
 
-      this.input.off(
-        "pointerdown",
-        this.closeInfoText
-      );
+      this.input.off("pointerdown", this.closeInfoText);
 
       this.tweens.add({
         targets: this.infoText,
@@ -327,28 +312,24 @@ export default class Tutorial extends Phaser.Scene {
         duration: 150,
         ease: "Power2",
         onComplete: () => {
-
           if (this.infoText) {
             this.infoText.destroy();
             this.infoText = null;
           }
 
           this.enableLineClick();
-        }
+        },
       });
     };
 
     this.time.delayedCall(200, () => {
-      this.input.on(
-        "pointerdown",
-        this.closeInfoText
-      );
+      this.input.on("pointerdown", this.closeInfoText);
     });
 
     this.spawnFish();
-
   }
 
+  // Erstellt den ersten Tutorial-Fisch und bereitet den Schneidepfad vor.
   spawnFish() {
     const { width, height } = this.scale;
 
@@ -356,16 +337,14 @@ export default class Tutorial extends Phaser.Scene {
     if (this.cutLine) this.cutLine.destroy();
     if (this.fishPathDebug) this.fishPathDebug.destroy();
 
-    this.fish = this.add.image(
-      width / 1.5,
-      height / 2.5,
-      "fish"
-    ).setDepth(102);
+    this.fish = this.add.image(width / 1.5, height / 2.5, "fish").setDepth(102);
 
     this.createFishPath();
     this.createMovingCutLine();
   }
 
+  // Definiert die Schneidelinie des Fisches.
+  // Diese Linie dient später zur Berechnung der Schnittposition.
   createFishPath() {
     const bounds = this.fish.getBounds();
 
@@ -375,14 +354,12 @@ export default class Tutorial extends Phaser.Scene {
     const endX = bounds.left + bounds.width * 0.96;
     const endY = this.fish.y;
 
-    this.fishPath = new Phaser.Curves.Path(
-      startX,
-      startY
-    );
+    this.fishPath = new Phaser.Curves.Path(startX, startY);
 
     this.fishPath.lineTo(endX, endY);
   }
-
+  // Zeichnet den Schneidepfad sichtbar ein.
+  // Wird nur für Tests und die Feinabstimmung der Kurve verwendet.
   drawFishPathDebug() {
     if (this.fishPathDebug) {
       this.fishPathDebug.destroy();
@@ -393,7 +370,7 @@ export default class Tutorial extends Phaser.Scene {
     //debug Linie zeichnen
     this.fishPath.draw(this.fishPathDebug);
   }
-
+  // Wandelt die aktuelle Position des Lasers in einen Prozentwert entlang des Schneidepfades um.
   getPercentOnFishPath(cutX) {
     if (!this.fishPath || !this.fish) return 0;
 
@@ -404,32 +381,32 @@ export default class Tutorial extends Phaser.Scene {
 
     const clampedX = Phaser.Math.Clamp(cutX, startX, endX);
 
-    const t = Phaser.Math.Clamp(
-      (clampedX - startX) / (endX - startX),
-      0,
-      1
-    );
+    const t = Phaser.Math.Clamp((clampedX - startX) / (endX - startX), 0, 1);
 
     return Math.round(t * 100);
   }
 
+  // Erstellt den Laser, der sich horizontal über den Fisch bewegt.
+  // Der Spieler muss den Laser im richtigen Moment stoppen.
   createMovingCutLine() {
     const bounds = this.fish.getBounds();
 
-    this.cutLine = this.add.rectangle(
-      bounds.left,
-      this.fish.y,
-      5,
-      this.fish.displayHeight + 90,
-      0xffffff,
-      0.95
-    ).setDepth(130);
+    this.cutLine = this.add
+      .rectangle(
+        bounds.left,
+        this.fish.y,
+        5,
+        this.fish.displayHeight + 90,
+        0xffffff,
+        0.95,
+      )
+      .setDepth(130);
 
     this.cutLineDirection = 1;
     this.cutLineSpeed = 4;
     this.canStopLine = false;
   }
-
+  // Erst nach dem Lesen des Tutorials darf der Spieler den Laser stoppen und den Fisch schneiden.
   enableLineClick() {
     this.canStopLine = true;
 
@@ -438,7 +415,7 @@ export default class Tutorial extends Phaser.Scene {
       this.cutButton.setAlpha(1);
     }
   }
-
+  // Bewegt den Laser kontinuierlich zwischen linker und rechter Fischkante.
   update() {
     if (!this.cutLine || !this.fish) return;
 
@@ -456,7 +433,8 @@ export default class Tutorial extends Phaser.Scene {
       this.cutLineDirection = 1;
     }
   }
-
+  // Wird aufgerufen, wenn der Spieler den Laser stoppt.
+  // Hier wird die finale Schnittposition berechnet.
   stopLineAndCut() {
     if (!this.canStopLine) return;
     if (!this.cutLine || !this.fish) return;
@@ -475,9 +453,9 @@ export default class Tutorial extends Phaser.Scene {
     const localX = Phaser.Math.Clamp(
       this.cutLine.x - bounds.left,
       0,
-      this.fish.displayWidth
+      this.fish.displayWidth,
     );
-
+    // Berechnet den prozentualen Fortschritt auf dem Schneidepfad und speichert das Ergebnis.
     const percent = this.getPercentOnFishPath(this.cutLine.x);
 
     this.cuts.push(percent);
@@ -492,21 +470,18 @@ export default class Tutorial extends Phaser.Scene {
 
     this.animateSlice(localX, percent);
   }
-
+  // Simuliert das Zerschneiden des Fisches, indem zwei Bildhälften erzeugt und auseinander bewegt werden.
   animateSlice(localX, percent) {
-    const {
-      x,
-      y,
-      displayWidth: w,
-      displayHeight: h
-    } = this.fish;
+    const { x, y, displayWidth: w, displayHeight: h } = this.fish;
 
-    const leftHalf = this.add.image(x, y, "fish")
+    const leftHalf = this.add
+      .image(x, y, "fish")
       .setDisplaySize(w, h)
       .setCrop(0, 0, localX, h)
       .setDepth(103);
 
-    const rightHalf = this.add.image(x, y, "fish")
+    const rightHalf = this.add
+      .image(x, y, "fish")
       .setDisplaySize(w, h)
       .setCrop(localX, 0, w - localX, h)
       .setDepth(103);
@@ -517,57 +492,45 @@ export default class Tutorial extends Phaser.Scene {
     let feedbackColor;
     let feedbackSound;
     let feedbackScale;
-
+    // Bewertet die Schnittqualität anhand des Prozentwerts und bestimmt das passende audiovisuelle Feedback.
     if (percent < 30) {
-
       feedbackTexture = "bad";
       feedbackColor = "#ff4444";
       feedbackSound = "badcut";
       feedbackScale = 0.12;
-
-    }
-
-    else if (percent >= 30 && percent <= 35) {
-
+    } else if (percent >= 30 && percent <= 35) {
       feedbackTexture = "good";
       feedbackColor = "#2ecc71";
       feedbackSound = "goodcut";
       feedbackScale = 0.12;
-
-    }
-    else {
-
+    } else {
       feedbackTexture = "toomuch";
       feedbackColor = "#ffd166";
       feedbackSound = "toomuchcut";
       feedbackScale = 0.18;
-
     }
     this.sound.play(feedbackSound, {
-      volume: 0.6
+      volume: 0.6,
     });
-
-    const percentText = this.add.text(
-      this.scale.width * 0.09,
-      this.scale.height * 0.8,
-      `${percent}%`,
-      {
+    // Zeigt die erreichte Schnittgenauigkeit als Prozentwert an.
+    const percentText = this.add
+      .text(this.scale.width * 0.09, this.scale.height * 0.8, `${percent}%`, {
         fontSize: `${Math.max(32, this.scale.width * 0.035)}px`,
         fontFamily: "Roboto",
         color: feedbackColor,
         fontStyle: "bold",
         stroke: "#000000",
-        strokeThickness: 5
-      }
-    )
+        strokeThickness: 5,
+      })
       .setOrigin(0, 1)
       .setDepth(300);
-
-    const feedbackImg = this.add.image(
-      percentText.x + percentText.width,
-      percentText.y - percentText.height / 2,
-      feedbackTexture
-    )
+    // Blendet das passende Feedback-Symbol ein
+    const feedbackImg = this.add
+      .image(
+        percentText.x + percentText.width,
+        percentText.y - percentText.height / 2,
+        feedbackTexture,
+      )
       .setOrigin(0, 0.5)
       .setDepth(300)
       .setScale(feedbackScale);
@@ -577,21 +540,21 @@ export default class Tutorial extends Phaser.Scene {
       scale: 0.6,
       duration: 100,
       yoyo: true,
-      ease: "Power2"
+      ease: "Power2",
     });
 
     this.tweens.add({
       targets: leftHalf,
       x: x - 250,
       alpha: 0,
-      duration: 350
+      duration: 350,
     });
 
     this.tweens.add({
       targets: rightHalf,
       x: x + 250,
       alpha: 0,
-      duration: 350
+      duration: 350,
     });
 
     this.time.delayedCall(2000, () => {
@@ -623,20 +586,21 @@ export default class Tutorial extends Phaser.Scene {
 
     const { width, height } = this.scale;
 
-    const endHintText = this.add.text(
-      width / 2,
-      height * 0.15,
-      "Ich sehe du hast es geschafft den Laser zu bedienen. Schneide nun die anderen Fische von der ersten Box auch noch.",
-      {
-        fontSize: "28px",
-        fontFamily: "Roboto",
-        color: "#ffffff",
-        backgroundColor: "#171718e0",
-        padding: { x: 40, y: 25 },
-        align: "center",
-        wordWrap: { width: width * 0.6 }
-      }
-    )
+    const endHintText = this.add
+      .text(
+        width / 2,
+        height * 0.15,
+        "Ich sehe du hast es geschafft den Laser zu bedienen. Schneide nun die anderen Fische von der ersten Box auch noch.",
+        {
+          fontSize: "28px",
+          fontFamily: "Roboto",
+          color: "#ffffff",
+          backgroundColor: "#171718e0",
+          padding: { x: 40, y: 25 },
+          align: "center",
+          wordWrap: { width: width * 0.6 },
+        },
+      )
       .setOrigin(0.5)
       .setDepth(1000)
       .setAlpha(0);
@@ -659,15 +623,14 @@ export default class Tutorial extends Phaser.Scene {
                 this.bgMusic.stop();
                 this.bgMusic.destroy();
                 this.bgMusic = null;
-              }
+              },
             });
-
           }
           this.time.delayedCall(1000, () => {
             this.scene.start("Game");
           });
         });
-      }
+      },
     });
   }
 }
